@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+<<<<<<< HEAD
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400&display=swap');
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background: #f2f3f8;
+}
+
+a {
+  color: inherit; 
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+.react-datepicker.react-datepicker--time-only > .react-datepicker__triangle {
+  display: none;
+}
+
+@media (prefers-color-scheme: light) {
+  
+  
+}
+
+.DetailTable {
+  table-layout: auto;
+  width: 100%;
+  overflow: auto;
+  overflow-y: scroll;
+}
+
+.DetailTable td:last-child, th:last-child {
+  position:sticky;
+  right:0;
+  z-index:1;
+  white-space: nowrap;
+}
+
+.DetailTable .second-last, .second-last-header{ 
+  position:sticky;
+  right:180px;
+  z-index:1;
+  white-space: nowrap;
+}
+
+.DetailTable td:last-child{
+  background-color: white;
+}
+
+.DetailTable .second-last {
+  background-color: white;
+}
+=======
+>>>>>>> cf2c543623abdfb04966cde688e14d33f22e63d3

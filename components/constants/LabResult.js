@@ -1,0 +1,2 @@
+export const LAB_CHECK_SAMPLECODE =
+  'LAB_CHECK_SAMPLECODE';

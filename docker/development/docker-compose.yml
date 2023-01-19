@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  bumame-housecall-development:
+    build:
+      context: ../../
+      dockerfile: docker/development/Dockerfile
+    image: bumame-housecall-development
+    ports:
+      - '3001:3000'

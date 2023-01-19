@@ -1,0 +1,2 @@
+export const SITE_FETCH_SELECT_LIST = 'SITE_FETCH_SELECT_LIST';
+export const TIER_ALERT = 'SITE_ALERT';
