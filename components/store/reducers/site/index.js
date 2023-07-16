@@ -1,4 +1,7 @@
-const { SITE_FETCH_SELECT_LIST, SITE_ALERT } = require('@constants/Site');
+const {
+  SITE_FETCH_SELECT_LIST,
+  SITE_ALERT
+} = require('components/constants/Site');
 
 const initState = {
   selectList: [],

@@ -3,7 +3,7 @@ const {
   HOUSECALL_FETCH_TRANSACTION_ITEM,
   HOUSECALL_ALERT,
   HOUSECALL_FETCH_DETAIL
-} = require('@constants/Housecall');
+} = require('components/constants/Housecall');
 
 const initState = {
   initialValue: {

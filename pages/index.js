@@ -1,7 +1,7 @@
 import Head from 'next/head';
 // import SideBar from '../components/Sidebar/SideBar'
 import Modals from '../components/Modals/ModalsSendLink';
-import { Header, MainLayout } from '@organisms';
+import { Header, MainLayout } from 'components/organisms';
 import authSlice from '/features/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';

@@ -1,18 +1,18 @@
-import assets from "@/public/index";
-import {CHANGE_SIDEBAR_MODE} from "@constants/Sidebar";
+import assets from 'public/index';
+import { CHANGE_SIDEBAR_MODE } from 'components/constants/Sidebar';
 
 const {
   SIDEBAR_MODULE,
   SIDEBAR_UNALLOWED_MODULE,
   SIDEBAR
-} = require('@constants/Sidebar');
+} = require('components/constants/Sidebar');
 
 const initState = {
   modules: [],
   unAllowedModules: [],
   sideBar: [],
   allowedSidebar: [],
-  active: true,
+  active: true
 };
 
 const sidebarReducers = (state = initState, { type, payload }) => {
@@ -75,11 +75,13 @@ const sidebarReducers = (state = initState, { type, payload }) => {
           link: 'lab-partner-transaction',
           moduleCode: 'lab-partner-transaction'
         }
-      ]
-      const allowedSidebar = sideBarList.filter(item => moduleCodes.includes(item.moduleCode));
+      ];
+      const allowedSidebar = sideBarList.filter(item =>
+        moduleCodes.includes(item.moduleCode)
+      );
       return { ...state, allowedSidebar: allowedSidebar };
     case CHANGE_SIDEBAR_MODE:
-      console.log(payload)
+      console.log(payload);
       return { ...state, active: payload };
 
     default:

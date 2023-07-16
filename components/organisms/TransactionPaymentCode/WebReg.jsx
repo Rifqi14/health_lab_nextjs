@@ -1,4 +1,4 @@
-import assets from '@/public/index';
+import assets from 'public/index';
 import {
   Button,
   Card,
@@ -9,9 +9,9 @@ import {
   Modal,
   Textarea,
   Typography
-} from '@atoms';
+} from 'components/atoms';
 import { Transition } from '@headlessui/react';
-import { EmptyTable } from '@molecules';
+import { EmptyTable } from 'components/molecules';
 import { Field, FieldArray, Form, Formik } from 'formik';
 import Image from 'next/image';
 import React, { useState } from 'react';
@@ -20,7 +20,7 @@ import * as Yup from 'yup';
 import { useRouter } from 'next/router';
 
 const WebReg = props => {
-  const router = useRouter()
+  const router = useRouter();
   const {
     setIsOpenConfirmationDialog,
     isWebRegFormOpen,

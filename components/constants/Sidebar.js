@@ -1,4 +1,4 @@
-import assets from '@/public/index';
+import assets from 'public/index';
 
 export const SidebarIcon = {
   'registrasi-lab-partner': `${assets.SidebarLab.src}`,
@@ -64,4 +64,4 @@ export const SideBarList = [
 export const SIDEBAR_MODULE = 'SIDEBAR_MODULE';
 export const SIDEBAR_UNALLOWED_MODULE = 'SIDEBAR_UNALLOWED_MODULE';
 export const SIDEBAR = 'SIDEBAR';
-export const CHANGE_SIDEBAR_MODE='CHANGE_SIDEBAR_MODE';
+export const CHANGE_SIDEBAR_MODE = 'CHANGE_SIDEBAR_MODE';

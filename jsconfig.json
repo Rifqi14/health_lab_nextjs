@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
       "@atoms": ["components/atoms/index"],
       "@molecules": ["components/molecules/index"],

@@ -4,8 +4,8 @@ const {
   AUTH_LOGIN_STATUS,
   AUTH_LOGOUT,
   AUTH_CURRENT_LOGIN_USER
-} = require('@constants/Authentication');
-const { getItemLocalStorage } = require('@utils/localstorage');
+} = require('components/constants/Authentication');
+const { getItemLocalStorage } = require('components/utils/localstorage');
 
 const initState = {
   login: getItemLocalStorage('AUTH')

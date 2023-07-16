@@ -1,5 +1,5 @@
-import { requestGet } from '@config';
-import { TIER_FETCH_SELECT_LIST } from '@constants/Tier';
+import { requestGet } from 'components/config';
+import { TIER_FETCH_SELECT_LIST } from 'components/constants/Tier';
 
 const configUrl = {
   service: 'tier',

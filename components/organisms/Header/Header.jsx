@@ -1,5 +1,5 @@
-import { Typography } from '@atoms';
-import { ProfileDropdown } from '@molecules';
+import { Typography } from 'components/atoms';
+import { ProfileDropdown } from 'components/molecules';
 import React from 'react';
 
 const Header = props => {

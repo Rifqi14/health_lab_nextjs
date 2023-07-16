@@ -1,15 +1,20 @@
-import { requestGet, requestPost, requestPut, requestGetFile} from '@config';
+import {
+  requestGet,
+  requestPost,
+  requestPut,
+  requestGetFile
+} from 'components/config';
 import {
   HOUSECALL_ALERT,
   HOUSECALL_FETCH_DATATABLE,
   HOUSECALL_FETCH_DETAIL,
   HOUSECALL_FETCH_TRANSACTION_ITEM
-} from '@constants/Housecall';
+} from 'components/constants/Housecall';
 import {
   TRANSACTION_ALERT,
   TRANSACTION_FETCH_HOUSE_CALL_DETAIL,
   TRANSACTION_FETCH_ITEMS
-} from '@constants/Transaction';
+} from 'components/constants/Transaction';
 import {
   fetchTransactionDocumentList,
   fetchTransactionItems
@@ -159,11 +164,10 @@ export const checkinItem = (itemId, data) => {
       });
       return error;
     }
-    
   };
 };
 
-export const collectedItem = (itemId,data) => {
+export const collectedItem = (itemId, data) => {
   return async dispatch => {
     try {
       const res = await requestPut(
@@ -187,7 +191,7 @@ export const collectedItem = (itemId,data) => {
   };
 };
 
-export const completeIdentityData = (itemId,body) => {
+export const completeIdentityData = (itemId, body) => {
   return async dispatch => {
     try {
       const res = await requestPost(
@@ -206,7 +210,7 @@ export const completeIdentityData = (itemId,body) => {
           type: 'error'
         }
       });
-      return error
+      return error;
     }
   };
 };
@@ -234,7 +238,7 @@ export const collectAllItem = itemId => {
   };
 };
 
-export const inputStatusItem = (itemId,status) => {
+export const inputStatusItem = (itemId, status) => {
   return async dispatch => {
     try {
       const res = await requestPut(
@@ -256,7 +260,7 @@ export const inputStatusItem = (itemId,status) => {
   };
 };
 
-export const inputStatusAntigenItem = (itemId,body) => {
+export const inputStatusAntigenItem = (itemId, body) => {
   return async dispatch => {
     try {
       const res = await requestPut(
@@ -279,7 +283,7 @@ export const inputStatusAntigenItem = (itemId,body) => {
   };
 };
 
-export const fetchDownloadResult = (transactionId,resultFilename) => {
+export const fetchDownloadResult = (transactionId, resultFilename) => {
   return async dispatch => {
     try {
       const res = await requestGetFile(
@@ -287,20 +291,14 @@ export const fetchDownloadResult = (transactionId,resultFilename) => {
       );
       const link = document.createElement('a');
       link.href = window.URL.createObjectURL(res);
-      link.setAttribute(
-        'download',
-        resultFilename,
-      );
+      link.setAttribute('download', resultFilename);
       document.body.appendChild(link);
       link.click();
-      link.parentNode.removeChild(link); 
-
+      link.parentNode.removeChild(link);
 
       return res;
-    }catch (error) {
+    } catch (error) {
       console.log(error);
     }
-  }
-}
-
-
+  };
+};

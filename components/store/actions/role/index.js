@@ -1,4 +1,9 @@
-import { requestDelete, requestGet, requestPatch, requestPost } from '@config';
+import {
+  requestDelete,
+  requestGet,
+  requestPatch,
+  requestPost
+} from 'components/config';
 import {
   ROLE_ALERT,
   ROLE_DELETE,
@@ -7,7 +12,7 @@ import {
   ROLE_FETCH_DETAIL,
   ROLE_FETCH_EXTENSION_STATUS_DATA,
   ROLE_FETCH_SELECT_LIST_ROLE_TYPE
-} from '@constants/Role';
+} from 'components/constants/Role';
 
 const configUrl = {
   service: 'roles',

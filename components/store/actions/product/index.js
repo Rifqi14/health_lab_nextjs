@@ -1,11 +1,11 @@
-import { requestGet } from '@config';
+import { requestGet } from 'components/config';
 import {
   PRODUCT_ALERT,
   PRODUCT_FETCH_COVID_SELECT_LIST,
   PRODUCT_FETCH_MCU_SELECT_LIST,
   PRODUCT_FETCH_SELECT_LIST,
   PRODUCT_FETCH_TIER_SELECT_LIST
-} from '@constants/Product';
+} from 'components/constants/Product';
 
 const configUrl = {
   service: 'product',

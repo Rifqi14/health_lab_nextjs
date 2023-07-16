@@ -1,10 +1,10 @@
-import { requestGet, requestPost } from '@config';
+import { requestGet, requestPost } from 'components/config';
 import {
   CORPORATE_TRX_ALERT,
   CORPORATE_TRX_FETCH_DATATABLE,
   CORPORATE_TRX_FETCH_DETAIL
-} from '@constants/CorporateTransaction';
-import { TRANSACTION_FETCH_IN_HOUSE_DETAIL } from '@constants/Transaction';
+} from 'components/constants/CorporateTransaction';
+import { TRANSACTION_FETCH_IN_HOUSE_DETAIL } from 'components/constants/Transaction';
 
 const configUrl = {
   service: 'coporate-transaction',

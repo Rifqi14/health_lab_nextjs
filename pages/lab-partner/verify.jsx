@@ -1,5 +1,5 @@
-import assets from '@/public/index';
-import {Button, Input, Label, Modal, Typography} from '@atoms';
+import assets from 'public/index';
+import { Button, Input, Label, Modal, Typography } from 'components/atoms';
 import { labPartnerVerify } from 'components/store/actions/labPartner';
 import { Field, Form, Formik } from 'formik';
 import Head from 'next/head';
@@ -27,7 +27,6 @@ const RegistrasiLabPartnerOtp = props => {
   const validationSchema = Yup.object().shape({
     otp: Yup.string().required('This field is required')
   });
-
 
   const onSubmit = values => {
     dispatch(labPartnerVerify(token, values))
@@ -68,9 +67,11 @@ const RegistrasiLabPartnerOtp = props => {
             Lab Partner
           </Typography>
         </div>
-        { isSuccess ? (
-          <div className="flex flex-col justify-center items-center my-5 text-center">
-            <Typography className={`text-xl text-black`}>Verifikasi OTP Berhasil, Anda dipersilakan meninggalkan laman ini</Typography>
+        {isSuccess ? (
+          <div className='flex flex-col justify-center items-center my-5 text-center'>
+            <Typography className={`text-xl text-black`}>
+              Verifikasi OTP Berhasil, Anda dipersilakan meninggalkan laman ini
+            </Typography>
           </div>
         ) : (
           <>
@@ -94,7 +95,11 @@ const RegistrasiLabPartnerOtp = props => {
                 <div className={`flex flex-col items-center`}>
                   <div className={`min-w-[25rem] pt-10`}>
                     <Label htmlFor={`otp`}>No OTP</Label>
-                    <Field component={Input} placeholder={`No OTP`} name={`otp`} />
+                    <Field
+                      component={Input}
+                      placeholder={`No OTP`}
+                      name={`otp`}
+                    />
                   </div>
                   <div className={`pt-12`}>
                     <Button
@@ -133,7 +138,7 @@ const RegistrasiLabPartnerOtp = props => {
         <div className={`pt-10`}>
           <Button
             onClick={() => {
-              setSuccessModal(false)
+              setSuccessModal(false);
             }}
             className={`bg-[#349EFF] rounded-lg hover:bg-[#349EFF] text-white`}
           >

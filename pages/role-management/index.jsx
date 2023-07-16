@@ -1,13 +1,22 @@
-import assets from '@/public/index';
-import {Button, Card, Input, LengthChange, ReactSelect, Select, Typography} from '@atoms';
-import LengthChangeValue from '@constants/LengthChange';
-import { ROLE_CREATE } from '@constants/Role';
-import { SORTING_ORDER } from '@constants/SortingOrder';
-import { EmptyTable, Pagination } from '@molecules';
-import { MainLayout, Table } from '@organisms';
+import assets from 'public/index';
+import {
+  Button,
+  Card,
+  Input,
+  LengthChange,
+  ReactSelect,
+  Select,
+  Typography
+} from 'components/atoms';
+import LengthChangeValue from 'components/constants/LengthChange';
+import { ROLE_CREATE } from 'components/constants/Role';
+import { SORTING_ORDER } from 'components/constants/SortingOrder';
+import { EmptyTable, Pagination } from 'components/molecules';
+import { MainLayout, Table } from 'components/organisms';
 import {
   fetchDataTable,
-  fetchRoleDetail, fetchRoleTypes,
+  fetchRoleDetail,
+  fetchRoleTypes,
   fetchStatusData
 } from 'components/store/actions/role';
 import { fetchSidebar } from 'components/store/actions/sidebar';
@@ -36,7 +45,7 @@ const RoleManagement = props => {
     page: 1,
     itemsPerPage: LengthChangeValue[0],
     sortCount: 0,
-    roleTypeList: [],
+    roleTypeList: []
   });
   const dispatch = useDispatch();
   const selector = useSelector(state => state);
@@ -156,7 +165,7 @@ const RoleManagement = props => {
     dispatch(fetchRoleTypes());
     setState({
       ...state,
-      roleTypeList: role.selectListRoleType.map((item) => {
+      roleTypeList: role.selectListRoleType.map(item => {
         return { value: item.roleType, label: item.roleTypeDescription };
       })
     });
@@ -208,13 +217,13 @@ const RoleManagement = props => {
                 });
               }}
               defaultValue={
-              state.params.RoleType ?
-                {
-                  value: state.params.RoleType,
-                  label: state.params.RoleType
-                } :
-                ""
-            }
+                state.params.RoleType
+                  ? {
+                      value: state.params.RoleType,
+                      label: state.params.RoleType
+                    }
+                  : ''
+              }
             />
             <Input
               prefixIcon={assets.IconSearch}

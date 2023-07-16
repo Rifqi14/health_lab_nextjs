@@ -1,20 +1,20 @@
-import { MainLayout } from "@organisms";
-import { interceptorResponseErr } from "@utils/interceptor";
-import { getItemLocalStorage } from "@utils/localstorage";
-import axios from "axios";
-import ModalConfirmation from "components/Modals/ModalConfirmation";
-import ModalSuccess from "components/Modals/ModalsSendLink";
-import Head from "next/head";
-import Image from "next/image";
-import { useRouter } from "next/router";
-import React from "react";
-import { useState } from "react";
-import assets from "../public";
-import { Formik, Field, Form, ErrorMessage } from "formik";
-import * as yup from "yup";
-import { useEffect } from "react";
-import { Button, Input, Modal, Typography } from "@atoms";
-import Link from "next/link";
+import { MainLayout } from 'components/organisms';
+import { interceptorResponseErr } from 'components/utils/interceptor';
+import { getItemLocalStorage } from 'components/utils/localstorage';
+import axios from 'axios';
+import ModalConfirmation from 'components/Modals/ModalConfirmation';
+import ModalSuccess from 'components/Modals/ModalsSendLink';
+import Head from 'next/head';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import React from 'react';
+import { useState } from 'react';
+import assets from '../public';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as yup from 'yup';
+import { useEffect } from 'react';
+import { Button, Input, Modal, Typography } from 'components/atoms';
+import Link from 'next/link';
 
 const ChangePassword = () => {
   const [show, setShow] = useState(false);
@@ -22,9 +22,9 @@ const ChangePassword = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showModalSuccess, setShowModalSuccess] = useState(false);
-  const [currentPassword, setCurrentPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [disabled, setDisabled] = useState(false);
   const [error, setError] = useState(false);
   const handleShowPass = () => {
@@ -33,25 +33,25 @@ const ChangePassword = () => {
 
   const router = useRouter();
 
-  const URL = process.env.NEXT_PUBLIC_API_URL;
-  const ls = JSON?.parse(getItemLocalStorage("AUTH"));
+  // const URL = process.env.NEXT_PUBLIC_API_URL;
+  // const ls = JSON?.parse(getItemLocalStorage('AUTH'));
 
   const onChangePassword = async () => {
     const data = {
       currentPassword: currentPassword,
       newPassword: newPassword,
-      confirmPassword: confirmPassword,
+      confirmPassword: confirmPassword
     };
 
     try {
       axios.interceptors.response.use(
-        (res) => res,
-        (error) => interceptorResponseErr(error)
+        res => res,
+        error => interceptorResponseErr(error)
       );
       const res = await axios.put(`${URL}/api/v1/users/change-password`, data, {
         headers: {
-          Authorization: `${ls.scheme} ${ls.token}`,
-        },
+          Authorization: `${ls.scheme} ${ls.token}`
+        }
       });
       setShowModal(false);
       setShowModalSuccess(true);
@@ -61,25 +61,25 @@ const ChangePassword = () => {
     }
   };
 
-  const handleChange = (value) => {
+  const handleChange = value => {
     setCurrentPassword(value);
   };
   const validationSchema = yup.object().shape({
-    currentPassword: yup.string().required("Current Password is required"),
-    newPassword: yup.string().required("New Password is required"),
-    confirmPassword: yup.string().when("newPassword", {
-      is: (val) => (val && val.length > 0 ? true : false),
+    currentPassword: yup.string().required('Current Password is required'),
+    newPassword: yup.string().required('New Password is required'),
+    confirmPassword: yup.string().when('newPassword', {
+      is: val => (val && val.length > 0 ? true : false),
       then: yup
         .string()
-        .oneOf([yup.ref("newPassword")], "Both password need to be the same"),
-    }),
+        .oneOf([yup.ref('newPassword')], 'Both password need to be the same')
+    })
   });
 
   const disabledButton = () => {
     if (
-      currentPassword !== "" &&
-      newPassword !== "" &&
-      confirmPassword !== ""
+      currentPassword !== '' &&
+      newPassword !== '' &&
+      confirmPassword !== ''
     ) {
       setDisabled(true);
     } else {
@@ -96,35 +96,35 @@ const ChangePassword = () => {
       <Head>
         <title>Bumame CMS</title>
         <link
-          rel="icon"
+          rel='icon'
           href={`${
-            process.env.NEXT_PUBLIC_PREFIX_URL || "housecall"
+            process.env.NEXT_PUBLIC_PREFIX_URL || 'housecall'
           }/favicon.ico`}
         />
       </Head>
 
       <MainLayout
-        height={"h-full"}
-        headline={"Change Password"}
+        height={'h-full'}
+        headline={'Change Password'}
         breadcrumb={[
           {
-            link: "change-password",
-            name: "Change Password",
-          },
+            link: 'change-password',
+            name: 'Change Password'
+          }
         ]}
       >
         <main
-          className={"flex flex-col bg-white rounded-lg shadow-lg p-7 mb-5"}
+          className={'flex flex-col bg-white rounded-lg shadow-lg p-7 mb-5'}
         >
-          <p className="my-4 font-bold text-lg">Change Password</p>
-          <p className="text-coolGray text-base">
+          <p className='my-4 font-bold text-lg'>Change Password</p>
+          <p className='text-coolGray text-base'>
             Your new password must be different from previous used password
           </p>
           <Formik
             initialValues={{
-              currentPassword: "",
-              newPassword: "",
-              confirmPassword: "",
+              currentPassword: '',
+              newPassword: '',
+              confirmPassword: ''
             }}
             validationSchema={validationSchema}
             enableReinitialize
@@ -132,100 +132,100 @@ const ChangePassword = () => {
             {({ errors, handleBlur, touched }) => {
               return (
                 <Form>
-                  <div className="mt-4 w-[400px]">
-                    <label className="pb-[5px] pt-5">Current Password</label>
-                    <div className="mb-4 p-2 rounded-[5px] border-solid border-2 flex ">
+                  <div className='mt-4 w-[400px]'>
+                    <label className='pb-[5px] pt-5'>Current Password</label>
+                    <div className='mb-4 p-2 rounded-[5px] border-solid border-2 flex '>
                       <input
-                        type={show ? "text" : "password"}
-                        name="currentPassword"
-                        className="w-full outline-none bg-transparent border-none"
-                        onChange={(e) => handleChange(e.target.value)}
+                        type={show ? 'text' : 'password'}
+                        name='currentPassword'
+                        className='w-full outline-none bg-transparent border-none'
+                        onChange={e => handleChange(e.target.value)}
                         value={currentPassword}
                         onBlur={handleBlur}
                       />
                       {show ? (
                         <Image
-                          className="hover:cursor-pointer"
+                          className='hover:cursor-pointer'
                           src={assets.EyeOpen}
-                          alt=""
+                          alt=''
                           onClick={handleShowPass}
                         />
                       ) : (
                         <Image
-                          className="hover:cursor-pointer"
+                          className='hover:cursor-pointer'
                           src={assets.EyeClose}
-                          alt=""
+                          alt=''
                           onClick={handleShowPass}
                         />
                       )}
                     </div>
-                    {currentPassword === "" && touched.currentPassword ? (
-                      <p className="mt-2 text-sm text-red-600 dark:text-red-500">
+                    {currentPassword === '' && touched.currentPassword ? (
+                      <p className='mt-2 text-sm text-red-600 dark:text-red-500'>
                         {errors.currentPassword}
                       </p>
                     ) : null}
 
-                    <label className="pb-[5px] pt-5">New Password</label>
-                    <div className="mb-4 p-2 rounded-[5px] border-solid border-2 flex">
+                    <label className='pb-[5px] pt-5'>New Password</label>
+                    <div className='mb-4 p-2 rounded-[5px] border-solid border-2 flex'>
                       <Field
-                        as="input"
-                        type={showNewPassword ? "text" : "password"}
-                        name="newPassword"
-                        className="w-full outline-none bg-transparent"
-                        onChange={(e) => setNewPassword(e.target.value)}
+                        as='input'
+                        type={showNewPassword ? 'text' : 'password'}
+                        name='newPassword'
+                        className='w-full outline-none bg-transparent'
+                        onChange={e => setNewPassword(e.target.value)}
                         value={newPassword}
                       />
                       {showNewPassword ? (
                         <Image
-                          className="hover:cursor-pointer"
+                          className='hover:cursor-pointer'
                           src={assets.EyeOpen}
-                          alt=""
+                          alt=''
                           onClick={() => {
                             setShowNewPassword(!showNewPassword);
                           }}
                         />
                       ) : (
                         <Image
-                          className="hover:cursor-pointer"
+                          className='hover:cursor-pointer'
                           src={assets.EyeClose}
-                          alt=""
+                          alt=''
                           onClick={() => {
                             setShowNewPassword(!showNewPassword);
                           }}
                         />
                       )}
                     </div>
-                    {newPassword === "" && touched.newPassword ? (
-                      <p className="mt-2 text-sm text-red-600 dark:text-red-500">
+                    {newPassword === '' && touched.newPassword ? (
+                      <p className='mt-2 text-sm text-red-600 dark:text-red-500'>
                         {errors.newPassword}
                       </p>
                     ) : null}
-                    <label className="pb-[5px] pt-5">
+                    <label className='pb-[5px] pt-5'>
                       Confirmation New Password
                     </label>
-                    <div className="mb-4 p-2 rounded-[5px] border-solid border-2 flex">
+                    <div className='mb-4 p-2 rounded-[5px] border-solid border-2 flex'>
                       <Field
-                        as="input"
-                        type={showConfirmPassword ? "text" : "password"}
-                        name="confirmPassword"
-                        className="w-full outline-none bg-transparent"
-                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        as='input'
+                        type={showConfirmPassword ? 'text' : 'password'}
+                        name='confirmPassword'
+                        className='w-full outline-none bg-transparent'
+                        onChange={e => setConfirmPassword(e.target.value)}
                         value={confirmPassword}
                       />
                       {showConfirmPassword ? (
                         <Image
-                          className="hover:cursor-pointer"
+                          className='hover:cursor-pointer'
                           src={assets.EyeOpen}
-                          alt=""
+                          alt=''
                           onClick={() => {
                             setShowConfirmPassword(!showConfirmPassword);
                           }}
                         />
                       ) : (
                         <Image
-                          className="hover:cursor-pointer"
+                          className='hover:cursor-pointer'
                           src={assets.EyeClose}
-                          alt=""
+                          alt=''
                           onClick={() => {
                             setShowConfirmPassword(!showConfirmPassword);
                           }}
@@ -233,7 +233,7 @@ const ChangePassword = () => {
                       )}
                     </div>
                     {newPassword !== confirmPassword ? (
-                      <p className="mt-2 text-sm text-red-600 dark:text-red-500">
+                      <p className='mt-2 text-sm text-red-600 dark:text-red-500'>
                         Both password need to be the same
                       </p>
                     ) : null}
@@ -242,9 +242,9 @@ const ChangePassword = () => {
               );
             }}
           </Formik>
-          <div className="flex justify-center mt-4">
+          <div className='flex justify-center mt-4'>
             <button
-              className="px-6 bg-btnBlue rounded py-2 text-white disabled:bg-btn-cancel disabled:text-black"
+              className='px-6 bg-btnBlue rounded py-2 text-white disabled:bg-btn-cancel disabled:text-black'
               onClick={() => {
                 setShowModal(true);
               }}
@@ -252,24 +252,24 @@ const ChangePassword = () => {
             >
               Submit
             </button>
-            <Link href="/">        
-            <button className="px-6 bg-[#DDDDDD] ml-4 rounded py-2">
-              Cancel
-            </button>
+            <Link href='/'>
+              <button className='px-6 bg-[#DDDDDD] ml-4 rounded py-2'>
+                Cancel
+              </button>
             </Link>
           </div>
         </main>
         <ModalConfirmation
           show={showModal}
           confirmation={`Confirmation`}
-          desc1="Apakah anda yakin akan menyimpan data ini?"
+          desc1='Apakah anda yakin akan menyimpan data ini?'
           onHide={() => {
             setShowModal(false);
           }}
           handleYes={() => onChangePassword()}
         />
         <Modal
-          setIsOpen={(val) => showModalSuccess(val)}
+          setIsOpen={val => showModalSuccess(val)}
           width={`w-[27rem]`}
           title={`Success`}
           headless
@@ -282,9 +282,9 @@ const ChangePassword = () => {
             />
           </div>
           <Typography className={`pt-8`}>Password berhasil diubah</Typography>
-          <div className="flex justify-center pt-8">
+          <div className='flex justify-center pt-8'>
             <Button
-              onClick={() => router.push("/")}
+              onClick={() => router.push('/')}
               color={`white`}
               background={`bg-btnBlue`}
             >

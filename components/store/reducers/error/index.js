@@ -1,4 +1,4 @@
-import { ERROR_DIALOG } from '@constants/ErrorConst';
+import { ERROR_DIALOG } from 'components/constants/ErrorConst';
 
 const initState = {
   error: {

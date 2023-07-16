@@ -1,12 +1,12 @@
-import { requestGet, requestPost } from "@config";
+import { requestGet, requestPost } from 'components/config';
 
 const configUrl = {
-  service: "users",
-  version: "v1",
-  prefix: "api",
+  service: 'users',
+  version: 'v1',
+  prefix: 'api'
 };
 
-export const createRoleManagement = (data) => {
+export const createRoleManagement = data => {
   return async dispatch => {
     try {
       const res = await requestPost(
@@ -19,20 +19,19 @@ export const createRoleManagement = (data) => {
         payload: {
           status: true,
           message: JSON.stringify(error.message),
-          type: "error",
-        },
+          type: 'error'
+        }
       });
     }
   };
 };
 
-
 export const getDataTable = () => {
   return async dispatch => {
     try {
-      return res = await requestGet(``)
+      return (res = await requestGet(``));
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
-}
+  };
+};

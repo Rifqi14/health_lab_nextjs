@@ -1,5 +1,5 @@
-import { Transition } from "@headlessui/react";
-import React, { useEffect, useState } from "react";
+import { Transition } from '@headlessui/react';
+import React, { useEffect, useState } from 'react';
 import {
   Button,
   Card,
@@ -10,37 +10,35 @@ import {
   ReactSelect,
   Select,
   Textarea,
-  Typography,
-} from "@atoms";
-import Image from "next/image";
-import assets from "@/public/index";
-import { useRouter } from "next/router";
-import axios from "axios";
-import ModalConfirmation from "components/Modals/ModalConfirmation";
-import ModalSuccess from "components/Modals/ModalsSendLink";
-import ModalUploadFile from "components/Modals/ModalUploadFile";
-import { getItemLocalStorage } from "@utils/localstorage";
-import Table from "../Tables/Table";
-import { EmptyTable } from "@molecules";
-import { useDispatch } from "react-redux";
+  Typography
+} from 'components/atoms';
+import Image from 'next/image';
+import assets from 'public/index';
+import { useRouter } from 'next/router';
+import axios from 'axios';
+import ModalConfirmation from 'components/Modals/ModalConfirmation';
+import ModalSuccess from 'components/Modals/ModalsSendLink';
+import ModalUploadFile from 'components/Modals/ModalUploadFile';
+import { getItemLocalStorage } from 'components/utils/localstorage';
+import Table from '../Tables/Table';
+import { EmptyTable } from 'components/molecules';
+import { useDispatch } from 'react-redux';
 import {
   createMasterCorporate,
   getSiteOption,
-  uploadDocument,
-} from "components/store/actions/corporate";
-import { Formik, Form, Field } from "formik";
-import * as yup from "yup";
-import Head from "next/head";
-import {
-  numberOnly,
-} from "components/constants/NumberValidation";
+  uploadDocument
+} from 'components/store/actions/corporate';
+import { Formik, Form, Field } from 'formik';
+import * as yup from 'yup';
+import Head from 'next/head';
+import { numberOnly } from 'components/constants/NumberValidation';
 
-const CorporateForm = (props) => {
+const CorporateForm = props => {
   const {
     isCorporateFormOpen,
     handleModals,
     handleModalsConfirm,
-    siteOptions,
+    siteOptions
   } = props;
 
   const router = useRouter();
@@ -51,76 +49,76 @@ const CorporateForm = (props) => {
   const [sendSite, setSendSite] = useState();
   const [showModals, setShowModals] = useState(false);
   const [successModal, setSuccessModal] = useState(false);
-  const [typeDoc, setTypeDoc] = useState("");
+  const [typeDoc, setTypeDoc] = useState('');
   const [isFormValid, setIsFormValid] = useState(false);
   const [errorModal, setErrorModal] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
   const [onSubmit, setOnSubmit] = useState(false);
   const [submitFailed, setSubmitFailed] = useState(false);
   const [selectTitle, setSelectTitle] = useState();
   const [isSupportingDataValid, setIsSupportingDataValid] = useState(false);
-  const [currentDocument, setCurrentDocument] = useState()
+  const [currentDocument, setCurrentDocument] = useState();
 
   const [state, setState] = useState({
-    name: "",
-    identityType: "",
-    brand: "",
-    catagories: "",
-    totalUser: "",
-    email: "",
-    gender: "",
-    code: "",
+    name: '',
+    identityType: '',
+    brand: '',
+    catagories: '',
+    totalUser: '',
+    email: '',
+    gender: '',
+    code: '',
     dateOfBirth: new Date(),
-    citizenship: "",
-    taxId: "",
+    citizenship: '',
+    taxId: '',
     arDueDate: 0,
-    phone: "",
-    address: "",
-    city: "",
-    province: "",
-    rt: "",
-    rw: "",
+    phone: '',
+    address: '',
+    city: '',
+    province: '',
+    rt: '',
+    rw: '',
     selectedSite: [],
-    district: "",
-    subDistinct: "",
-    domicileAddress: "",
-    domicileCity: "",
-    domicileProvince: "",
-    domicileRt: "",
-    domicileRw: "",
-    domicileDistrict: "",
-    domicileSubDistinct: "",
-    selectType: "",
+    district: '',
+    subDistinct: '',
+    domicileAddress: '',
+    domicileCity: '',
+    domicileProvince: '',
+    domicileRt: '',
+    domicileRw: '',
+    domicileDistrict: '',
+    domicileSubDistinct: '',
+    selectType: '',
     sites: [
       {
         siteId: null,
-        siteName: "",
-      },
+        siteName: ''
+      }
     ],
     pics: [
       {
         index: 0,
-        name: "",
-        title: "Corporate",
-        contact: "",
-        email: "",
+        name: '',
+        title: 'Corporate',
+        contact: '',
+        email: ''
       },
       {
         index: 1,
-        name: "",
-        title: "Operasional",
-        contact: "",
-        email: "",
+        name: '',
+        title: 'Operasional',
+        contact: '',
+        email: ''
       },
       {
         index: 2,
-        name: "",
-        title: "Finance",
-        contact: "",
-        email: "",
-      },
+        name: '',
+        title: 'Finance',
+        contact: '',
+        email: ''
+      }
     ],
-    corporateType: "",
+    corporateType: '',
     spkDocument: [],
     sphDocument: [],
     npwpDocument: [],
@@ -130,34 +128,34 @@ const CorporateForm = (props) => {
     isOpenUploadSphData: false,
     isOpenUploadNpwpData: false,
     isOpenUploadDataIdData: false,
-    isOpenUploadSuratVendorData: false,
+    isOpenUploadSuratVendorData: false
   });
 
   const headColumns = [
     {
-      key: "no",
-      name: "No",
-      className: "w-3 px-4 text-center",
-      icon: false,
+      key: 'no',
+      name: 'No',
+      className: 'w-3 px-4 text-center',
+      icon: false
     },
     {
-      key: "file",
-      name: "File",
-      className: "text-left",
-      icon: false,
+      key: 'file',
+      name: 'File',
+      className: 'text-left',
+      icon: false
     },
     {
-      key: "note",
-      name: "Note",
-      className: "text-left pl-6",
-      icon: false,
+      key: 'note',
+      name: 'Note',
+      className: 'text-left pl-6',
+      icon: false
     },
     {
-      key: "deletbtn",
-      name: "",
-      className: "w-12 px-2",
-      icon: false,
-    },
+      key: 'deletbtn',
+      name: '',
+      className: 'w-12 px-2',
+      icon: false
+    }
   ];
 
   const addPic = () => {
@@ -167,12 +165,12 @@ const CorporateForm = (props) => {
         ...state.pics,
         {
           index: state.pics[state.pics.length - 1].index + 1,
-          name: "",
-          title: [{ value: "", label: "" }],
-          contact: "",
-          email: "",
-        },
-      ],
+          name: '',
+          title: [{ value: '', label: '' }],
+          contact: '',
+          email: ''
+        }
+      ]
     });
   };
 
@@ -183,10 +181,10 @@ const CorporateForm = (props) => {
         ...state.spkDocument,
         {
           index: state.spkDocument.length + 1,
-          file: "",
-          note: "",
-        },
-      ],
+          file: '',
+          note: ''
+        }
+      ]
     });
   };
 
@@ -197,10 +195,10 @@ const CorporateForm = (props) => {
         ...state.sphDocument,
         {
           index: state.sphDocument.length + 1,
-          file: "",
-          note: "",
-        },
-      ],
+          file: '',
+          note: ''
+        }
+      ]
     });
   };
 
@@ -211,10 +209,10 @@ const CorporateForm = (props) => {
         ...state.npwpDocument,
         {
           index: state.npwpDocument.length + 1,
-          file: "",
-          note: "",
-        },
-      ],
+          file: '',
+          note: ''
+        }
+      ]
     });
   };
 
@@ -225,10 +223,10 @@ const CorporateForm = (props) => {
         ...state.dataIdDocument,
         {
           index: state.dataIdDocument.length + 1,
-          file: "",
-          note: "",
-        },
-      ],
+          file: '',
+          note: ''
+        }
+      ]
     });
   };
 
@@ -239,54 +237,54 @@ const CorporateForm = (props) => {
         ...state.suratVendorDocument,
         {
           index: state.suratVendorDocument.length + 1,
-          file: "",
-          note: "",
-        },
-      ],
+          file: '',
+          note: ''
+        }
+      ]
     });
   };
 
-  const setIsOpenUploadSupportingData = (value) => {
+  const setIsOpenUploadSupportingData = value => {
     if (value) {
-      setCurrentDocument("spk")
+      setCurrentDocument('spk');
     } else {
-      setCurrentDocument("")
+      setCurrentDocument('');
     }
     setState({ ...state, isOpenUploadSupportingData: value });
   };
 
-  const setIsOpenUploadSphData = (value) => {
+  const setIsOpenUploadSphData = value => {
     if (value) {
-      setCurrentDocument("sph")
+      setCurrentDocument('sph');
     } else {
-      setCurrentDocument("")
+      setCurrentDocument('');
     }
     setState({ ...state, isOpenUploadSphData: value });
   };
 
-  const setIsOpenUploadNpwpData = (value) => {
+  const setIsOpenUploadNpwpData = value => {
     if (value) {
-      setCurrentDocument("npwp")
+      setCurrentDocument('npwp');
     } else {
-      setCurrentDocument("")
+      setCurrentDocument('');
     }
     setState({ ...state, isOpenUploadNpwpData: value });
   };
 
-  const setIsOpenUploaddDataIdData = (value) => {
+  const setIsOpenUploaddDataIdData = value => {
     if (value) {
-      setCurrentDocument("dataId")
+      setCurrentDocument('dataId');
     } else {
-      setCurrentDocument("")
+      setCurrentDocument('');
     }
     setState({ ...state, isOpenUploadDataIdData: value });
   };
 
-  const setIsOpenUploaddSuratVendorData = (value) => {
+  const setIsOpenUploaddSuratVendorData = value => {
     if (value) {
-      setCurrentDocument("suratVendor")
+      setCurrentDocument('suratVendor');
     } else {
-      setCurrentDocument("")
+      setCurrentDocument('');
     }
     setState({ ...state, isOpenUploadSuratVendorData: value });
   };
@@ -301,7 +299,7 @@ const CorporateForm = (props) => {
     });
     setState({
       ...state,
-      spkDocument: upload,
+      spkDocument: upload
     });
   };
 
@@ -315,7 +313,7 @@ const CorporateForm = (props) => {
     });
     setState({
       ...state,
-      sphDocument: upload,
+      sphDocument: upload
     });
   };
 
@@ -329,7 +327,7 @@ const CorporateForm = (props) => {
     });
     setState({
       ...state,
-      npwpDocument: upload,
+      npwpDocument: upload
     });
   };
 
@@ -343,7 +341,7 @@ const CorporateForm = (props) => {
     });
     setState({
       ...state,
-      dataIdDocument: upload,
+      dataIdDocument: upload
     });
   };
 
@@ -357,7 +355,7 @@ const CorporateForm = (props) => {
     });
     setState({
       ...state,
-      suratVendorDocument: upload,
+      suratVendorDocument: upload
     });
   };
 
@@ -371,7 +369,7 @@ const CorporateForm = (props) => {
     });
     setState({
       ...state,
-      spkDocument: upload,
+      spkDocument: upload
     });
   };
 
@@ -385,7 +383,7 @@ const CorporateForm = (props) => {
     });
     setState({
       ...state,
-      npwpDocument: upload,
+      npwpDocument: upload
     });
   };
 
@@ -399,7 +397,7 @@ const CorporateForm = (props) => {
     });
     setState({
       ...state,
-      sphDocument: upload,
+      sphDocument: upload
     });
   };
 
@@ -413,7 +411,7 @@ const CorporateForm = (props) => {
     });
     setState({
       ...state,
-      dataIdDocument: upload,
+      dataIdDocument: upload
     });
   };
 
@@ -427,70 +425,70 @@ const CorporateForm = (props) => {
     });
     setState({
       ...state,
-      suratVendorDocument: upload,
+      suratVendorDocument: upload
     });
   };
 
-  const deleteSpkFile = (index) => {
+  const deleteSpkFile = index => {
     const upload = state.spkDocument.filter((item, i) => {
       return item.index !== index;
     });
     setState({
       ...state,
-      spkDocument: upload,
+      spkDocument: upload
     });
   };
 
-  const deleteSphFile = (index) => {
+  const deleteSphFile = index => {
     const upload = state.sphDocument.filter((item, i) => {
       return item.index !== index;
     });
     setState({
       ...state,
-      sphDocument: upload,
+      sphDocument: upload
     });
   };
 
-  const deleteNpwpFile = (index) => {
+  const deleteNpwpFile = index => {
     const upload = state.npwpDocument.filter((item, i) => {
       return item.index !== index;
     });
     setState({
       ...state,
-      npwpDocument: upload,
+      npwpDocument: upload
     });
   };
 
-  const deleteDataIdFile = (index) => {
+  const deleteDataIdFile = index => {
     const upload = state.dataIdDocument.filter((item, i) => {
       return item.index !== index;
     });
     setState({
       ...state,
-      dataIdDocument: upload,
+      dataIdDocument: upload
     });
   };
 
-  const deleteSuratVendorFile = (index) => {
+  const deleteSuratVendorFile = index => {
     const upload = state.suratVendorDocument.filter((item, i) => {
       return item.index !== index;
     });
     setState({
       ...state,
-      suratVendorDocument: upload,
+      suratVendorDocument: upload
     });
   };
 
   const onChangeData = (e, index, type) => {
     const upload = state.pics.map((item, i) => {
       if (item.index === index) {
-        if (type == "name") {
+        if (type == 'name') {
           item.name = e.target.value;
-        } else if (type == "contact") {
+        } else if (type == 'contact') {
           item.contact = e.target.value;
-        } else if (type == "title") {
+        } else if (type == 'title') {
           item.title = e;
-        } else if (type == "email") {
+        } else if (type == 'email') {
           item.email = e.target.value;
         }
       }
@@ -498,13 +496,13 @@ const CorporateForm = (props) => {
     });
     setState({
       ...state,
-      pics: upload,
+      pics: upload
     });
   };
 
-  const handleSelectSite = (val) => {
+  const handleSelectSite = val => {
     setSelectSite(val);
-    let obj = props.siteOptions.find((o) => o.siteId == val?.siteId);
+    let obj = props.siteOptions.find(o => o.siteId == val?.siteId);
     setSendSite(obj);
   };
 
@@ -515,7 +513,7 @@ const CorporateForm = (props) => {
       totalUser: +state.totalUser,
       brand: state.brand,
       phoneNumber: state.phone,
-      CorporateType: "corporate",
+      CorporateType: 'corporate',
       code: state.code,
       taxId: state.taxId,
       catagories: state.catagories,
@@ -532,24 +530,24 @@ const CorporateForm = (props) => {
           name: item.name,
           contact: item.contact,
           title: item.title,
-          email: item.email,
+          email: item.email
         };
       }),
-      sites: [sendSite],
+      sites: [sendSite]
     };
     setOnSubmit(true);
-    dispatch(createMasterCorporate(data)).then((res) => {
+    dispatch(createMasterCorporate(data)).then(res => {
       if (res?.statusCode === 200) {
         let uploadDocumentStatus = true;
 
         state.spkDocument.forEach((item, index) => {
           const newFormData = new FormData();
-          newFormData.append("CorporateCode", state.code);
-          newFormData.append("File", item.file);
-          newFormData.append("Type", "SPK");
-          newFormData.append("Notes", item.notes);
+          newFormData.append('CorporateCode', state.code);
+          newFormData.append('File', item.file);
+          newFormData.append('Type', 'SPK');
+          newFormData.append('Notes', item.notes);
 
-          dispatch(uploadDocument(newFormData)).then((res) => {
+          dispatch(uploadDocument(newFormData)).then(res => {
             if (res.statusCode !== 200) {
               uploadDocumentStatus = false;
             }
@@ -558,12 +556,12 @@ const CorporateForm = (props) => {
 
         state.sphDocument.forEach((item, index) => {
           const newFormData = new FormData();
-          newFormData.append("CorporateCode", state.code);
-          newFormData.append("File", item.file);
-          newFormData.append("Type", "SPH");
-          newFormData.append("Notes", item.notes);
+          newFormData.append('CorporateCode', state.code);
+          newFormData.append('File', item.file);
+          newFormData.append('Type', 'SPH');
+          newFormData.append('Notes', item.notes);
 
-          dispatch(uploadDocument(newFormData)).then((res) => {
+          dispatch(uploadDocument(newFormData)).then(res => {
             if (res.statusCode !== 200) {
               uploadDocumentStatus = false;
             }
@@ -572,12 +570,12 @@ const CorporateForm = (props) => {
 
         state.npwpDocument.forEach((item, index) => {
           const newFormData = new FormData();
-          newFormData.append("CorporateCode", state.code);
-          newFormData.append("File", item.file);
-          newFormData.append("Type", "NPWP");
-          newFormData.append("Notes", item.notes);
+          newFormData.append('CorporateCode', state.code);
+          newFormData.append('File', item.file);
+          newFormData.append('Type', 'NPWP');
+          newFormData.append('Notes', item.notes);
 
-          dispatch(uploadDocument(newFormData)).then((res) => {
+          dispatch(uploadDocument(newFormData)).then(res => {
             if (res.statusCode !== 200) {
               uploadDocumentStatus = false;
             }
@@ -586,12 +584,12 @@ const CorporateForm = (props) => {
 
         state.dataIdDocument.forEach((item, index) => {
           const newFormData = new FormData();
-          newFormData.append("CorporateCode", state.code);
-          newFormData.append("File", item.file);
-          newFormData.append("Type", "IDENTITY");
-          newFormData.append("Notes", item.notes);
+          newFormData.append('CorporateCode', state.code);
+          newFormData.append('File', item.file);
+          newFormData.append('Type', 'IDENTITY');
+          newFormData.append('Notes', item.notes);
 
-          dispatch(uploadDocument(newFormData)).then((res) => {
+          dispatch(uploadDocument(newFormData)).then(res => {
             if (res.statusCode !== 200) {
               uploadDocumentStatus = false;
             }
@@ -600,12 +598,12 @@ const CorporateForm = (props) => {
 
         state.suratVendorDocument.forEach((item, index) => {
           const newFormData = new FormData();
-          newFormData.append("CorporateCode", state.code);
-          newFormData.append("File", item.file);
-          newFormData.append("Type", "VENDOR_DOCUMENT");
-          newFormData.append("Notes", item.notes);
+          newFormData.append('CorporateCode', state.code);
+          newFormData.append('File', item.file);
+          newFormData.append('Type', 'VENDOR_DOCUMENT');
+          newFormData.append('Notes', item.notes);
 
-          dispatch(uploadDocument(newFormData)).then((res) => {
+          dispatch(uploadDocument(newFormData)).then(res => {
             if (res.statusCode !== 200) {
               uploadDocumentStatus = false;
             }
@@ -627,28 +625,36 @@ const CorporateForm = (props) => {
   };
 
   const validationSchema = yup.object().shape({
-    name: yup.string().required("This field is required"),
-    totalUser: yup.number().integer().min(1).required("This field is required"),
-    brand: yup.string().required("This field is required"),
-    phone: yup.number().integer().required("This field is required"),
-    code: yup.string().required("This field is required"),
-    taxId: yup.string().required("This field is required"),
-    catagories: yup.string().required("This field is required"),
-    ArDueDate: yup.string().required("This field is required"),
-    address: yup.string().required("This field is required"),
-    city: yup.string().required("This field is required"),
-    province: yup.string().required("This field is required"),
-    rt: yup.string().required("This field is required"),
-    district: yup.string().required("This field is required"),
-    rw: yup.string().required("This field is required"),
-    subdistrict: yup.string().required("This field is required"),
-    site: yup.string().required("This field is required"),
-    picName1: yup.string().required("This field is required"),
-    picContact1: yup.string().required("This field is required").matches(numberOnly, 'Only numbers').min(10, "Too Short!"),
-    picEmail1: yup.string().email().required("This field is required"),
-    picName2: yup.string().required("This field is required"),
-    picContact2: yup.string().required("This field is required").matches(numberOnly, 'Only numbers').min(10, "Too Short!"),
-    picEmail2: yup.string().email().required("This field is required"),
+    name: yup.string().required('This field is required'),
+    totalUser: yup.number().integer().min(1).required('This field is required'),
+    brand: yup.string().required('This field is required'),
+    phone: yup.number().integer().required('This field is required'),
+    code: yup.string().required('This field is required'),
+    taxId: yup.string().required('This field is required'),
+    catagories: yup.string().required('This field is required'),
+    ArDueDate: yup.string().required('This field is required'),
+    address: yup.string().required('This field is required'),
+    city: yup.string().required('This field is required'),
+    province: yup.string().required('This field is required'),
+    rt: yup.string().required('This field is required'),
+    district: yup.string().required('This field is required'),
+    rw: yup.string().required('This field is required'),
+    subdistrict: yup.string().required('This field is required'),
+    site: yup.string().required('This field is required'),
+    picName1: yup.string().required('This field is required'),
+    picContact1: yup
+      .string()
+      .required('This field is required')
+      .matches(numberOnly, 'Only numbers')
+      .min(10, 'Too Short!'),
+    picEmail1: yup.string().email().required('This field is required'),
+    picName2: yup.string().required('This field is required'),
+    picContact2: yup
+      .string()
+      .required('This field is required')
+      .matches(numberOnly, 'Only numbers')
+      .min(10, 'Too Short!'),
+    picEmail2: yup.string().email().required('This field is required')
     // picOtherEmail: yup.string().email("Invalid email format"),
   });
 
@@ -663,49 +669,52 @@ const CorporateForm = (props) => {
     return output;
   };
 
-  const isEmptyObject = (data) => {
+  const isEmptyObject = data => {
     const formCek = [
-      "name",
-      "totalUser",
-      "brand",
-      "phoneNumber",
-      "taxId",
-      "catagories",
-      "address",
-      "city",
-      "province",
-      "rt",
-      "rw",
-      "district",
-      "subDistinct",
-      "pics",
-      "arDueDate",
+      'name',
+      'totalUser',
+      'brand',
+      'phoneNumber',
+      'taxId',
+      'catagories',
+      'address',
+      'city',
+      'province',
+      'rt',
+      'rw',
+      'district',
+      'subDistinct',
+      'pics',
+      'arDueDate'
     ];
 
     for (const key in data) {
       if (formCek.includes(key)) {
         const keyData = data[key];
-        if (key === "totalUser" || key === "arDueDate") {
-          if (typeof keyData === "number" && keyData <= 0) {
+        if (key === 'totalUser' || key === 'arDueDate') {
+          if (typeof keyData === 'number' && keyData <= 0) {
             return true;
           }
-        } else if (key === "pics") {
+        } else if (key === 'pics') {
           for (const pic in keyData) {
-            if (keyData[pic].title !== "Finance") {
+            if (keyData[pic].title !== 'Finance') {
               for (const data in keyData[pic]) {
-                if (data !== "index") {
-                  if (data === "email") {
+                if (data !== 'index') {
+                  if (data === 'email') {
                     if (!checkPICEmailIsValid(keyData[pic][data])) {
                       return true;
                     }
-                  } else if (data === "contact") {
-                    if (keyData[pic][data].length < 10 || !numberOnly.test(keyData[pic][data])) {
+                  } else if (data === 'contact') {
+                    if (
+                      keyData[pic][data].length < 10 ||
+                      !numberOnly.test(keyData[pic][data])
+                    ) {
                       return true;
                     }
                   } else if (
                     keyData[pic][data] === null ||
-                    (typeof keyData[pic][data] === "string" &&
-                      keyData[pic][data] === "") ||
+                    (typeof keyData[pic][data] === 'string' &&
+                      keyData[pic][data] === '') ||
                     !keyData[pic][data] ||
                     !keyData[pic][data].length
                   ) {
@@ -717,7 +726,7 @@ const CorporateForm = (props) => {
           }
         } else if (
           keyData === null ||
-          (typeof keyData === "string" && keyData === "") ||
+          (typeof keyData === 'string' && keyData === '') ||
           !keyData ||
           !keyData.length
         ) {
@@ -730,9 +739,7 @@ const CorporateForm = (props) => {
 
   const checkIsFormValid = () => {
     const isPicsEmailValid = checkPicsEmailIsValid();
-    if (
-      !isEmptyObject(state)
-    ) {
+    if (!isEmptyObject(state)) {
       setIsFormValid(true);
     } else {
       setIsFormValid(false);
@@ -744,44 +751,49 @@ const CorporateForm = (props) => {
   }, [state]);
 
   useEffect(() => {
-    let isDocumentValid = true
+    let isDocumentValid = true;
     switch (currentDocument) {
-      case "spk":
+      case 'spk':
         state.spkDocument.forEach((item, index) => {
           if (!item.file || !item.notes) {
             isDocumentValid = false;
           }
         });
-      case "sph":
+      case 'sph':
         state.sphDocument.forEach((item, index) => {
           if (!item.file || !item.notes) {
             isDocumentValid = false;
           }
         });
-      case "npwp":
+      case 'npwp':
         state.npwpDocument.forEach((item, index) => {
           if (!item.file || !item.notes) {
             isDocumentValid = false;
           }
         });
-      case "dataId":
+      case 'dataId':
         state.dataIdDocument.forEach((item, index) => {
           if (!item.file || !item.notes) {
             isDocumentValid = false;
           }
         });
-      case "suratVendor":
+      case 'suratVendor':
         state.suratVendorDocument.forEach((item, index) => {
           if (!item.file || !item.notes) {
             isDocumentValid = false;
           }
         });
     }
-    setIsSupportingDataValid(isDocumentValid)
+    setIsSupportingDataValid(isDocumentValid);
+  }, [
+    state.spkDocument,
+    state.sphDocument,
+    state.npwpDocument,
+    state.dataIdDocument,
+    state.suratVendorDocument
+  ]);
 
-  }, [state.spkDocument, state.sphDocument, state.npwpDocument, state.dataIdDocument, state.suratVendorDocument])
-
-  const checkPICEmailIsValid = (data) => {
+  const checkPICEmailIsValid = data => {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     return emailRegex.test(data);
   };
@@ -791,9 +803,9 @@ const CorporateForm = (props) => {
       <Head>
         <title>Bumame CMS</title>
         <link
-          rel="icon"
+          rel='icon'
           href={`${
-            process.env.NEXT_PUBLIC_PREFIX_URL || "/housecall"
+            process.env.NEXT_PUBLIC_PREFIX_URL || '/housecall'
           }/favicon.ico`}
         />
       </Head>
@@ -810,7 +822,7 @@ const CorporateForm = (props) => {
             initialValues={state}
             onSubmit={() => setShowModals(true)}
           >
-            {(formik) => {
+            {formik => {
               return (
                 <Form>
                   <div>
@@ -825,9 +837,9 @@ const CorporateForm = (props) => {
                       <Label>Name Corporate</Label>
                       <Field
                         component={Input}
-                        name="name"
+                        name='name'
                         type={`text`}
-                        onChange={(e) =>
+                        onChange={e =>
                           setState({ ...state, name: e.target.value })
                         }
                       />
@@ -836,9 +848,9 @@ const CorporateForm = (props) => {
                       <Label>Total User</Label>
                       <Field
                         component={Input}
-                        name="totalUser"
+                        name='totalUser'
                         type={`number`}
-                        onChange={(e) =>
+                        onChange={e =>
                           setState({ ...state, totalUser: e.target.value })
                         }
                       />
@@ -849,9 +861,9 @@ const CorporateForm = (props) => {
                       <Label>Brand Corporate</Label>
                       <Field
                         component={Input}
-                        name="brand"
+                        name='brand'
                         type={`text`}
-                        onChange={(e) =>
+                        onChange={e =>
                           setState({ ...state, brand: e.target.value })
                         }
                       />
@@ -860,9 +872,9 @@ const CorporateForm = (props) => {
                       <Label>Phone</Label>
                       <Field
                         component={Input}
-                        name="phone"
+                        name='phone'
                         type={`text`}
-                        onChange={(e) =>
+                        onChange={e =>
                           setState({ ...state, phone: e.target.value })
                         }
                       />
@@ -873,9 +885,9 @@ const CorporateForm = (props) => {
                       <Label>Code Corporate</Label>
                       <Field
                         component={Input}
-                        name="code"
+                        name='code'
                         type={`text`}
-                        onChange={(e) =>
+                        onChange={e =>
                           setState({ ...state, code: e.target.value })
                         }
                       />
@@ -884,9 +896,9 @@ const CorporateForm = (props) => {
                       <Label>Tax ID</Label>
                       <Field
                         component={Input}
-                        name="taxId"
+                        name='taxId'
                         type={`text`}
-                        onChange={(e) =>
+                        onChange={e =>
                           setState({ ...state, taxId: e.target.value })
                         }
                       />
@@ -897,9 +909,9 @@ const CorporateForm = (props) => {
                       <Label>Categories</Label>
                       <Field
                         component={Input}
-                        name="catagories"
+                        name='catagories'
                         type={`text`}
-                        onChange={(e) =>
+                        onChange={e =>
                           setState({ ...state, catagories: e.target.value })
                         }
                       />
@@ -908,9 +920,9 @@ const CorporateForm = (props) => {
                       <Label>AR Due Days</Label>
                       <Field
                         component={Input}
-                        name="ArDueDate"
+                        name='ArDueDate'
                         type={`number`}
-                        onChange={(e) =>
+                        onChange={e =>
                           setState({ ...state, arDueDate: e.target.value })
                         }
                       />
@@ -924,9 +936,9 @@ const CorporateForm = (props) => {
                       <Label>Address</Label>
                       <Field
                         component={Input}
-                        name="address"
+                        name='address'
                         type={`text`}
-                        onChange={(e) =>
+                        onChange={e =>
                           setState({ ...state, address: e.target.value })
                         }
                       />
@@ -935,9 +947,9 @@ const CorporateForm = (props) => {
                       <Label>Subdistrict</Label>
                       <Field
                         component={Input}
-                        name="subdistrict"
+                        name='subdistrict'
                         type={`text`}
-                        onChange={(e) =>
+                        onChange={e =>
                           setState({ ...state, subDistinct: e.target.value })
                         }
                       />
@@ -948,9 +960,9 @@ const CorporateForm = (props) => {
                       <Label>Province</Label>
                       <Field
                         component={Input}
-                        name="province"
+                        name='province'
                         type={`text`}
-                        onChange={(e) =>
+                        onChange={e =>
                           setState({ ...state, province: e.target.value })
                         }
                       />
@@ -959,9 +971,9 @@ const CorporateForm = (props) => {
                       <Label>RT</Label>
                       <Field
                         component={Input}
-                        name="rt"
+                        name='rt'
                         type={`text`}
-                        onChange={(e) =>
+                        onChange={e =>
                           setState({ ...state, rt: e.target.value })
                         }
                       />
@@ -972,9 +984,9 @@ const CorporateForm = (props) => {
                       <Label>City</Label>
                       <Field
                         component={Input}
-                        name="city"
+                        name='city'
                         type={`text`}
-                        onChange={(e) =>
+                        onChange={e =>
                           setState({ ...state, city: e.target.value })
                         }
                       />
@@ -983,9 +995,9 @@ const CorporateForm = (props) => {
                       <Label>RW</Label>
                       <Field
                         component={Input}
-                        name="rw"
+                        name='rw'
                         type={`text`}
-                        onChange={(e) =>
+                        onChange={e =>
                           setState({ ...state, rw: e.target.value })
                         }
                       />
@@ -996,29 +1008,27 @@ const CorporateForm = (props) => {
                       <Label>District</Label>
                       <Field
                         component={Input}
-                        name="district"
+                        name='district'
                         type={`text`}
-                        onChange={(e) =>
+                        onChange={e =>
                           setState({ ...state, district: e.target.value })
                         }
                       />
                     </div>
                   </div>
-                  <Typography className="font-medium text-lg">
-                    PIC
-                  </Typography>
+                  <Typography className='font-medium text-lg'>PIC</Typography>
                   {state.pics.map((data, key) => {
                     return (
                       <div key={key}>
-                        <div className="grid gap-16 mb-6 md:grid-cols-3">
+                        <div className='grid gap-16 mb-6 md:grid-cols-3'>
                           <div>
                             <Label>PIC Name </Label>
                             <Field
                               component={Input}
-                              type={"text"}
-                              name={key != 2 ? `picName${key + 1}` : "picname"}
-                              onChange={(e) =>
-                                onChangeData(e, data.index, "name")
+                              type={'text'}
+                              name={key != 2 ? `picName${key + 1}` : 'picname'}
+                              onChange={e =>
+                                onChangeData(e, data.index, 'name')
                               }
                             />
                           </div>
@@ -1026,28 +1036,28 @@ const CorporateForm = (props) => {
                             <Label>Contact PIC </Label>
                             <Field
                               component={Input}
-                              type={"text"}
+                              type={'text'}
                               name={
-                                key != 2 ? `picContact${key + 1}` : "piccontact"
+                                key != 2 ? `picContact${key + 1}` : 'piccontact'
                               }
-                              onChange={(e) =>
-                                onChangeData(e, data.index, "contact")
+                              onChange={e =>
+                                onChangeData(e, data.index, 'contact')
                               }
                             />
                           </div>
                         </div>
-                        <div className="grid gap-16 mb-6 md:grid-cols-3">
+                        <div className='grid gap-16 mb-6 md:grid-cols-3'>
                           <div>
                             <Label>Title PIC </Label>
                             <Field
                               component={Input}
-                              className="bg-disabledItem !rounded-lg"
+                              className='bg-disabledItem !rounded-lg'
                               readonly
                               value={data.title}
                               name={
-                                key != 2 ? `picTitle${key + 1}` : "pictitle"
+                                key != 2 ? `picTitle${key + 1}` : 'pictitle'
                               }
-                              type={"text"}
+                              type={'text'}
                             />
                           </div>
                           <div>
@@ -1057,11 +1067,11 @@ const CorporateForm = (props) => {
                               name={
                                 key != 2
                                   ? `picEmail${key + 1}`
-                                  : "picOtherEmail"
+                                  : 'picOtherEmail'
                               }
-                              type={"email"}
-                              onChange={(e) =>
-                                onChangeData(e, data.index, "email")
+                              type={'email'}
+                              onChange={e =>
+                                onChangeData(e, data.index, 'email')
                               }
                             />
                           </div>
@@ -1082,18 +1092,18 @@ const CorporateForm = (props) => {
                     <div>
                       <Label>Assign site</Label>
                       <ReactSelect
-                        name="site"
-                        placeholder="Select a site"
+                        name='site'
+                        placeholder='Select a site'
                         options={siteOptions}
                         defaultValue={
                           selectSite
                             ? {
                                 value: selectSite.siteId,
-                                label: selectSite.siteName,
+                                label: selectSite.siteName
                               }
-                            : ""
+                            : ''
                         }
-                        onChange={(val) => handleSelectSite(val)}
+                        onChange={val => handleSelectSite(val)}
                       />
                     </div>
                   </div>
@@ -1114,8 +1124,8 @@ const CorporateForm = (props) => {
                                   key={key}
                                   className={`text-center ${
                                     key % 2 != 0
-                                      ? "bg-[#FCFCFC]"
-                                      : "bg-[#FFFFFF]"
+                                      ? 'bg-[#FCFCFC]'
+                                      : 'bg-[#FFFFFF]'
                                   }`}
                                 >
                                   <td className={`py-[24px] text-center`}>
@@ -1132,7 +1142,7 @@ const CorporateForm = (props) => {
                                   <td className={`py-[24px] text-start pl-6`}>
                                     <Typography>{data.notes}</Typography>
                                   </td>
-                                  <td className={"px-2"}>
+                                  <td className={'px-2'}>
                                     <Button
                                       className={`bg-[#F64E60] flex items-center p-2`}
                                       onClick={() => deleteSpkFile(data.index)}
@@ -1155,14 +1165,14 @@ const CorporateForm = (props) => {
                           />
                         )}
                         <tr>
-                          <td colSpan="3">
-                            <div className="p-[15px]">
+                          <td colSpan='3'>
+                            <div className='p-[15px]'>
                               <Button
                                 paddingVertical={`py-1`}
                                 paddingHorizontal={`px-6`}
                                 background={`bg-pattensBlue hover:bg-btnBlue`}
                                 className={
-                                  "flex items-center text-btnBlue hover:text-white justify-center"
+                                  'flex items-center text-btnBlue hover:text-white justify-center'
                                 }
                                 onClick={() => {
                                   setIsOpenUploadSupportingData(true);
@@ -1171,9 +1181,9 @@ const CorporateForm = (props) => {
                                 <Typography
                                   className={`font-normal text-sm flex items-center justify-center`}
                                 >
-                                  <span className="font-bold text-2xl pb-1.5 pr-2">
+                                  <span className='font-bold text-2xl pb-1.5 pr-2'>
                                     +
-                                  </span>{" "}
+                                  </span>{' '}
                                   Add File
                                 </Typography>
                               </Button>
@@ -1195,8 +1205,8 @@ const CorporateForm = (props) => {
                                   key={key}
                                   className={`text-center ${
                                     key % 2 != 0
-                                      ? "bg-[#FCFCFC]"
-                                      : "bg-[#FFFFFF]"
+                                      ? 'bg-[#FCFCFC]'
+                                      : 'bg-[#FFFFFF]'
                                   }`}
                                 >
                                   <td className={`py-[24px] text-center`}>
@@ -1212,7 +1222,7 @@ const CorporateForm = (props) => {
                                   <td className={`py-[24px] text-start pl-6`}>
                                     <Typography>{data.notes}</Typography>
                                   </td>
-                                  <td className={"px-2"}>
+                                  <td className={'px-2'}>
                                     <Button
                                       className={`bg-[#F64E60] flex items-center p-2`}
                                       onClick={() => deleteSphFile(data.index)}
@@ -1235,23 +1245,23 @@ const CorporateForm = (props) => {
                           />
                         )}
                         <tr>
-                          <td colSpan="3">
-                            <div className="p-[15px]">
+                          <td colSpan='3'>
+                            <div className='p-[15px]'>
                               <Button
                                 paddingVertical={`py-1`}
                                 paddingHorizontal={`px-6`}
                                 background={`bg-pattensBlue hover:bg-btnBlue`}
                                 className={
-                                  "flex items-center text-btnBlue hover:text-white justify-center"
+                                  'flex items-center text-btnBlue hover:text-white justify-center'
                                 }
                                 onClick={() => setIsOpenUploadSphData(true)}
                               >
                                 <Typography
                                   className={`font-normal text-sm flex items-center justify-center`}
                                 >
-                                  <span className="font-bold text-2xl pb-1.5 pr-2">
+                                  <span className='font-bold text-2xl pb-1.5 pr-2'>
                                     +
-                                  </span>{" "}
+                                  </span>{' '}
                                   Add File
                                 </Typography>
                               </Button>
@@ -1275,8 +1285,8 @@ const CorporateForm = (props) => {
                                   key={key}
                                   className={`text-center ${
                                     key % 2 != 0
-                                      ? "bg-[#FCFCFC]"
-                                      : "bg-[#FFFFFF]"
+                                      ? 'bg-[#FCFCFC]'
+                                      : 'bg-[#FFFFFF]'
                                   }`}
                                 >
                                   <td className={`py-[24px] text-center`}>
@@ -1292,7 +1302,7 @@ const CorporateForm = (props) => {
                                   <td className={`py-[24px] text-start pl-6`}>
                                     <Typography>{data.notes}</Typography>
                                   </td>
-                                  <td className={"px-2"}>
+                                  <td className={'px-2'}>
                                     <Button
                                       className={`bg-[#F64E60] flex items-center p-2`}
                                       onClick={() => deleteNpwpFile(data.index)}
@@ -1315,23 +1325,23 @@ const CorporateForm = (props) => {
                           />
                         )}
                         <tr>
-                          <td colSpan="3">
-                            <div className="p-[15px]">
+                          <td colSpan='3'>
+                            <div className='p-[15px]'>
                               <Button
                                 paddingVertical={`py-1`}
                                 paddingHorizontal={`px-6`}
                                 background={`bg-pattensBlue hover:bg-btnBlue`}
                                 className={
-                                  "flex items-center text-btnBlue hover:text-white justify-center"
+                                  'flex items-center text-btnBlue hover:text-white justify-center'
                                 }
                                 onClick={() => setIsOpenUploadNpwpData(true)}
                               >
                                 <Typography
                                   className={`font-normal text-sm flex items-center justify-center`}
                                 >
-                                  <span className="font-bold text-2xl pb-1.5 pr-2">
+                                  <span className='font-bold text-2xl pb-1.5 pr-2'>
                                     +
-                                  </span>{" "}
+                                  </span>{' '}
                                   Add File
                                 </Typography>
                               </Button>
@@ -1355,8 +1365,8 @@ const CorporateForm = (props) => {
                                   key={key}
                                   className={`text-center ${
                                     key % 2 != 0
-                                      ? "bg-[#FCFCFC]"
-                                      : "bg-[#FFFFFF]"
+                                      ? 'bg-[#FCFCFC]'
+                                      : 'bg-[#FFFFFF]'
                                   }`}
                                 >
                                   <td className={`py-[24px] text-center`}>
@@ -1372,7 +1382,7 @@ const CorporateForm = (props) => {
                                   <td className={`py-[24px] text-start pl-6`}>
                                     <Typography>{data.notes}</Typography>
                                   </td>
-                                  <td className={"px-2"}>
+                                  <td className={'px-2'}>
                                     <Button
                                       className={`bg-[#F64E60] flex items-center p-2`}
                                       onClick={() =>
@@ -1397,23 +1407,23 @@ const CorporateForm = (props) => {
                           />
                         )}
                         <tr>
-                          <td colSpan="3">
-                            <div className="p-[15px]">
+                          <td colSpan='3'>
+                            <div className='p-[15px]'>
                               <Button
                                 paddingVertical={`py-1`}
                                 paddingHorizontal={`px-6`}
                                 background={`bg-pattensBlue hover:bg-btnBlue`}
                                 className={
-                                  "flex items-center text-btnBlue hover:text-white justify-center"
+                                  'flex items-center text-btnBlue hover:text-white justify-center'
                                 }
                                 onClick={() => setIsOpenUploaddDataIdData(true)}
                               >
                                 <Typography
                                   className={`font-normal text-sm flex items-center justify-center`}
                                 >
-                                  <span className="font-bold text-2xl pb-1.5 pr-2">
+                                  <span className='font-bold text-2xl pb-1.5 pr-2'>
                                     +
-                                  </span>{" "}
+                                  </span>{' '}
                                   Add File
                                 </Typography>
                               </Button>
@@ -1437,8 +1447,8 @@ const CorporateForm = (props) => {
                                   key={key}
                                   className={`text-center ${
                                     key % 2 != 0
-                                      ? "bg-[#FCFCFC]"
-                                      : "bg-[#FFFFFF]"
+                                      ? 'bg-[#FCFCFC]'
+                                      : 'bg-[#FFFFFF]'
                                   }`}
                                 >
                                   <td className={`py-[24px] text-center`}>
@@ -1454,7 +1464,7 @@ const CorporateForm = (props) => {
                                   <td className={`py-[24px] text-start pl-6`}>
                                     <Typography>{data.notes}</Typography>
                                   </td>
-                                  <td className={"px-2"}>
+                                  <td className={'px-2'}>
                                     <Button
                                       className={`bg-[#F64E60] flex items-center p-2`}
                                       onClick={() =>
@@ -1479,14 +1489,14 @@ const CorporateForm = (props) => {
                           />
                         )}
                         <tr>
-                          <td colSpan="3">
-                            <div className="p-[15px]">
+                          <td colSpan='3'>
+                            <div className='p-[15px]'>
                               <Button
                                 paddingVertical={`py-1`}
                                 paddingHorizontal={`px-6`}
                                 background={`bg-pattensBlue hover:bg-btnBlue`}
                                 className={
-                                  "flex items-center text-btnBlue hover:text-white justify-center"
+                                  'flex items-center text-btnBlue hover:text-white justify-center'
                                 }
                                 onClick={() =>
                                   setIsOpenUploaddSuratVendorData(true)
@@ -1495,9 +1505,9 @@ const CorporateForm = (props) => {
                                 <Typography
                                   className={`font-normal text-sm flex items-center justify-center`}
                                 >
-                                  <span className="font-bold text-2xl pb-1.5 pr-2">
+                                  <span className='font-bold text-2xl pb-1.5 pr-2'>
                                     +
-                                  </span>{" "}
+                                  </span>{' '}
                                   Add File
                                 </Typography>
                               </Button>
@@ -1507,7 +1517,7 @@ const CorporateForm = (props) => {
                       </Table>
                     </div>
                   </div>
-                  <div className="flex justify-center mt-6">
+                  <div className='flex justify-center mt-6'>
                     <Button
                       paddingVertical={`py-2`}
                       paddingHorizontal={`px-7`}
@@ -1540,7 +1550,7 @@ const CorporateForm = (props) => {
         </Card>
 
         <Modal
-          setIsOpen={(val) => setIsOpenUploadSupportingData(val)}
+          setIsOpen={val => setIsOpenUploadSupportingData(val)}
           width={`w-[50rem]`}
           title={`Supporting Data`}
           isOpen={state.isOpenUploadSupportingData}
@@ -1570,11 +1580,11 @@ const CorporateForm = (props) => {
                       <div className={`w-6/12 mr-2`}>
                         <div className={`border p-3 rounded-md`}>
                           <InputFile
-                            onChange={(e) => onChangeBrowseFile(e, item.index)}
+                            onChange={e => onChangeBrowseFile(e, item.index)}
                             name={`file[${item.index}]`}
                             fileName={
                               item.file?.name &&
-                              item.file?.name.substring(0, 12) + "..."
+                              item.file?.name.substring(0, 12) + '...'
                             }
                             className={`bg-[#1BC5BD] text-[#FFF]`}
                             isWhite
@@ -1585,8 +1595,8 @@ const CorporateForm = (props) => {
                         <Textarea
                           cols={4}
                           name={`note[${item.index}]`}
-                          className={"resize-none"}
-                          onChange={(e) => onChangeSpkNote(e, item.index)}
+                          className={'resize-none'}
+                          onChange={e => onChangeSpkNote(e, item.index)}
                         />
                       </div>
                       <div className={`w-1/12 ml-2 justify-self-end`}>
@@ -1634,8 +1644,8 @@ const CorporateForm = (props) => {
               </Button>
               <Button
                 onClick={() => {
-                  state.spkDocument.splice(0, state.spkDocument.length)
-                  setIsOpenUploadSupportingData(false)
+                  state.spkDocument.splice(0, state.spkDocument.length);
+                  setIsOpenUploadSupportingData(false);
                 }}
                 className={`bg-[#DDDDDD] rounded-lg hover:bg-[#C6C6C6] text-black`}
               >
@@ -1646,7 +1656,7 @@ const CorporateForm = (props) => {
         </Modal>
 
         <Modal
-          setIsOpen={(val) => setIsOpenUploadSphData(val)}
+          setIsOpen={val => setIsOpenUploadSphData(val)}
           width={`w-[50rem]`}
           title={`Supporting Data`}
           isOpen={state.isOpenUploadSphData}
@@ -1676,13 +1686,11 @@ const CorporateForm = (props) => {
                       <div className={`w-6/12 mr-2`}>
                         <div className={`border p-3 rounded-md`}>
                           <InputFile
-                            onChange={(e) =>
-                              onChangeBrowseSphFile(e, item.index)
-                            }
+                            onChange={e => onChangeBrowseSphFile(e, item.index)}
                             name={`file[${item.index}]`}
                             fileName={
                               item.file?.name &&
-                              item.file?.name.substring(0, 12) + "..."
+                              item.file?.name.substring(0, 12) + '...'
                             }
                             className={`bg-[#1BC5BD] text-[#FFF]`}
                             isWhite
@@ -1693,8 +1701,8 @@ const CorporateForm = (props) => {
                         <Textarea
                           cols={4}
                           name={`note[${item.index}]`}
-                          className={"resize-none"}
-                          onChange={(e) => onChangeSphNote(e, item.index)}
+                          className={'resize-none'}
+                          onChange={e => onChangeSphNote(e, item.index)}
                         />
                       </div>
                       <div className={`w-1/12 ml-2 justify-self-end`}>
@@ -1740,8 +1748,8 @@ const CorporateForm = (props) => {
               </Button>
               <Button
                 onClick={() => {
-                  state.sphDocument.splice(0, state.sphDocument.length)
-                  setIsOpenUploadSphData(false)
+                  state.sphDocument.splice(0, state.sphDocument.length);
+                  setIsOpenUploadSphData(false);
                 }}
                 className={`bg-[#DDDDDD] rounded-lg hover:bg-[#C6C6C6] text-black`}
               >
@@ -1753,7 +1761,7 @@ const CorporateForm = (props) => {
 
         {/* NPWP */}
         <Modal
-          setIsOpen={(val) => setIsOpenUploadNpwpData(val)}
+          setIsOpen={val => setIsOpenUploadNpwpData(val)}
           width={`w-[50rem]`}
           title={`Supporting Data`}
           isOpen={state.isOpenUploadNpwpData}
@@ -1783,13 +1791,13 @@ const CorporateForm = (props) => {
                       <div className={`w-6/12 mr-2`}>
                         <div className={`border p-3 rounded-md`}>
                           <InputFile
-                            onChange={(e) =>
+                            onChange={e =>
                               onChangeBrowseNpwpFile(e, item.index)
                             }
                             name={`file[${item.index}]`}
                             fileName={
                               item.file?.name &&
-                              item.file?.name.substring(0, 12) + "..."
+                              item.file?.name.substring(0, 12) + '...'
                             }
                             className={`bg-[#1BC5BD] text-[#FFF]`}
                             isWhite
@@ -1800,8 +1808,8 @@ const CorporateForm = (props) => {
                         <Textarea
                           cols={4}
                           name={`note[${item.index}]`}
-                          className={"resize-none"}
-                          onChange={(e) => onChangeNpwpNote(e, item.index)}
+                          className={'resize-none'}
+                          onChange={e => onChangeNpwpNote(e, item.index)}
                         />
                       </div>
                       <div className={`w-1/12 ml-2 justify-self-end`}>
@@ -1847,8 +1855,8 @@ const CorporateForm = (props) => {
               </Button>
               <Button
                 onClick={() => {
-                  state.npwpDocument.splice(0, state.npwpDocument.length)
-                  setIsOpenUploadNpwpData(false)
+                  state.npwpDocument.splice(0, state.npwpDocument.length);
+                  setIsOpenUploadNpwpData(false);
                 }}
                 className={`bg-[#DDDDDD] rounded-lg hover:bg-[#C6C6C6] text-black`}
               >
@@ -1860,7 +1868,7 @@ const CorporateForm = (props) => {
 
         {/* Data Id */}
         <Modal
-          setIsOpen={(val) => setIsOpenUploaddDataIdData(val)}
+          setIsOpen={val => setIsOpenUploaddDataIdData(val)}
           width={`w-[50rem]`}
           title={`Supporting Data`}
           isOpen={state.isOpenUploadDataIdData}
@@ -1890,13 +1898,13 @@ const CorporateForm = (props) => {
                       <div className={`w-6/12 mr-2`}>
                         <div className={`border p-3 rounded-md`}>
                           <InputFile
-                            onChange={(e) =>
+                            onChange={e =>
                               onChangeBrowseDataIdFile(e, item.index)
                             }
                             name={`file[${item.index}]`}
                             fileName={
                               item.file?.name &&
-                              item.file?.name.substring(0, 12) + "..."
+                              item.file?.name.substring(0, 12) + '...'
                             }
                             className={`bg-[#1BC5BD] text-[#FFF]`}
                             isWhite
@@ -1907,8 +1915,8 @@ const CorporateForm = (props) => {
                         <Textarea
                           cols={4}
                           name={`note[${item.index}]`}
-                          className={"resize-none"}
-                          onChange={(e) => onChangeDataIdNote(e, item.index)}
+                          className={'resize-none'}
+                          onChange={e => onChangeDataIdNote(e, item.index)}
                         />
                       </div>
                       <div className={`w-1/12 ml-2 justify-self-end`}>
@@ -1954,8 +1962,8 @@ const CorporateForm = (props) => {
               </Button>
               <Button
                 onClick={() => {
-                  state.dataIdDocument.splice(0, state.dataIdDocument.length)
-                  setIsOpenUploaddDataIdData(false)
+                  state.dataIdDocument.splice(0, state.dataIdDocument.length);
+                  setIsOpenUploaddDataIdData(false);
                 }}
                 className={`bg-[#DDDDDD] rounded-lg hover:bg-[#C6C6C6] text-black`}
               >
@@ -1967,7 +1975,7 @@ const CorporateForm = (props) => {
 
         {/* Surat Vendor */}
         <Modal
-          setIsOpen={(val) => setIsOpenUploaddSuratVendorData(val)}
+          setIsOpen={val => setIsOpenUploaddSuratVendorData(val)}
           width={`w-[50rem]`}
           title={`Supporting Data`}
           isOpen={state.isOpenUploadSuratVendorData}
@@ -1997,13 +2005,13 @@ const CorporateForm = (props) => {
                       <div className={`w-6/12 mr-2`}>
                         <div className={`border p-3 rounded-md`}>
                           <InputFile
-                            onChange={(e) =>
+                            onChange={e =>
                               onChangeBrowseSuratVendorFile(e, item.index)
                             }
                             name={`file[${item.index}]`}
                             fileName={
                               item.file?.name &&
-                              item.file?.name.substring(0, 12) + "..."
+                              item.file?.name.substring(0, 12) + '...'
                             }
                             className={`bg-[#1BC5BD] text-[#FFF]`}
                             isWhite
@@ -2014,10 +2022,8 @@ const CorporateForm = (props) => {
                         <Textarea
                           cols={4}
                           name={`note[${item.index}]`}
-                          className={"resize-none"}
-                          onChange={(e) =>
-                            onChangeSuratVendorNote(e, item.index)
-                          }
+                          className={'resize-none'}
+                          onChange={e => onChangeSuratVendorNote(e, item.index)}
                         />
                       </div>
                       <div className={`w-1/12 ml-2 justify-self-end`}>
@@ -2063,8 +2069,11 @@ const CorporateForm = (props) => {
               </Button>
               <Button
                 onClick={() => {
-                  state.suratVendorDocument.splice(0,state.suratVendorDocument.length)
-                  setIsOpenUploaddSuratVendorData(false)
+                  state.suratVendorDocument.splice(
+                    0,
+                    state.suratVendorDocument.length
+                  );
+                  setIsOpenUploaddSuratVendorData(false);
                 }}
                 className={`bg-[#DDDDDD] rounded-lg hover:bg-[#C6C6C6] text-black`}
               >
@@ -2076,7 +2085,7 @@ const CorporateForm = (props) => {
         <ModalConfirmation
           isLoading={onSubmit}
           show={showModals}
-          confirmation={"Confirmation"}
+          confirmation={'Confirmation'}
           handleYes={() => {
             submitDataCorporateForm();
           }}
@@ -2087,12 +2096,12 @@ const CorporateForm = (props) => {
           show={successModal}
           onHide={() => {
             setSuccessModal(false);
-            router.push("/master-corporate");
+            router.push('/master-corporate');
           }}
           desc1={`No OTP dan link URL berhasil dikirim ke PIC Operasional dengan no handphone berikut ${state.pics[1].contact}`}
         />
         <Modal
-          setIsOpen={(val) => setErrorModal(val)}
+          setIsOpen={val => setErrorModal(val)}
           width={`w-[27rem]`}
           title={`Error`}
           headless

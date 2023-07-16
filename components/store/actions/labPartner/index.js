@@ -1,14 +1,19 @@
-import { requestDelete, requestGet, requestPatch, requestPost } from '@config';
-import { ERROR_DIALOG } from '@constants/ErrorConst';
+import {
+  requestDelete,
+  requestGet,
+  requestPatch,
+  requestPost
+} from 'components/config';
+import { ERROR_DIALOG } from 'components/constants/ErrorConst';
 import {
   LAB_PARTNER_ALERT,
   LAB_PARTNER_FETCH_DATATABLE,
   LAB_PARTNER_FETCH_DETAIL,
   LAB_PARTNER_FETCH_SELECT_LIST,
   LAB_SELECT_LIST
-} from '@constants/LapPartner';
+} from 'components/constants/LapPartner';
 import { errorMessage } from '../error';
-import axios from "axios";
+import axios from 'axios';
 
 const configUrl = {
   service: 'lab-partners',
@@ -29,16 +34,16 @@ export const fetchDataTable = params => {
       return res;
     } catch (error) {
       console.log(error);
-      dispatch({
-        type: LAB_PARTNER_ALERT,
-        payload: {
-          status: true,
-          message: error.response.data
-            ? JSON.stringify(error.response.data?.message)
-            : JSON.stringify(error.message),
-          type: 'error'
-        }
-      });
+      // dispatch({
+      //   type: LAB_PARTNER_ALERT,
+      //   payload: {
+      //     status: true,
+      //     message: error.response.data
+      //       ? JSON.stringify(error.response.data?.message)
+      //       : JSON.stringify(error.message),
+      //     type: 'error'
+      //   }
+      // });
     }
   };
 };
@@ -135,30 +140,32 @@ export const createLabPartner = data => {
     const res = await requestPost(
       `${configUrl.prefix}/${configUrl.version}/${configUrl.service}`,
       data
-    ).then((res) => {
-      dispatch({
-        type: LAB_PARTNER_ALERT,
-        payload: {
-          status: false,
-          message: '',
-          type: ''
-        }
+    )
+      .then(res => {
+        dispatch({
+          type: LAB_PARTNER_ALERT,
+          payload: {
+            status: false,
+            message: '',
+            type: ''
+          }
+        });
+        return res;
       })
-      return res
-    }).catch((error) => {
-      dispatch({
-        type: LAB_PARTNER_ALERT,
-        payload: {
-          status: true,
-          message: error.response?.data.message
-            ? JSON.stringify(error.response.data.message)
-            : JSON.stringify(error.message),
-          type: 'error'
-        }
+      .catch(error => {
+        dispatch({
+          type: LAB_PARTNER_ALERT,
+          payload: {
+            status: true,
+            message: error.response?.data.message
+              ? JSON.stringify(error.response.data.message)
+              : JSON.stringify(error.message),
+            type: 'error'
+          }
+        });
+        return error;
       });
-      return error
-    })
-    return res
+    return res;
   };
 };
 
@@ -237,11 +244,7 @@ export const labPartnerVerify = (token, otp) => {
       return res;
     } catch (error) {
       console.log(error);
-      alert(
-        error.response.data
-          ? error.response.data?.message
-          : error.message
-      );
+      alert(error.response.data ? error.response.data?.message : error.message);
       dispatch({
         type: LAB_PARTNER_ALERT,
         payload: {
@@ -256,8 +259,7 @@ export const labPartnerVerify = (token, otp) => {
   };
 };
 
-
-export const uploadLogo = (body) => {
+export const uploadLogo = body => {
   return async dispatch => {
     try {
       const res = await requestPost(

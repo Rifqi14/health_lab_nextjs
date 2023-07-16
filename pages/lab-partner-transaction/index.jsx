@@ -1,4 +1,4 @@
-import assets from "@/public/index";
+import assets from 'public/index';
 import {
   Button,
   Card,
@@ -6,145 +6,145 @@ import {
   LengthChange,
   Pill,
   ReactSelect,
-  Typography,
-} from "@atoms";
-import LengthChangeValue from "@constants/LengthChange";
-import { LAB_PARTNER_STATUS } from "@constants/ServiceMethod";
-import { SORTING_ORDER } from "@constants/SortingOrder";
-import { EmptyTable, Pagination } from "@molecules";
-import { MainLayout, Table } from "@organisms";
-import { ymdToDmy } from "@utils/datetime";
+  Typography
+} from 'components/atoms';
+import LengthChangeValue from 'components/constants/LengthChange';
+import { LAB_PARTNER_STATUS } from 'components/constants/ServiceMethod';
+import { SORTING_ORDER } from 'components/constants/SortingOrder';
+import { EmptyTable, Pagination } from 'components/molecules';
+import { MainLayout, Table } from 'components/organisms';
+import { ymdToDmy } from 'components/utils/datetime';
 import {
   fetchLabTransactionDataTable,
-  fetchLabTransactionDetail,
-} from "components/store/actions/labtransaction";
-import { fetchStatusData } from "components/store/actions/role";
-import Head from "next/head";
-import Image from "next/image";
-import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+  fetchLabTransactionDetail
+} from 'components/store/actions/labtransaction';
+import { fetchStatusData } from 'components/store/actions/role';
+import Head from 'next/head';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-const LabPartnerTransaction = (props) => {
+const LabPartnerTransaction = props => {
   const router = useRouter();
   const [state, setState] = useState({
-    headline: "List Lab Partner Transaction",
+    headline: 'List Lab Partner Transaction',
     breadcrumbs: [
       {
-        link: "/lab-partner-transaction",
-        name: "List Lab Partner Transaction",
-      },
+        link: '/lab-partner-transaction',
+        name: 'List Lab Partner Transaction'
+      }
     ],
     initialTable: [
       {
         no: 1,
         id: 1,
-        partnerName: "Radya Digital",
+        partnerName: 'Radya Digital',
         totalPatient: 5,
-        transactionDate: "22/09/2022",
-        status: "collected",
+        transactionDate: '22/09/2022',
+        status: 'collected'
       },
       {
         no: 2,
         id: 2,
-        partnerName: "Alkademi",
+        partnerName: 'Alkademi',
         totalPatient: 5,
-        transactionDate: "22/09/2022",
-        status: "completed",
+        transactionDate: '22/09/2022',
+        status: 'completed'
       },
       {
         no: 3,
         id: 3,
-        partnerName: "Tosanarka",
+        partnerName: 'Tosanarka',
         totalPatient: 5,
-        transactionDate: "22/09/2022",
-        status: "completed",
+        transactionDate: '22/09/2022',
+        status: 'completed'
       },
       {
         no: 4,
         id: 4,
-        partnerName: "Radya Labs",
+        partnerName: 'Radya Labs',
         totalPatient: 5,
-        transactionDate: "22/09/2022",
-        status: "completed",
+        transactionDate: '22/09/2022',
+        status: 'completed'
       },
       {
         no: 5,
         id: 5,
-        partnerName: "Radya Labs",
+        partnerName: 'Radya Labs',
         totalPatient: 5,
-        transactionDate: "22/09/2022",
-        status: "completed",
-      },
+        transactionDate: '22/09/2022',
+        status: 'completed'
+      }
     ],
     params: {
-      Status: "",
-      StatusLabel: "",
-      SortBy: "",
-      OrderType: "",
+      Status: '',
+      StatusLabel: '',
+      SortBy: '',
+      OrderType: '',
       p: 1,
       s: LengthChangeValue[0],
-      q: "",
+      q: ''
     },
     page: 1,
     itemsPerPage: LengthChangeValue[0],
-    sortCount: 0,
+    sortCount: 0
   });
   const dispatch = useDispatch();
-  const selector = useSelector((state) => state);
+  const selector = useSelector(state => state);
   const { role, labtransaction } = selector;
 
   const headColumns = [
     {
-      key: "no",
-      name: "No",
-      className: "w-3",
-      icon: false,
+      key: 'no',
+      name: 'No',
+      className: 'w-3',
+      icon: false
     },
     {
-      key: "action",
-      name: "Action",
-      className: "w-3",
-      icon: false,
+      key: 'action',
+      name: 'Action',
+      className: 'w-3',
+      icon: false
     },
     {
-      key: "labPartnerId",
-      name: "Transaction Id",
-      className: "text-left",
-      sortable: true,
+      key: 'labPartnerId',
+      name: 'Transaction Id',
+      className: 'text-left',
+      sortable: true
     },
     {
-      key: "labPartnerName",
-      name: "Nama Partner",
-      className: "text-left",
-      sortable: true,
+      key: 'labPartnerName',
+      name: 'Nama Partner',
+      className: 'text-left',
+      sortable: true
     },
     {
-      key: "qty",
-      name: "Total Pasien",
-      className: "text-left",
-      sortable: true,
+      key: 'qty',
+      name: 'Total Pasien',
+      className: 'text-left',
+      sortable: true
     },
     {
-      key: "transactionDate",
-      name: "Tanggal Transaksi",
-      sortable: true,
+      key: 'transactionDate',
+      name: 'Tanggal Transaksi',
+      sortable: true
     },
     {
-      key: "status",
-      name: "Status",
-      icon: false,
-    },
+      key: 'status',
+      name: 'Status',
+      icon: false
+    }
   ];
 
-  const onChangeLength = (val) => {
+  const onChangeLength = val => {
     setState({
       ...state,
       itemsPerPage: val,
       params: {
         ...state.params,
-        s: val,
-      },
+        s: val
+      }
     });
   };
 
@@ -155,43 +155,43 @@ const LabPartnerTransaction = (props) => {
       params: {
         ...state.params,
         SortBy: column.key,
-        OrderType: SORTING_ORDER[state.sortCount],
-      },
+        OrderType: SORTING_ORDER[state.sortCount]
+      }
     });
   };
 
-  const onChangeStatus = (e) => {
+  const onChangeStatus = e => {
     setState({
       ...state,
       params: {
         ...state.params,
-        StatusData: e.target.value,
-      },
+        StatusData: e.target.value
+      }
     });
   };
 
-  const onChangeSearch = (e) => {
+  const onChangeSearch = e => {
     if (e.target.value.length >= 3) {
       const search = e.target.value;
       setState({
         ...state,
         params: {
           ...state.params,
-          q: search,
-        },
+          q: search
+        }
       });
     } else {
       setState({
         ...state,
         params: {
           ...state.params,
-          q: "",
-        },
+          q: ''
+        }
       });
     }
   };
 
-  const onClickPagination = (val) => {
+  const onClickPagination = val => {
     setState({ ...state, page: val, params: { ...state.params, p: val } });
   };
 
@@ -199,16 +199,16 @@ const LabPartnerTransaction = (props) => {
     router.push(`/lab-partner-transaction/create`);
   };
 
-  const navigateToSlug = (value) => {
+  const navigateToSlug = value => {
     dispatch(fetchLabTransactionDetail(value.id))
-      .then((res) => {
+      .then(res => {
         if (res.isSuccess && res.statusCode === 200) {
           setTimeout(() => {
             router.push(`/lab-partner-transaction/${value.id}/${value.slug}`);
-          },2000)
+          }, 2000);
         }
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
       });
   };
@@ -222,8 +222,8 @@ const LabPartnerTransaction = (props) => {
       <Head>
         <title>Bumame CMS</title>
         <link
-          rel="icon"
-          href={`${process.env.NEXT_PUBLIC_PREFIX_URL || ""}/favicon.ico`}
+          rel='icon'
+          href={`${process.env.NEXT_PUBLIC_PREFIX_URL || ''}/favicon.ico`}
         />
       </Head>
       <MainLayout headline={state.headline} breadcrumb={state.breadcrumbs}>
@@ -254,19 +254,19 @@ const LabPartnerTransaction = (props) => {
                 state.params.Status
                   ? {
                       value: state.params.Status,
-                      label: state.params.StatusLabel,
+                      label: state.params.StatusLabel
                     }
-                  : ""
+                  : ''
               }
-              onChange={(val) => {
+              onChange={val => {
                 setState({
                   ...state,
                   params: {
                     ...state.params,
                     p: 1,
-                    Status: val?.value ? val?.value : "",
-                    StatusLabel: val?.label ? val?.label : "",
-                  },
+                    Status: val?.value ? val?.value : '',
+                    StatusLabel: val?.label ? val?.label : ''
+                  }
                 });
               }}
             />
@@ -274,10 +274,10 @@ const LabPartnerTransaction = (props) => {
               prefixIcon={assets.IconSearch}
               className={`w-[20rem]`}
               placeholder={`Search`}
-              onChange={(e) => onChangeSearch(e)}
+              onChange={e => onChangeSearch(e)}
             />
           </div>
-          <div className="w-full h-full overflow-x-auto space-y-[16px] flex flex-col rounded border border-[#E6E6E6]">
+          <div className='w-full h-full overflow-x-auto space-y-[16px] flex flex-col rounded border border-[#E6E6E6]'>
             <Table
               headColumns={headColumns}
               sortableHeader={sortableHeader}
@@ -304,34 +304,34 @@ const LabPartnerTransaction = (props) => {
                         <Button
                           background={`bg-btnBlue`}
                           className={`rounded-md w-8 h-8 flex items-center bg-label-completed-text mx-1 shadow`}
-                          paddingHorizontal={""}
-                          paddingVertical={""}
+                          paddingHorizontal={''}
+                          paddingVertical={''}
                           onClick={() => {
-                            navigateToSlug({ id: item.id, slug: "detail" });
+                            navigateToSlug({ id: item.id, slug: 'detail' });
                           }}
                         >
                           <Image
                             width={18}
                             height={18}
                             src={assets.IconEyeOpenWhite}
-                            alt={"Icon detail"}
+                            alt={'Icon detail'}
                           />
                         </Button>
                         <Button
-                          background="bg-btnBlue"
-                          className="rounded-md w-8 h-8 flex items-center disabled:bg-disabled-btn bg-btnBlue mx-1 shadow"
-                          paddingHorizontal={""}
-                          paddingVertical={""}
-                          disabled={item.status.toLowerCase() !== "completed"}
+                          background='bg-btnBlue'
+                          className='rounded-md w-8 h-8 flex items-center disabled:bg-disabled-btn bg-btnBlue mx-1 shadow'
+                          paddingHorizontal={''}
+                          paddingVertical={''}
+                          disabled={item.status.toLowerCase() !== 'completed'}
                           onClick={() => {
-                            navigateToSlug({ id: item.id, slug: "edit" });
+                            navigateToSlug({ id: item.id, slug: 'edit' });
                           }}
                         >
                           <Image
                             width={18}
                             height={18}
                             src={assets.IconEditWhite}
-                            alt={"Icon detail"}
+                            alt={'Icon detail'}
                           />
                         </Button>
                       </td>
@@ -384,7 +384,7 @@ const LabPartnerTransaction = (props) => {
                     ? labtransaction.dataTable?.totalFilteredItem
                     : 0
                 }
-                onClick={(value) => onClickPagination(value)}
+                onClick={value => onClickPagination(value)}
                 currentPage={state.page || 1}
               />
             </div>

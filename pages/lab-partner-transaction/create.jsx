@@ -1,4 +1,4 @@
-import assets from "@/public/index";
+import assets from 'public/index';
 import {
   Button,
   Card,
@@ -9,115 +9,115 @@ import {
   ReactSelect,
   Select,
   Textarea,
-  Typography,
-} from "@atoms";
-import Messages from "@constants/PopUpMessage";
-import { EmptyTable } from "@molecules";
-import { MainLayout, Table } from "@organisms";
-import { ymdToDmy } from "@utils/datetime";
-import { currencyFormatter } from "@utils/number";
-import { fetchCooperationTermSelectList } from "components/store/actions/cooperationTerm";
-import { fetchCorporateSelectList } from "components/store/actions/corporate";
+  Typography
+} from 'components/atoms';
+import Messages from 'components/constants/PopUpMessage';
+import { EmptyTable } from 'components/molecules';
+import { MainLayout, Table } from 'components/organisms';
+import { ymdToDmy } from 'components/utils/datetime';
+import { currencyFormatter } from 'components/utils/number';
+import { fetchCooperationTermSelectList } from 'components/store/actions/cooperationTerm';
+import { fetchCorporateSelectList } from 'components/store/actions/corporate';
 import {
   fetchDataTable,
-  fetchLabSelectList,
-} from "components/store/actions/labPartner";
+  fetchLabSelectList
+} from 'components/store/actions/labPartner';
 import {
   createLabTransaction,
-  fetchLabPartnerSelectList,
-} from "components/store/actions/labtransaction";
-import { fetchCheckSampleCode } from "components/store/actions/labresult";
-import { fetchProductTierSelectList } from "components/store/actions/product";
-import { fetchTierSelectList } from "components/store/actions/tier";
-import { fetchBranchSelectList } from "components/store/actions/branchs";
-import { Field, FieldArray, Form, Formik, yupToFormErrors } from "formik";
-import Head from "next/head";
-import Image from "next/image";
-import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import * as Yup from "yup";
+  fetchLabPartnerSelectList
+} from 'components/store/actions/labtransaction';
+import { fetchCheckSampleCode } from 'components/store/actions/labresult';
+import { fetchProductTierSelectList } from 'components/store/actions/product';
+import { fetchTierSelectList } from 'components/store/actions/tier';
+import { fetchBranchSelectList } from 'components/store/actions/branchs';
+import { Field, FieldArray, Form, Formik, yupToFormErrors } from 'formik';
+import Head from 'next/head';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import * as Yup from 'yup';
 import {
   sampleCodeValidationSpesialChar,
-  sampleCodeValidationSpace,
-} from "components/constants/SamplecodeValidation";
+  sampleCodeValidationSpace
+} from 'components/constants/SamplecodeValidation';
 
-const CreateLabPartnerTransaction = (props) => {
+const CreateLabPartnerTransaction = props => {
   const router = useRouter();
   const dispatch = useDispatch();
-  const selector = useSelector((state) => state);
+  const selector = useSelector(state => state);
   const { tier, product, labpartner } = selector;
   const [onSubmitData, setOnSubmitData] = useState(false);
   const [state, setState] = useState({
-    headline: "Lab Partner Transaction",
+    headline: 'Lab Partner Transaction',
     breadcrumbs: [
       {
-        link: "/lab-partner-transaction",
-        name: "List Lab Partner Transaction",
+        link: '/lab-partner-transaction',
+        name: 'List Lab Partner Transaction'
       },
       {
-        link: "/lab-partner-transaction/create",
-        name: "Create",
-      },
+        link: '/lab-partner-transaction/create',
+        name: 'Create'
+      }
     ],
     tableData: [],
     formInitialValue: {
-      labPartnerCode: "",
+      labPartnerCode: '',
       tierId: 0,
-      tierName: "",
-      serviceMethod: "",
-      serviceGroup: "",
-      salesRepresentatif: "",
+      tierName: '',
+      serviceMethod: '',
+      serviceGroup: '',
+      salesRepresentatif: '',
       transactionDate: new Date().toISOString(),
-      siteCode: "",
+      siteCode: '',
       items: [
         {
-          identityName: "",
-          identityNumber: "",
-          phoneNumber: "",
-          idType: "",
-          address: "",
-          gender: "",
-          nationality: "",
+          identityName: '',
+          identityNumber: '',
+          phoneNumber: '',
+          idType: '',
+          address: '',
+          gender: '',
+          nationality: '',
           birtOfDate: new Date().toISOString(),
           product: null,
           productId: 0,
-          productName: "",
+          productName: '',
           productPrice: 0,
-          serviceGroup: "LAB PARTNER",
-          sampleCode: "",
-          productType: "Covid",
-          cekSampleCodeExist: false,
-        },
-      ],
+          serviceGroup: 'LAB PARTNER',
+          sampleCode: '',
+          productType: 'Covid',
+          cekSampleCodeExist: false
+        }
+      ]
     },
     formPostInitialValue: {
-      labPartnerCode: "",
+      labPartnerCode: '',
       tierId: 0,
-      tierName: "",
-      serviceMethod: "",
-      serviceGroup: "",
-      salesRepresentatif: "",
+      tierName: '',
+      serviceMethod: '',
+      serviceGroup: '',
+      salesRepresentatif: '',
       transactionDate: null,
-      siteCode: "",
+      siteCode: '',
       items: [
         {
-          identityName: "",
-          identityNumber: "",
-          phoneNumber: "",
-          idType: "",
-          address: "",
-          gender: "",
-          nationality: "",
-          birtOfDate: "",
+          identityName: '',
+          identityNumber: '',
+          phoneNumber: '',
+          idType: '',
+          address: '',
+          gender: '',
+          nationality: '',
+          birtOfDate: '',
           productId: 0,
-          productName: "",
+          productName: '',
           productPrice: 0,
-          serviceGroup: "LAB PARTNER",
-          sampleCode: "",
-          productType: "Covid",
-        },
-      ],
+          serviceGroup: 'LAB PARTNER',
+          sampleCode: '',
+          productType: 'Covid'
+        }
+      ]
     },
     totalOrder: 0,
     totalProduct: 0,
@@ -126,12 +126,12 @@ const CreateLabPartnerTransaction = (props) => {
     isOpenError: false,
     cekSampleCodeExist: [
       {
-        cek: false,
-      },
-    ],
+        cek: false
+      }
+    ]
   });
-  const [tierData, setTierData] = useState([{ value: "", label: "" }]);
-  const [productData, setProductData] = useState([{ value: "", label: "" }]);
+  const [tierData, setTierData] = useState([{ value: '', label: '' }]);
+  const [productData, setProductData] = useState([{ value: '', label: '' }]);
   const [branchData, setBranchData] = useState([]);
   const [cooperationTermData, setCooperationTermData] = useState([]);
   const [tierSelected, setTierSelected] = useState({});
@@ -141,96 +141,96 @@ const CreateLabPartnerTransaction = (props) => {
 
   const headColumns = [
     {
-      key: "no",
-      name: "No",
-      className: "w-auto",
+      key: 'no',
+      name: 'No',
+      className: 'w-auto'
     },
     {
-      key: "identityName",
-      name: "Nama Pasien",
-      className: "text-left w-auto",
+      key: 'identityName',
+      name: 'Nama Pasien',
+      className: 'text-left w-auto'
     },
     {
-      key: "sampleCode",
-      name: "Sample Code",
-      className: "text-left w-auto",
+      key: 'sampleCode',
+      name: 'Sample Code',
+      className: 'text-left w-auto'
     },
     {
-      key: "idType",
-      name: "ID Type",
-      className: "text-left w-auto",
+      key: 'idType',
+      name: 'ID Type',
+      className: 'text-left w-auto'
     },
     {
-      key: "identityNumber",
-      name: "ID Client (NIK KTP/Passport)",
-      className: "text-left w-auto",
+      key: 'identityNumber',
+      name: 'ID Client (NIK KTP/Passport)',
+      className: 'text-left w-auto'
     },
     {
-      key: "address",
-      name: "Address",
-      className: "text-left w-auto",
+      key: 'address',
+      name: 'Address',
+      className: 'text-left w-auto'
     },
     {
-      key: "gender",
-      name: "Gender",
-      className: "text-left w-auto",
+      key: 'gender',
+      name: 'Gender',
+      className: 'text-left w-auto'
     },
     {
-      key: "birtOfDate",
-      name: "Date Of Birth",
-      className: "text-left w-auto",
+      key: 'birtOfDate',
+      name: 'Date Of Birth',
+      className: 'text-left w-auto'
     },
     {
-      key: "nationality",
-      name: "Nationality",
-      className: "text-left w-auto",
+      key: 'nationality',
+      name: 'Nationality',
+      className: 'text-left w-auto'
     },
     {
-      key: "phoneNumber",
-      name: "Phone Number",
-      className: "text-left w-auto",
+      key: 'phoneNumber',
+      name: 'Phone Number',
+      className: 'text-left w-auto'
     },
     {
-      key: "product",
-      name: "Product",
-      className: "text-left w-auto",
+      key: 'product',
+      name: 'Product',
+      className: 'text-left w-auto'
     },
     {
-      key: "action",
-      name: "",
-      className: "w-auto",
-    },
+      key: 'action',
+      name: '',
+      className: 'w-auto'
+    }
   ];
 
   const idTypeData = [
     {
-      label: "NIK KTP",
-      value: "NIK KTP",
+      label: 'NIK KTP',
+      value: 'NIK KTP'
     },
     {
-      label: "Passport",
-      value: "Passport",
-    },
+      label: 'Passport',
+      value: 'Passport'
+    }
   ];
 
   const genderData = [
     {
-      label: "Laki-laki",
-      value: "Laki-laki",
+      label: 'Laki-laki',
+      value: 'Laki-laki'
     },
     {
-      label: "Perempuan",
-      value: "Perempuan",
-    },
+      label: 'Perempuan',
+      value: 'Perempuan'
+    }
   ];
 
   const setIsOpenConfirmationDialog = (value, ...props) => {
-    if (props[0] && props[0] === "submit") {
+    if (props[0] && props[0] === 'submit') {
       setOnSubmitData(true);
-      dispatch(createLabTransaction(state.formPostInitialValue)).then((res) => {
+      dispatch(createLabTransaction(state.formPostInitialValue)).then(res => {
         if (res.isSuccess && res.statusCode === 200) {
           setTimeout(() => {
-            router.push("/lab-partner-transaction");
+            router.push('/lab-partner-transaction');
           }, 1000);
         } else {
           setOnSubmitData(false);
@@ -238,7 +238,7 @@ const CreateLabPartnerTransaction = (props) => {
           setState({
             ...state,
             isOpenError: true,
-            isOpenConfirmationDialog: false,
+            isOpenConfirmationDialog: false
           });
         }
       });
@@ -247,42 +247,47 @@ const CreateLabPartnerTransaction = (props) => {
     }
   };
 
-  const setIsOpenError = (value) => {
+  const setIsOpenError = value => {
     setState({
       ...state,
-      isOpenError: value,
+      isOpenError: value
     });
   };
 
   const validationSchema = Yup.object().shape({
-    labPartnerCode: Yup.object().required("Please fill out this field"),
-    tierId: Yup.object().required("Please fill out this field").nullable(),
-    siteCode: Yup.object().required("Please fill out this field"),
+    labPartnerCode: Yup.object().required('Please fill out this field'),
+    tierId: Yup.object().required('Please fill out this field').nullable(),
+    siteCode: Yup.object().required('Please fill out this field'),
     items: Yup.array().of(
       Yup.object().shape({
-        identityName: Yup.string().required("Please fill out this field"),
-        gender: Yup.object().required("Please fill out this field"),
-        address: Yup.string().required("Please fill out this field"),
-        idType: Yup.object().required("Please fill out this field").nullable(),
-        identityNumber: Yup.string().when('idType', (idType) => {
-          if (idType?.value === 'NIK KTP') { 
-            return Yup.string().required("Please fill out this field").matches(/^\d+$/, 'Only numbers').min(16, "Too Short!");
+        identityName: Yup.string().required('Please fill out this field'),
+        gender: Yup.object().required('Please fill out this field'),
+        address: Yup.string().required('Please fill out this field'),
+        idType: Yup.object().required('Please fill out this field').nullable(),
+        identityNumber: Yup.string().when('idType', idType => {
+          if (idType?.value === 'NIK KTP') {
+            return Yup.string()
+              .required('Please fill out this field')
+              .matches(/^\d+$/, 'Only numbers')
+              .min(16, 'Too Short!');
           }
-          return Yup.string().min(16, "Too Short!").required("Please fill out this field");
+          return Yup.string()
+            .min(16, 'Too Short!')
+            .required('Please fill out this field');
         }),
-        birtOfDate: Yup.string().required("Please fill out this field"),
-        nationality: Yup.string().required("Please fill out this field"),
-        product: Yup.object().required("Please fill out this field").nullable(),
+        birtOfDate: Yup.string().required('Please fill out this field'),
+        nationality: Yup.string().required('Please fill out this field'),
+        product: Yup.object().required('Please fill out this field').nullable(),
         phoneNumber: Yup.string()
-          .min(11, "Too Short!")
-          .required("This field is required"),
+          .min(11, 'Too Short!')
+          .required('This field is required'),
         sampleCode: Yup.string()
-          .min(20, "Too Short!")
-          .required("This field is required")
-          .matches(sampleCodeValidationSpesialChar, "No special character")
-          .matches(sampleCodeValidationSpace, "Cant use blankspace"),
+          .min(20, 'Too Short!')
+          .required('This field is required')
+          .matches(sampleCodeValidationSpesialChar, 'No special character')
+          .matches(sampleCodeValidationSpace, 'Cant use blankspace')
       })
-    ),
+    )
   });
 
   const onSubmit = () => {};
@@ -292,16 +297,16 @@ const CreateLabPartnerTransaction = (props) => {
       return item.sampleCode;
     });
     var data = {
-      sampelCodes: sampelCode,
+      sampelCodes: sampelCode
     };
     var res = await dispatch(fetchCheckSampleCode(data));
 
     const newForm = state.formPostInitialValue.items.map((item, index) => {
       item.cekSampleCodeExist = res[index].isSampleCodeExist;
-      item.gender = genderData.find((gender) => gender.value === item.gender);
-      item.idType = idTypeData.find((idType) => idType.value === item.idType);
+      item.gender = genderData.find(gender => gender.value === item.gender);
+      item.idType = idTypeData.find(idType => idType.value === item.idType);
       item.product = productData.find(
-        (product) => product.value.productId === item.productId
+        product => product.value.productId === item.productId
       );
       return item;
     });
@@ -310,11 +315,11 @@ const CreateLabPartnerTransaction = (props) => {
 
     const itemobject = {
       labPartnerCode: cooperationTermData.find(
-        (partner) => partner.value === labPartnerCode
+        partner => partner.value === labPartnerCode
       ),
-      tierId: tierData.find((tier) => tier.value === tierId),
-      siteCode: branchData.find((site) => site.value === siteCode),
-      items: newForm,
+      tierId: tierData.find(tier => tier.value === tierId),
+      siteCode: branchData.find(site => site.value === siteCode),
+      items: newForm
     };
 
     setState({
@@ -322,49 +327,49 @@ const CreateLabPartnerTransaction = (props) => {
       isOpenError: false,
       formInitialValue: {
         ...state.formPostInitialValue,
-        ...itemobject,
-      },
+        ...itemobject
+      }
     });
   };
 
   useEffect(() => {
     if (tier.selectList.length <= 0 || tier.selectList !== Array) {
-      dispatch(fetchTierSelectList()).then((res) => {
+      dispatch(fetchTierSelectList()).then(res => {
         if (res != undefined) {
           setTierData(
-            res.payload.map((item) => {
+            res.payload.map(item => {
               return {
                 value: item.id,
                 label: item.name,
-                totalProduct: item.totalProduct,
+                totalProduct: item.totalProduct
               };
             })
           );
         }
       });
     }
-    dispatch(fetchBranchSelectList()).then((res) => {
+    dispatch(fetchBranchSelectList()).then(res => {
       setBranchData(
-        res.payload.map((item) => {
+        res.payload.map(item => {
           return {
             ...item,
             value: item.branchCode,
-            label: `${item.branchName}`,
+            label: `${item.branchName}`
           };
         })
       );
     });
     if (tierSelected && tierSelected?.value !== undefined) {
-      dispatch(fetchProductTierSelectList(tierSelected.value)).then((res) => {
+      dispatch(fetchProductTierSelectList(tierSelected.value)).then(res => {
         if (res != undefined) {
           setProductData(
-            product.tierSelectList.map((item) => {
+            product.tierSelectList.map(item => {
               return {
                 ...item,
                 value: item,
                 label: `${item.productName} - ${currencyFormatter(
                   item.productPrice
-                )}`,
+                )}`
               };
             })
           );
@@ -376,11 +381,11 @@ const CreateLabPartnerTransaction = (props) => {
     if (labpartner.selectList !== Array || labpartner.selectList.length <= 0) {
       dispatch(fetchLabPartnerSelectList());
       setCooperationTermData(
-        labpartner.selectList?.map((item) => {
+        labpartner.selectList?.map(item => {
           return {
             ...item,
             value: item.labPartnerCode,
-            label: item.labPartnerName,
+            label: item.labPartnerName
           };
         })
       );
@@ -394,17 +399,17 @@ const CreateLabPartnerTransaction = (props) => {
       <Head>
         <title>Bumame CMS</title>
         <link
-          rel="icon"
-          href={`${process.env.NEXT_PUBLIC_PREFIX_URL || ""}/favicon.ico`}
+          rel='icon'
+          href={`${process.env.NEXT_PUBLIC_PREFIX_URL || ''}/favicon.ico`}
         />
       </Head>
       <MainLayout headline={state.headline} breadcrumb={state.breadcrumbs}>
         <Card>
           <Formik
             initialValues={state.formInitialValue}
-            onSubmit={(values) => {
+            onSubmit={values => {
               values.transactionDate =
-                values.transactionDate == ""
+                values.transactionDate == ''
                   ? new Date().toISOString()
                   : values.transactionDate;
               setState({
@@ -413,8 +418,8 @@ const CreateLabPartnerTransaction = (props) => {
                   labPartnerCode: values.labPartnerCode?.value,
                   tierId: values.tierId?.value,
                   tierName: values.tierId?.label,
-                  serviceMethod: "LAB PARTNER",
-                  serviceGroup: "LAB PARTNER",
+                  serviceMethod: 'LAB PARTNER',
+                  serviceGroup: 'LAB PARTNER',
                   salesRepresentatif: values.salesRepresentatif,
                   transactionDate: values.transactionDate,
                   siteCode: String(values.siteCode?.value),
@@ -431,14 +436,14 @@ const CreateLabPartnerTransaction = (props) => {
                       productId: item.product?.productId,
                       productName: item.product?.productName,
                       productPrice: item.product?.productPrice,
-                      serviceGroup: "1",
+                      serviceGroup: '1',
                       sampleCode: item.sampleCode.toUpperCase(),
-                      productType: "Covid",
-                      cekSampleCodeExist: false,
+                      productType: 'Covid',
+                      cekSampleCodeExist: false
                     };
-                  }),
+                  })
                 },
-                isOpenConfirmationDialog: true,
+                isOpenConfirmationDialog: true
               });
             }}
             enableReinitialize
@@ -451,7 +456,7 @@ const CreateLabPartnerTransaction = (props) => {
                 >
                   {/* First Row */}
                   <div>
-                    <Label htmlFor={"labPartnerCode"}>Nama Partner</Label>
+                    <Label htmlFor={'labPartnerCode'}>Nama Partner</Label>
                     <Field
                       name={`labPartnerCode`}
                       component={ReactSelect}
@@ -462,27 +467,27 @@ const CreateLabPartnerTransaction = (props) => {
                       errors.labPartnerCode &&
                       touched &&
                       touched.labPartnerCode && (
-                        <p className="mt-2 text-sm text-red-600 dark:text-red-500">
+                        <p className='mt-2 text-sm text-red-600 dark:text-red-500'>
                           {errors.labPartnerCode}
                         </p>
                       )}
                   </div>
                   <div>
-                    <Label htmlFor={"tierId"}>Tier Pricing</Label>
+                    <Label htmlFor={'tierId'}>Tier Pricing</Label>
                     <Field
                       name={`tierId`}
                       component={ReactSelect}
                       options={tierData}
                       placeholder={`Choose a tier...`}
-                      onChange={(option) => {
+                      onChange={option => {
                         setTierSelected(option);
                         values.items = values.items.map((value, index) => {
-                          return { ...value, product: "" };
+                          return { ...value, product: '' };
                         });
                       }}
                     />
                     {errors && errors.tierId && touched && touched.tierId && (
-                      <p className="mt-2 text-sm text-red-600 dark:text-red-500">
+                      <p className='mt-2 text-sm text-red-600 dark:text-red-500'>
                         {errors.tierId}
                       </p>
                     )}
@@ -490,38 +495,38 @@ const CreateLabPartnerTransaction = (props) => {
                   <div></div>
                   {/* Second Row */}
                   <div>
-                    <Label htmlFor={"siteCode"}>Assign Site</Label>
+                    <Label htmlFor={'siteCode'}>Assign Site</Label>
                     <Field
                       name={`siteCode`}
                       placeholder={`Choose a site...`}
                       component={ReactSelect}
                       options={branchData}
-                      type="text"
+                      type='text'
                     />
                     {errors &&
                       errors.siteCode &&
                       touched &&
                       touched.siteCode && (
-                        <p className="mt-2 text-sm text-red-600 dark:text-red-500">
+                        <p className='mt-2 text-sm text-red-600 dark:text-red-500'>
                           {errors.siteCode}
                         </p>
                       )}
                   </div>
                   <div>
-                    <Label htmlFor={"salesRepresentatif"}>
+                    <Label htmlFor={'salesRepresentatif'}>
                       Sales Representative
                     </Label>
                     <Field
                       name={`salesRepresentatif`}
                       placeholder={`Sales Representative`}
                       component={Input}
-                      type="text"
+                      type='text'
                     />
                   </div>
                   <div></div>
                   {/* Third Row */}
                   <div>
-                    <Label htmlFor={"transactionDate"}>Tanggal Transaksi</Label>
+                    <Label htmlFor={'transactionDate'}>Tanggal Transaksi</Label>
                     <Field
                       id={`transactionDate`}
                       name={`transactionDate`}
@@ -538,7 +543,7 @@ const CreateLabPartnerTransaction = (props) => {
                     </Typography>
                   </div>
                   <FieldArray name={`items`} className={``}>
-                    {(arrayHelpers) => (
+                    {arrayHelpers => (
                       <div
                         className={`overflow-x-auto w-full h-full space-y-[16px] rounded border border-[#E6E6E6] `}
                       >
@@ -569,7 +574,7 @@ const CreateLabPartnerTransaction = (props) => {
                                         touched.items &&
                                         touched.items[key] &&
                                         touched.items[key].identityName && (
-                                          <p className="mt-2 text-sm text-red-600 dark:text-red-500">
+                                          <p className='mt-2 text-sm text-red-600 dark:text-red-500'>
                                             {errors.items[key].identityName}
                                           </p>
                                         )}
@@ -589,12 +594,12 @@ const CreateLabPartnerTransaction = (props) => {
                                         touched.items &&
                                         touched.items[key] &&
                                         touched.items[key].sampleCode && (
-                                          <p className="mt-2 text-sm text-red-600 dark:text-red-500">
+                                          <p className='mt-2 text-sm text-red-600 dark:text-red-500'>
                                             {errors.items[key].sampleCode}
                                           </p>
                                         )}
                                       {item.cekSampleCodeExist && (
-                                        <p className="mt-2 text-sm text-red-600 dark:text-red-500">
+                                        <p className='mt-2 text-sm text-red-600 dark:text-red-500'>
                                           Sample Code Exist
                                         </p>
                                       )}
@@ -606,7 +611,7 @@ const CreateLabPartnerTransaction = (props) => {
                                         type={`text`}
                                         className={``}
                                         options={idTypeData}
-                                        onChange={(option) => {
+                                        onChange={option => {
                                           if (option) {
                                             values.items[key].idType =
                                               option.value;
@@ -621,7 +626,7 @@ const CreateLabPartnerTransaction = (props) => {
                                         touched.items &&
                                         touched.items[key] &&
                                         touched.items[key].idType && (
-                                          <p className="mt-2 text-sm text-red-600 dark:text-red-500">
+                                          <p className='mt-2 text-sm text-red-600 dark:text-red-500'>
                                             {errors.items[key].idType}
                                           </p>
                                         )}
@@ -641,7 +646,7 @@ const CreateLabPartnerTransaction = (props) => {
                                         touched.items &&
                                         touched.items[key] &&
                                         touched.items[key].identityNumber && (
-                                          <p className="mt-2 text-sm text-red-600 dark:text-red-500">
+                                          <p className='mt-2 text-sm text-red-600 dark:text-red-500'>
                                             {errors.items[key].identityNumber}
                                           </p>
                                         )}
@@ -650,8 +655,8 @@ const CreateLabPartnerTransaction = (props) => {
                                       <Field
                                         component={Textarea}
                                         name={`items[${key}].address`}
-                                        type="text"
-                                        className="w-[280px]"
+                                        type='text'
+                                        className='w-[280px]'
                                       />
                                       {errors &&
                                         errors.items &&
@@ -661,7 +666,7 @@ const CreateLabPartnerTransaction = (props) => {
                                         touched.items &&
                                         touched.items[key] &&
                                         touched.items[key].address && (
-                                          <p className="mt-2 text-sm text-red-600 dark:text-red-500">
+                                          <p className='mt-2 text-sm text-red-600 dark:text-red-500'>
                                             {errors.items[key].address}
                                           </p>
                                         )}
@@ -681,7 +686,7 @@ const CreateLabPartnerTransaction = (props) => {
                                         touched.items &&
                                         touched.items[key] &&
                                         touched.items[key].gender && (
-                                          <p className="mt-2 text-sm text-red-600 dark:text-red-500">
+                                          <p className='mt-2 text-sm text-red-600 dark:text-red-500'>
                                             {errors.items[key].gender}
                                           </p>
                                         )}
@@ -702,7 +707,7 @@ const CreateLabPartnerTransaction = (props) => {
                                           touched.items &&
                                           touched.items[key] &&
                                           touched.items[key].birtOfDate && (
-                                            <p className="mt-2 text-sm text-red-600 dark:text-red-500">
+                                            <p className='mt-2 text-sm text-red-600 dark:text-red-500'>
                                               {errors.items[key].birtOfDate}
                                             </p>
                                           )}
@@ -723,7 +728,7 @@ const CreateLabPartnerTransaction = (props) => {
                                         touched.items &&
                                         touched.items[key] &&
                                         touched.items[key].nationality && (
-                                          <p className="mt-2 text-sm text-red-600 dark:text-red-500">
+                                          <p className='mt-2 text-sm text-red-600 dark:text-red-500'>
                                             {errors.items[key].nationality}
                                           </p>
                                         )}
@@ -743,7 +748,7 @@ const CreateLabPartnerTransaction = (props) => {
                                         touched.items &&
                                         touched.items[key] &&
                                         touched.items[key].phoneNumber && (
-                                          <p className="mt-2 text-sm text-red-600 dark:text-red-500">
+                                          <p className='mt-2 text-sm text-red-600 dark:text-red-500'>
                                             {errors.items[key].phoneNumber}
                                           </p>
                                         )}
@@ -764,12 +769,12 @@ const CreateLabPartnerTransaction = (props) => {
                                         touched.items &&
                                         touched.items[key] &&
                                         touched.items[key].product && (
-                                          <p className="mt-2 text-sm text-red-600 dark:text-red-500">
+                                          <p className='mt-2 text-sm text-red-600 dark:text-red-500'>
                                             {errors.items[key].product}
                                           </p>
                                         )}
                                     </td>
-                                    <td className="py-4 pr-4">
+                                    <td className='py-4 pr-4'>
                                       {key > 0 && (
                                         <Button
                                           className={`bg-[#F64E60] flex items-center px-5`}
@@ -811,22 +816,22 @@ const CreateLabPartnerTransaction = (props) => {
                             className={`flex justify-between items-center`}
                             onClick={() => {
                               arrayHelpers.push({
-                                identityName: "",
-                                identityNumber: "",
-                                phoneNumber: "",
-                                idType: "",
-                                address: "",
-                                gender: "",
-                                nationality: "",
+                                identityName: '',
+                                identityNumber: '',
+                                phoneNumber: '',
+                                idType: '',
+                                address: '',
+                                gender: '',
+                                nationality: '',
                                 birtOfDate: new Date().toISOString(),
                                 product: null,
                                 productId: 0,
-                                productName: "",
+                                productName: '',
                                 productPrice: 0,
-                                serviceGroup: "LAB PARTNER",
-                                sampleCode: "",
-                                productType: "Covid",
-                                cekSampleCodeExist: false,
+                                serviceGroup: 'LAB PARTNER',
+                                sampleCode: '',
+                                productType: 'Covid',
+                                cekSampleCodeExist: false
                               });
 
                               setNumberPatient(numberPatient + 1);
@@ -875,7 +880,7 @@ const CreateLabPartnerTransaction = (props) => {
         </Card>
       </MainLayout>
       <Modal
-        setIsOpen={(val) => setIsOpenConfirmationDialog(val)}
+        setIsOpen={val => setIsOpenConfirmationDialog(val)}
         width={`w-[27rem]`}
         title={`Confirmation`}
         isOpen={state.isOpenConfirmationDialog}
@@ -884,7 +889,7 @@ const CreateLabPartnerTransaction = (props) => {
         <div className={`pt-12`}>
           <Button
             onClick={() => {
-              setIsOpenConfirmationDialog(false, "submit");
+              setIsOpenConfirmationDialog(false, 'submit');
             }}
             className={`bg-btnBlue rounded-lg hover:bg-[#008AEC] text-white mr-5`}
             disabled={onSubmitData}
@@ -894,22 +899,22 @@ const CreateLabPartnerTransaction = (props) => {
             >
               {onSubmitData ? (
                 <svg
-                  class="inline mr-2 w-4 h-4 text-gray-200 animate-spin dark:text-gray-600 fill-[#FFF] dark:fill-gray-300"
-                  viewBox="0 0 100 101"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
+                  class='inline mr-2 w-4 h-4 text-gray-200 animate-spin dark:text-gray-600 fill-[#FFF] dark:fill-gray-300'
+                  viewBox='0 0 100 101'
+                  fill='none'
+                  xmlns='http://www.w3.org/2000/svg'
                 >
                   <path
-                    d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                    fill="currentColor"
+                    d='M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z'
+                    fill='currentColor'
                   />
                   <path
-                    d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                    fill="currentFill"
+                    d='M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z'
+                    fill='currentFill'
                   />
                 </svg>
               ) : null}
-              <p className="text-white">Yes</p>
+              <p className='text-white'>Yes</p>
             </span>
           </Button>
           <Button
@@ -921,7 +926,7 @@ const CreateLabPartnerTransaction = (props) => {
         </div>
       </Modal>
       <Modal
-        setIsOpen={(val) => setIsOpenError(val)}
+        setIsOpen={val => setIsOpenError(val)}
         width={`w-[27rem]`}
         title={``}
         headless

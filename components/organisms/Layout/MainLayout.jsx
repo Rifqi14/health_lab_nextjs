@@ -1,6 +1,6 @@
 import React from 'react';
-import { Header } from '@organisms';
-import { BreadCrumb, SideBar } from '@molecules';
+import { Header } from 'components/organisms';
+import { BreadCrumb, SideBar } from 'components/molecules';
 
 const MainLayout = props => {
   const { children, headline, breadcrumb, height, pBottom, className } = props;

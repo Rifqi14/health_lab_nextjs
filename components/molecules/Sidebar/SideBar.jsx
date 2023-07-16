@@ -1,20 +1,13 @@
-import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
 
-import assets from '@/public/index.js';
+import assets from 'public/index.js';
+import { authCurrentUser } from 'components/store/actions';
+import { CHANGE_SIDEBAR_MODE } from 'components/constants/Sidebar';
+import { fetchSidebar } from 'components/store/actions/sidebar';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchSidebar } from 'components/store/actions/sidebar';
-import {
-  SIDEBAR,
-  SidebarIcon,
-  SideBarList,
-  SIDEBAR_UNALLOWED_MODULE, CHANGE_SIDEBAR_MODE
-} from '@constants/Sidebar';
-import HouseCallButtonLabel from '@constants/HouseCallButtonLabel';
-import { fetchRoleModuleAccess } from 'components/store/actions/role';
-import { authCurrentUser } from '@actions';
 
 function SideBar() {
   const router = useRouter();
@@ -109,67 +102,88 @@ function SideBar() {
 
   const handleChangeSidebarMode = () => {
     dispatch({ type: CHANGE_SIDEBAR_MODE, payload: !sidebar.active });
-  }
+  };
 
   useEffect(() => {
     dispatch(authCurrentUser());
-    console.log(sidebar.active)
-  //   if(router.pathname !== '/login'){
-  //     dispatch(authCurrentUser()).then((res) => {
-  //       const moduleCodes = res.payload.roleModules.map((item) => {
-  //         return item.moduleCode;
-  //       });
-  //       const allowedSideBarList = SideBarList.filter((item) => {
-  //         return moduleCodes.includes(item.moduleCode);
-  //       });
-  //       setAllowedSidebar(allowedSideBarList);
-  //     });
-  //   }
+    console.log(sidebar.active);
+    //   if(router.pathname !== '/login'){
+    //     dispatch(authCurrentUser()).then((res) => {
+    //       const moduleCodes = res.payload.roleModules.map((item) => {
+    //         return item.moduleCode;
+    //       });
+    //       const allowedSideBarList = SideBarList.filter((item) => {
+    //         return moduleCodes.includes(item.moduleCode);
+    //       });
+    //       setAllowedSidebar(allowedSideBarList);
+    //     });
+    //   }
   }, []);
 
   return (
     <div className='min-h-screen flex flex-col'>
-      <div className={`flex bg-white items-center py-2 ${!sidebar.active && 'pb-5'}`} style={{minWidth: 80}}>
-        <div className={'ml-7 mr-2' }>
-          <Image  src={sidebar.active ? assets.Logo : assets.FavIconSVG} alt='bumame' />
+      <div
+        className={`flex bg-white items-center py-2 ${
+          !sidebar.active && 'pb-5'
+        }`}
+        style={{ minWidth: 80 }}
+      >
+        <div className={'ml-7 mr-2'}>
+          <Image
+            src={sidebar.active ? assets.Logo : assets.FavIconSVG}
+            alt='bumame'
+          />
         </div>
-        <span className={sidebar.active &&'pl-28'}></span>
-        <Image className={sidebar.active ? 'hover:cursor-pointer' : 'rotate-180 hover:cursor-pointer'}
-               onClick={() => handleChangeSidebarMode()}
-               src={assets.DoubleArrow} alt='arrow'
+        <span className={sidebar.active && 'pl-28'}></span>
+        <Image
+          className={
+            sidebar.active
+              ? 'hover:cursor-pointer'
+              : 'rotate-180 hover:cursor-pointer'
+          }
+          onClick={() => handleChangeSidebarMode()}
+          src={assets.DoubleArrow}
+          alt='arrow'
         />
       </div>
-      <div className={`bg-primary h-full text-white ${sidebar.active ? 'w-80' : 'w-30'}`}>
+      <div
+        className={`bg-primary h-full text-white ${
+          sidebar.active ? 'w-80' : 'w-30'
+        }`}
+      >
         <div className='pt-10'>
-          {sidebar?.allowedSidebar?.map(item => (
+          {sideBarList?.map(item => (
             <div
               key={item.id}
-              className={`${sidebar.active && 'pl-8'} hover:cursor-pointer hover:bg-isActive ${
+              className={`${
+                sidebar.active && 'pl-8'
+              } hover:cursor-pointer hover:bg-isActive ${
                 router.pathname.includes(item.link) && 'bg-isActive'
               }`}
             >
               <Link href={`/${item.link}`}>
-                <div className={sidebar.active ? 'flex py-4' :  'py-4 flex flex-col items-center'}>
+                <div
+                  className={
+                    sidebar.active
+                      ? 'flex py-4'
+                      : 'py-4 flex flex-col items-center'
+                  }
+                >
                   <Image
                     src={item.icon}
                     alt={item.title}
                     width={20}
                     height={20}
                   />
-                  {sidebar.active && (
-                    <p className='ml-2'>{item.title}</p>
-                  )
-                  }
-
+                  {sidebar.active && <p className='ml-2'>{item.title}</p>}
                 </div>
               </Link>
             </div>
           ))}
         </div>
       </div>
-
     </div>
   );
 }
 
-export default SideBar
+export default SideBar;

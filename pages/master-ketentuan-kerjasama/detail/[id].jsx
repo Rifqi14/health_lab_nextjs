@@ -1,18 +1,18 @@
-import { Button, Modal, Typography, UserDetail } from "@atoms";
-import { EmptyTable } from "@molecules";
-import { MainLayout, Table } from "@organisms";
-import { interceptorResponseErr } from "@utils/interceptor";
-import { getItemLocalStorage } from "@utils/localstorage";
-import axios from "axios";
-import Head from "next/head";
-import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
-import Image from "next/image";
-import assets from "@/public/index";
-import ModalDelete from "../../../components/Modals/ModalDelete";
-import { useDispatch } from "react-redux";
-import { deleteCooperationTerm } from "components/store/actions/cooperationTerm";
-import ModalConfirmation from "components/Modals/ModalConfirmation";
+import { Button, Modal, Typography, UserDetail } from 'components/atoms';
+import { EmptyTable } from 'components/molecules';
+import { MainLayout, Table } from 'components/organisms';
+import { interceptorResponseErr } from 'components/utils/interceptor';
+import { getItemLocalStorage } from 'components/utils/localstorage';
+import axios from 'axios';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
+import assets from 'public/index';
+import ModalDelete from '../../../components/Modals/ModalDelete';
+import { useDispatch } from 'react-redux';
+import { deleteCooperationTerm } from 'components/store/actions/cooperationTerm';
+import ModalConfirmation from 'components/Modals/ModalConfirmation';
 
 const Detail = () => {
   const router = useRouter();
@@ -27,44 +27,44 @@ const Detail = () => {
 
   const headColumns = [
     {
-      key: "no",
-      name: "No",
-      className: "w-3 px-4 text-center",
-      icon: false,
+      key: 'no',
+      name: 'No',
+      className: 'w-3 px-4 text-center',
+      icon: false
     },
     {
-      key: "file",
-      name: "File",
-      className: "text-left",
-      icon: false,
+      key: 'file',
+      name: 'File',
+      className: 'text-left',
+      icon: false
     },
     {
-      key: "note",
-      name: "Note",
-      className: "text-left pl-6",
-      icon: false,
-    },
+      key: 'note',
+      name: 'Note',
+      className: 'text-left pl-6',
+      icon: false
+    }
   ];
 
   const URL = process.env.NEXT_PUBLIC_API_URL;
-  const ls = JSON.parse(getItemLocalStorage("AUTH"));
+  const ls = JSON.parse(getItemLocalStorage('AUTH'));
 
   const getCooperationTermsById = async () => {
     try {
       axios.interceptors.response.use(
-        (res) => res,
-        (error) => interceptorResponseErr(error)
+        res => res,
+        error => interceptorResponseErr(error)
       );
       const res = await axios.get(`${URL}/api/v1/cooperation-terms/${id}`, {
         headers: {
-          Authorization: `${ls.scheme} ${ls.token}`,
-        },
+          Authorization: `${ls.scheme} ${ls.token}`
+        }
       });
       const dataRes = res.data.payload;
       setCooperationTerms(dataRes);
       setListDocument(dataRes.listDocument);
     } catch (error) {
-      console.log("error", error);
+      console.log('error', error);
     }
   };
 
@@ -89,19 +89,20 @@ const Detail = () => {
       </Head>
 
       <MainLayout
-        headline={"Master Ketentuan Kerjasama"}
+        headline={'Master Ketentuan Kerjasama'}
         breadcrumb={[
           {
-            link: "/master-ketentuan-kerjasama",
-            name: "List Master Ketentuan Kerjasama",
+            link: '/master-ketentuan-kerjasama',
+            name: 'List Master Ketentuan Kerjasama'
           },
           {
             link: `/master-ketentuan-kerjasama/detail/${id}`,
-            name: "Detail",
-          },
-        ]}>
-        <main className={" bg-white rounded-lg shadow-lg p-7 mb-5"}>
-          <div className="mb-[15px] flex justify-between">
+            name: 'Detail'
+          }
+        ]}
+      >
+        <main className={' bg-white rounded-lg shadow-lg p-7 mb-5'}>
+          <div className='mb-[15px] flex justify-between'>
             <Typography className={`font-medium text-lg text-[#212121]`}>
               Cooperation Term Detail
             </Typography>
@@ -109,9 +110,10 @@ const Detail = () => {
               paddingVertical={`py-2`}
               paddingHorizontal={`px-4`}
               background={`bg-inActive`}
-              className={"flex items-center justify-center"}
-              onClick={() => setShowModals(true)}>
-              <Image src={assets.IconTrash} alt="create" />
+              className={'flex items-center justify-center'}
+              onClick={() => setShowModals(true)}
+            >
+              <Image src={assets.IconTrash} alt='create' />
               <Typography className={`text-white font-normal text-sm pl-2`}>
                 Delete
               </Typography>
@@ -120,27 +122,28 @@ const Detail = () => {
           <div>
             <UserDetail
               title={cooperationTerms.code}
-              label={"Kode Ketentuan"}
+              label={'Kode Ketentuan'}
             />
             <UserDetail
-              className="py-6"
+              className='py-6'
               title={cooperationTerms.name}
-              label={"Nama Ketentuan Kerjasama"}
+              label={'Nama Ketentuan Kerjasama'}
             />
             <UserDetail
               title={cooperationTerms.description}
-              label={"Deskripsi"}
+              label={'Deskripsi'}
             />
-            <div className="w-[570px] pt-6">
-              <p className="mb-1">Supporting Data</p>
+            <div className='w-[570px] pt-6'>
+              <p className='mb-1'>Supporting Data</p>
               <Table headColumns={headColumns}>
                 {listDocument.length > 0 ? (
                   listDocument.map((data, index) => (
                     <tr
                       key={index}
                       className={`text-center ${
-                        index % 2 != 0 ? "bg-[#FCFCFC]" : "bg-[#FFFFFF]"
-                      }`}>
+                        index % 2 != 0 ? 'bg-[#FCFCFC]' : 'bg-[#FFFFFF]'
+                      }`}
+                    >
                       <td className={`py-[24px] text-center`}>
                         <Typography>{index + 1}</Typography>
                       </td>
@@ -148,7 +151,11 @@ const Detail = () => {
                         <Typography>{data.filename}</Typography>
                       </td>
                       <td className={`py-[24px] text-left pl-6`}>
-                        <Typography>{data.notes === 'undefined' || undefined ? '-' : data.notes}</Typography>
+                        <Typography>
+                          {data.notes === 'undefined' || undefined
+                            ? '-'
+                            : data.notes}
+                        </Typography>
                       </td>
                     </tr>
                   ))
@@ -158,12 +165,13 @@ const Detail = () => {
               </Table>
             </div>
           </div>
-          <div className="flex justify-center mt-8">
+          <div className='flex justify-center mt-8'>
             <Button
               paddingVertical={`py-2`}
               paddingHorizontal={`px-7`}
               background={`bg-btn-cancel`}
-              onClick={() => router.push("/master-ketentuan-kerjasama")}>
+              onClick={() => router.push('/master-ketentuan-kerjasama')}
+            >
               <Typography className={`font-normal text-sm`}>Back</Typography>
             </Button>
           </div>
@@ -212,18 +220,21 @@ const Detail = () => {
           </Modal> */}
           <ModalConfirmation
             show={showModals}
-            onHide={ () => setShowModals(false)}
-            handleYes={() => {handleDelete()}}
+            onHide={() => setShowModals(false)}
+            handleYes={() => {
+              handleDelete();
+            }}
             desc1={'Apakah anda yakin akan menghapus data ini?'}
             isLoading={onDelete}
             confirmDelete={true}
           />
           <Modal
-            setIsOpen={(val) => setShowSuccessDeleteModal(val)}
+            setIsOpen={val => setShowSuccessDeleteModal(val)}
             width={`w-[27rem]`}
             title={`Success`}
             headless
-            isOpen={showSuccessDeleteModal}>
+            isOpen={showSuccessDeleteModal}
+          >
             <div>
               <Image
                 src={assets.ImageCheckedGreen}
@@ -231,11 +242,12 @@ const Detail = () => {
               />
             </div>
             <Typography className={`pt-8`}>Data berhasil dihapus</Typography>
-            <div className="flex justify-center pt-8">
+            <div className='flex justify-center pt-8'>
               <Button
-                onClick={() => router.push("/master-ketentuan-kerjasama")}
+                onClick={() => router.push('/master-ketentuan-kerjasama')}
                 color={`white`}
-                background={`bg-btnBlue`}>
+                background={`bg-btnBlue`}
+              >
                 <Typography className={`text-white font-normal text-sm`}>
                   OK
                 </Typography>

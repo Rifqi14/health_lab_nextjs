@@ -1,10 +1,10 @@
 import {
   interceptorRequestConfig,
   interceptorResponseErr
-} from '@utils/interceptor';
-import { objectString } from '@utils/string';
+} from 'components/utils/interceptor';
+import { objectString } from 'components/utils/string';
 import axios from 'axios';
-import { getItemLocalStorage } from '@utils/localstorage';
+import { getItemLocalStorage } from 'components/utils/localstorage';
 
 let cancelTokenSource;
 
@@ -128,13 +128,11 @@ export const requestGetFile = (url, params, headers) => {
         ...headers
       };
     }
-    req.get(
-      `${url}`,
-      { responseType: 'blob' }
-    ).then(response => {
-      resolve(response.data);
-    })
-    .catch(error => reject(error));
+    req
+      .get(`${url}`, { responseType: 'blob' })
+      .then(response => {
+        resolve(response.data);
+      })
+      .catch(error => reject(error));
   });
 };
-

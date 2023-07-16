@@ -1,6 +1,8 @@
-import { LAB_PARTNER_ALERT } from '@constants/LapPartner';
+import { LAB_PARTNER_ALERT } from 'components/constants/LapPartner';
 
-const { COOPERATION_TERM_SELECT_LIST } = require('@constants/CooperationTerm');
+const {
+  COOPERATION_TERM_SELECT_LIST
+} = require('components/constants/CooperationTerm');
 
 const initState = {
   cooperationTermSelectList: [],

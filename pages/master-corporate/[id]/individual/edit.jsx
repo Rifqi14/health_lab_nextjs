@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import {
   Button,
   InputText,
@@ -9,21 +9,21 @@ import {
   Input,
   Card,
   Select,
-  ReactSelect,
-} from "@atoms";
-import { MainLayout } from "@organisms";
-import Image from "next/image";
-import Head from "next/head";
-import assets from "@/public/index";
-import axios from "axios";
-import { getItemLocalStorage } from "@utils/localstorage";
-import { useRouter } from "next/router";
-import ModalConfirmation from "components/Modals/ModalConfirmation";
-import { getSiteOption } from "../../../../components/store/actions/corporate";
-import { useDispatch } from "react-redux";
-import ModalSuccess from "../../../../components/Modals/ModalsSendLink";
-import { Transition } from "@headlessui/react";
-import { data } from "autoprefixer";
+  ReactSelect
+} from 'components/atoms';
+import { MainLayout } from 'components/organisms';
+import Image from 'next/image';
+import Head from 'next/head';
+import assets from 'public/index';
+import axios from 'axios';
+import { getItemLocalStorage } from 'components/utils/localstorage';
+import { useRouter } from 'next/router';
+import ModalConfirmation from 'components/Modals/ModalConfirmation';
+import { getSiteOption } from '../../../../components/store/actions/corporate';
+import { useDispatch } from 'react-redux';
+import ModalSuccess from '../../../../components/Modals/ModalsSendLink';
+import { Transition } from '@headlessui/react';
+import { data } from 'autoprefixer';
 
 const Edit = () => {
   const router = useRouter();
@@ -32,64 +32,64 @@ const Edit = () => {
   const [showModals, setShowModals] = useState(false);
   const [successModal, setSuccessModal] = useState(false);
   const [onSubmit, setOnSubmit] = useState(false);
-  const [otpModal, setOtpModal] = useState(false)
+  const [otpModal, setOtpModal] = useState(false);
   const [siteOption, setSiteOption] = useState([]);
   const [sendSite, setSendSite] = useState('');
   const [selectSite, setSelectSite] = useState([]);
   const [typeInput, setTypeInput] = useState(false);
   const [state, setstate] = useState({
-    name: "",
-    identityType: "",
-    identityId: "",
-    corporateType: "",
-    brand: "",
-    catagories: "",
-    totalUser: "",
-    email: "",
-    gender: "",
-    code: "",
-    dateOfBirth: "",
-    citizenship: "",
-    taxId: "",
-    arDueDate: "",
-    phoneNumber: "",
-    address: "",
-    city: "",
-    province: "",
-    rt: "",
-    rw: "",
-    district: "",
-    subDistinct: "",
-    domicileAddress: "",
-    domicileCity: "",
-    domicileProvince: "",
-    domicileRt: "",
-    domicileRw: "",
-    domicileDistrict: "",
-    domicileSubDistinct: "",
-    selectType: "",
-    statusData: "",
+    name: '',
+    identityType: '',
+    identityId: '',
+    corporateType: '',
+    brand: '',
+    catagories: '',
+    totalUser: '',
+    email: '',
+    gender: '',
+    code: '',
+    dateOfBirth: '',
+    citizenship: '',
+    taxId: '',
+    arDueDate: '',
+    phoneNumber: '',
+    address: '',
+    city: '',
+    province: '',
+    rt: '',
+    rw: '',
+    district: '',
+    subDistinct: '',
+    domicileAddress: '',
+    domicileCity: '',
+    domicileProvince: '',
+    domicileRt: '',
+    domicileRw: '',
+    domicileDistrict: '',
+    domicileSubDistinct: '',
+    selectType: '',
+    statusData: '',
     sites: [],
     pics: [
       {
-        name: "",
-        title: "",
-        contact: "",
-        email: "",
-      },
+        name: '',
+        title: '',
+        contact: '',
+        email: ''
+      }
     ],
-    numberPhone:""
+    numberPhone: ''
   });
 
   const URL = process.env.NEXT_PUBLIC_API_URL;
-  const ls = JSON.parse(getItemLocalStorage("AUTH"));
+  const ls = JSON.parse(getItemLocalStorage('AUTH'));
 
   const getDetailData = async () => {
     try {
       const res = await axios.get(`${URL}/api/v1/corporates/${code}`, {
         headers: {
-          Authorization: `${ls.scheme} ${ls.token}`,
-        },
+          Authorization: `${ls.scheme} ${ls.token}`
+        }
       });
       const data = res.data.payload;
       setstate({
@@ -98,16 +98,16 @@ const Edit = () => {
         identityType: data.identityType,
         identityId: data.identityId,
         corporateType: data.corporateType,
-        brand: "",
-        catagories: "",
+        brand: '',
+        catagories: '',
         totalUser: 0,
-        email: "",
+        email: '',
         gender: data.gender,
         code: data.code,
         dateOfBirth: data.dateOfBirth,
         citizenship: data.citizenship,
-        taxId: "",
-        arDueDate: "",
+        taxId: '',
+        arDueDate: '',
         phoneNumber: data.phoneNumber,
         address: data.address,
         city: data.city,
@@ -123,15 +123,15 @@ const Edit = () => {
         domicileRw: data.domicileRw,
         domicileDistrict: data.domicileDistrict,
         domicileSubDistinct: data.domicileSubDistinct,
-        selectType: "",
+        selectType: '',
         sites: data.sites.map(item => {
           return {
             ...item,
             value: item.siteId,
             label: item.siteName
-          }
+          };
         }),
-        numberPhone: data.phoneNumber,
+        numberPhone: data.phoneNumber
       });
     } catch (err) {
       return err;
@@ -139,21 +139,23 @@ const Edit = () => {
   };
 
   useEffect(() => {
-    dispatch(getSiteOption()).then((res) => {
+    dispatch(getSiteOption()).then(res => {
       if (res?.statusCode === 200) {
-        setSiteOption(res?.payload.map(item => {
-          return {
-            ...item,
-            value: item.siteId,
-            label: item.siteName
-          }
-        }));
+        setSiteOption(
+          res?.payload.map(item => {
+            return {
+              ...item,
+              value: item.siteId,
+              label: item.siteName
+            };
+          })
+        );
       }
     });
   }, []);
 
-  const handleOptionSite = (val) => {
-    let obj = siteOption.find((o) => o.siteId == val?.siteId);
+  const handleOptionSite = val => {
+    let obj = siteOption.find(o => o.siteId == val?.siteId);
     setSendSite(obj);
   };
 
@@ -161,7 +163,7 @@ const Edit = () => {
     ...state,
     name: state.name,
     code: state.code,
-    corporateType: "Individual",
+    corporateType: 'Individual',
     phoneNumber: state.phoneNumber,
     dateOfBirth: state.dateOfBirth,
     identityType: state.identityType,
@@ -190,11 +192,11 @@ const Edit = () => {
         name: state.pics.name,
         title: state.pics.title,
         contact: state.pics.contact,
-        email: state.pics.email,
-      },
+        email: state.pics.email
+      }
     ],
 
-    statusData: "InActive",
+    statusData: 'InActive'
   };
 
   const handleEdit = async () => {
@@ -205,11 +207,11 @@ const Edit = () => {
         dataIndividual,
         {
           headers: {
-            Authorization: `${ls.scheme} ${ls.token}`,
-          },
+            Authorization: `${ls.scheme} ${ls.token}`
+          }
         }
       );
-      setOnSubmit(false)
+      setOnSubmit(false);
       setShowModals(false);
       setSuccessModal(true);
     } catch (err) {
@@ -218,10 +220,10 @@ const Edit = () => {
   };
 
   const handleModal = () => {
-    setOtpModal(false)
-    setShowModals(false)
-    setSuccessModal(true)
-  }
+    setOtpModal(false);
+    setShowModals(false);
+    setSuccessModal(true);
+  };
 
   useEffect(() => {
     getDetailData();
@@ -233,9 +235,9 @@ const Edit = () => {
       <Head>
         <title>Bumame CMS</title>
         <link
-          rel="icon"
+          rel='icon'
           href={`${
-            process.env.NEXT_PUBLIC_PREFIX_URL || "/housecall"
+            process.env.NEXT_PUBLIC_PREFIX_URL || '/housecall'
           }/favicon.ico`}
         />
       </Head>
@@ -245,7 +247,8 @@ const Edit = () => {
             rounded={`rounded-lg`}
             shadow={`shadow-lg`}
             padding={`p-7`}
-            className={`mb-20`}>
+            className={`mb-20`}
+          >
             <form>
               <Typography className={`font-medium text-lg text-[#212121]`}>
                 Individual Identity
@@ -256,16 +259,14 @@ const Edit = () => {
                   <Input
                     type={`text`}
                     value={state.name}
-                    onChange={(e) =>
-                      setstate({ ...state, name: e.target.value })
-                    }
+                    onChange={e => setstate({ ...state, name: e.target.value })}
                   />
                 </div>
                 <div>
                   <Label>Tipe Identitas</Label>
                   <Select value={state.identityType}>
-                    <option value="ktp">KTP</option>
-                    <option value="passport">Passport</option>
+                    <option value='ktp'>KTP</option>
+                    <option value='passport'>Passport</option>
                   </Select>
                 </div>
               </div>
@@ -274,14 +275,15 @@ const Edit = () => {
                   <Label>Gender</Label>
                   <select
                     value={state.gender}
-                    onChange={(e) =>
+                    onChange={e =>
                       setstate({ ...state, gender: e.target.value })
                     }
-                    className="w-full py-2 rounded border border-gray-200 px-1"
-                    name=""
-                    id="">
-                    <option value="pria">Pria</option>
-                    <option value="female">Wanita</option>
+                    className='w-full py-2 rounded border border-gray-200 px-1'
+                    name=''
+                    id=''
+                  >
+                    <option value='pria'>Pria</option>
+                    <option value='female'>Wanita</option>
                   </select>
                   {/* <Input
                   type={`text`}
@@ -297,7 +299,7 @@ const Edit = () => {
                   <Input
                     type={`text`}
                     value={state.identityId}
-                    onChange={(e) =>
+                    onChange={e =>
                       setstate({ ...state, identityId: e.target.value })
                     }
                     // onChange={(e) => (data.identityId = e.target.value)}
@@ -311,7 +313,7 @@ const Edit = () => {
                     type={typeInput == true ? `datetime-local` : `text`}
                     value={state.dateOfBirth}
                     onfocus={(setTypeInput = true)}
-                    onChange={(e) =>
+                    onChange={e =>
                       setstate({ ...state, dateOfBirth: e.target.value })
                     }
                   />
@@ -321,7 +323,7 @@ const Edit = () => {
                   <Input
                     type={`text`}
                     value={state.citizenship}
-                    onChange={(e) =>
+                    onChange={e =>
                       setstate({ ...state, citizenship: e.target.value })
                     }
                     // onChange={(e) => (data.citizenship = e.target.value)}
@@ -334,7 +336,7 @@ const Edit = () => {
                   <Input
                     type={`text`}
                     value={state.phoneNumber}
-                    onChange={(e) =>
+                    onChange={e =>
                       setstate({ ...state, phoneNumber: e.target.value })
                     }
                   />
@@ -358,7 +360,7 @@ const Edit = () => {
                   <Input
                     type={`text`}
                     value={state.address}
-                    onChange={(e) =>
+                    onChange={e =>
                       setstate({ ...state, address: e.target.value })
                     }
                     // onChange={(e) => (data.address = e.target.value)}
@@ -369,9 +371,7 @@ const Edit = () => {
                   <Input
                     type={`text`}
                     value={state.city}
-                    onChange={(e) =>
-                      setstate({ ...state, city: e.target.value })
-                    }
+                    onChange={e => setstate({ ...state, city: e.target.value })}
                     // onChange={(e) => (data.city = e.target.value)}
                   />
                 </div>
@@ -382,7 +382,7 @@ const Edit = () => {
                   <Input
                     type={`text`}
                     value={state.province}
-                    onChange={(e) =>
+                    onChange={e =>
                       setstate({ ...state, province: e.target.value })
                     }
                     // onChange={(e) => (data.province = e.target.value)}
@@ -393,7 +393,7 @@ const Edit = () => {
                   <Input
                     type={`text`}
                     value={state.rt}
-                    onChange={(e) => setstate({ ...state, rt: e.target.value })}
+                    onChange={e => setstate({ ...state, rt: e.target.value })}
                     // onChange={(e) => (data.rt = e.target.value)}
                   />
                 </div>
@@ -404,7 +404,7 @@ const Edit = () => {
                   <Input
                     type={`text`}
                     value={state.district}
-                    onChange={(e) =>
+                    onChange={e =>
                       setstate({ ...state, district: e.target.value })
                     }
                     // onChange={(e) => (data.district = e.target.value)}
@@ -415,7 +415,7 @@ const Edit = () => {
                   <Input
                     type={`text`}
                     value={state.rw}
-                    onChange={(e) => setstate({ ...state, rw: e.target.value })}
+                    onChange={e => setstate({ ...state, rw: e.target.value })}
                     // onChange={(e) => (data.rw = e.target.value)}
                   />
                 </div>
@@ -426,7 +426,7 @@ const Edit = () => {
                   <Input
                     type={`text`}
                     value={state.subDistinct}
-                    onChange={(e) =>
+                    onChange={e =>
                       setstate({ ...state, subDistinct: e.target.value })
                     }
                     // onChange={(e) => (data.subDistinct = e.target.value)}
@@ -442,7 +442,7 @@ const Edit = () => {
                   <Input
                     type={`text`}
                     value={state.domicileAddress}
-                    onChange={(e) =>
+                    onChange={e =>
                       setstate({ ...state, domicileAddress: e.target.value })
                     }
                     // onChange={(e) => (data.domicileAddress = e.target.value)}
@@ -453,7 +453,7 @@ const Edit = () => {
                   <Input
                     type={`text`}
                     value={state.domicileCity}
-                    onChange={(e) =>
+                    onChange={e =>
                       setstate({ ...state, domicileCity: e.target.value })
                     }
                     // onChange={(e) => (data.domicileCity = e.target.value)}
@@ -466,7 +466,7 @@ const Edit = () => {
                   <Input
                     type={`text`}
                     value={state.domicileProvince}
-                    onChange={(e) =>
+                    onChange={e =>
                       setstate({ ...state, domicileProvince: e.target.value })
                     }
                     // onChange={(e) => (data.domicileProvince = e.target.value)}
@@ -477,7 +477,7 @@ const Edit = () => {
                   <Input
                     type={`text`}
                     value={state.domicileRt}
-                    onChange={(e) =>
+                    onChange={e =>
                       setstate({ ...state, domicileRt: e.target.value })
                     }
                     // onChange={(e) => (data.domicileRt = e.target.value)}
@@ -490,7 +490,7 @@ const Edit = () => {
                   <Input
                     type={`text`}
                     value={state.domicileDistrict}
-                    onChange={(e) =>
+                    onChange={e =>
                       setstate({ ...state, domicileDistrict: e.target.value })
                     }
                     // onChange={(e) => (data.domicileDistrict = e.target.value)}
@@ -501,7 +501,7 @@ const Edit = () => {
                   <Input
                     type={`text`}
                     value={state.domicileRw}
-                    onChange={(e) =>
+                    onChange={e =>
                       setstate({ ...state, domicileRw: e.target.value })
                     }
                     // onChange={(e) => (data.domicileRw = e.target.value)}
@@ -514,10 +514,10 @@ const Edit = () => {
                   <Input
                     type={`text`}
                     value={state.domicileSubDistinct}
-                    onChange={(e) =>
+                    onChange={e =>
                       setstate({
                         ...state,
-                        domicileSubDistinct: e.target.value,
+                        domicileSubDistinct: e.target.value
                       })
                     }
                     // onChange={(e) => (data.domicileSubDistinct = e.target.value)}
@@ -531,15 +531,15 @@ const Edit = () => {
                 <div>
                   <Label>Assign site</Label>
                   <ReactSelect
-                    name="site"
-                    placeholder="Select a site"
+                    name='site'
+                    placeholder='Select a site'
                     options={siteOption}
                     defaultValue={
-                      sendSite ?
-                        {
-                          value: sendSite.siteId,
-                          label: sendSite.siteName
-                        }
+                      sendSite
+                        ? {
+                            value: sendSite.siteId,
+                            label: sendSite.siteName
+                          }
                         : state.sites
                     }
                     onChange={val => handleOptionSite(val)}
@@ -564,7 +564,7 @@ const Edit = () => {
                   </select> */}
                 </div>
               </div>
-              <div className="flex justify-center mt-6">
+              <div className='flex justify-center mt-6'>
                 <Button
                   paddingVertical={`py-2`}
                   paddingHorizontal={`px-7`}
@@ -581,7 +581,8 @@ const Edit = () => {
                   paddingHorizontal={`px-7`}
                   background={`bg-btn-cancel`}
                   className={`ml-2`}
-                  onClick={() => router.push("/master-corporate")}>
+                  onClick={() => router.push('/master-corporate')}
+                >
                   <Typography className={` font-normal text-sm`}>
                     Cancel
                   </Typography>
@@ -589,15 +590,15 @@ const Edit = () => {
               </div>
             </form>
           </Card>
-          <div className="absolute mt-80 z-20 left-[650px] top-0">
+          <div className='absolute mt-80 z-20 left-[650px] top-0'>
             <ModalConfirmation
               show={showModals}
               confirmation={`Confirmation`}
               onHide={() => setShowModals(false)}
               handleYes={() => {
-                handleEdit()
+                handleEdit();
               }}
-              desc1="Apakah anda yakin akan menyimpan data ini?"
+              desc1='Apakah anda yakin akan menyimpan data ini?'
               isLoading={onSubmit}
             />
           </div>
@@ -608,7 +609,7 @@ const Edit = () => {
               if (state.numberPhone !== state.phoneNumber) {
                 setOtpModal(true);
               } else {
-                router.push("/master-corporate");
+                router.push('/master-corporate');
               }
             }}
             desc1={`Data berhasil disimpan`}
@@ -617,7 +618,7 @@ const Edit = () => {
             show={otpModal}
             onHide={() => {
               setOtpModal(false);
-              router.push("/master-corporate");
+              router.push('/master-corporate');
             }}
             desc1={`No OTP dan link URL berhasil dikirim ke PIC Corporate dengan no handphone berikut ${state.phoneNumber}`}
           />

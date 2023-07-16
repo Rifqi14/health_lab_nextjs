@@ -1,11 +1,11 @@
-import { requestGet, requestPost } from '@config';
+import { requestGet, requestPost } from 'components/config';
 import {
   AUTH_CURRENT_LOGIN_USER,
   AUTH_LOGIN,
   AUTH_LOGIN_ERROR,
   AUTH_LOGOUT
-} from '@constants/Authentication';
-import { setItemLocalStorage } from '@utils/localstorage';
+} from 'components/constants/Authentication';
+import { setItemLocalStorage } from 'components/utils/localstorage';
 
 const configUrl = {
   service: 'users',
@@ -67,7 +67,7 @@ export const authCurrentUser = () => {
       dispatch({
         type: 'ALLOWED_SIDEBAR',
         payload: res.payload.roleModules
-      })
+      });
 
       return res;
     } catch (error) {

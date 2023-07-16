@@ -1,14 +1,14 @@
-import { requestGet } from "@config";
-import axios from "axios";
+import { requestGet } from 'components/config';
+import axios from 'axios';
 
 const configUrl = {
-  service: "branchs",
-  version: "v1",
-  prefix: "api",
+  service: 'branchs',
+  version: 'v1',
+  prefix: 'api'
 };
 
 export const fetchBranchSelectList = () => {
-  return async (dispatch) => {
+  return async dispatch => {
     try {
       const res = await requestGet(
         `${configUrl.prefix}/${configUrl.version}/${configUrl.service}/select-list`
@@ -20,8 +20,8 @@ export const fetchBranchSelectList = () => {
         payload: {
           status: true,
           message: JSON.stringify(error.message),
-          type: "error",
-        },
+          type: 'error'
+        }
       });
     }
   };

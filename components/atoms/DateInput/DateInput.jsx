@@ -1,12 +1,12 @@
-import { parseTime, ymdToDmy } from '@utils/datetime';
+import { parseTime, ymdToDmy } from 'components/utils/datetime';
 import Image from 'next/image';
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
-import assets from '@/public/index';
-import { Portal } from "react-overlays";
+import assets from 'public/index';
+import { Portal } from 'react-overlays';
 
 const CalendarContainer = ({ children }) => {
-  const el = document.getElementById("calendar-portal");
+  const el = document.getElementById('calendar-portal');
 
   return <Portal container={el}>{children}</Portal>;
 };
@@ -61,7 +61,7 @@ const DateInput = props => {
               popperContainer={CalendarContainer}
               showMonthDropdown
               showYearDropdown
-              dropdownMode="select"
+              dropdownMode='select'
               disabled={disabled}
             />
             {icon && (

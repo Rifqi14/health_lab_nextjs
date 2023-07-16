@@ -1,4 +1,4 @@
-import assets from '@/public/index';
+import assets from 'public/index';
 import Image from 'next/image';
 import React, { useRef } from 'react';
 import Typography from '../Typography/Typography';

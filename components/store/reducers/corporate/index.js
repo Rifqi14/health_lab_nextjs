@@ -3,7 +3,7 @@ const {
   CORPORATE_FETCH_SELECT_LIST,
   CORPORATE_ALERT,
   CORPORATE_FETCH_DETAIL
-} = require('@constants/Corporate');
+} = require('components/constants/Corporate');
 
 const initState = {
   dataTable: {

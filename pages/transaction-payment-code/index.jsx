@@ -5,19 +5,22 @@ import {
   Pill,
   ReactSelect,
   Typography
-} from '@atoms';
-import { CORPORATE_TRX_FETCH_DETAIL } from '@constants/CorporateTransaction';
-import LengthChangeValue from '@constants/LengthChange';
-import { PAYMENT_CODE_STATUS, SERVICE_TYPE } from '@constants/ServiceMethod';
-import { SORTING_ORDER } from '@constants/SortingOrder';
+} from 'components/atoms';
+import { CORPORATE_TRX_FETCH_DETAIL } from 'components/constants/CorporateTransaction';
+import LengthChangeValue from 'components/constants/LengthChange';
+import {
+  PAYMENT_CODE_STATUS,
+  SERVICE_TYPE
+} from 'components/constants/ServiceMethod';
+import { SORTING_ORDER } from 'components/constants/SortingOrder';
 import {
   TRANSACTION_FETCH_DOCUMENT_LIST,
   TRANSACTION_FETCH_IN_HOUSE_DETAIL,
   TRANSACTION_FETCH_ITEMS
-} from '@constants/Transaction';
-import { EmptyTable, Pagination } from '@molecules';
-import { MainLayout, Table } from '@organisms';
-import { currencyFormatter } from '@utils/number';
+} from 'components/constants/Transaction';
+import { EmptyTable, Pagination } from 'components/molecules';
+import { MainLayout, Table } from 'components/organisms';
+import { currencyFormatter } from 'components/utils/number';
 import { fetchCorporateTrxDetail } from 'components/store/actions/corporateTrx/corporateTrx';
 import { fetchHouseCallDetail } from 'components/store/actions/housecall';
 import { fetchProductSelectList } from 'components/store/actions/product';
@@ -488,7 +491,9 @@ const TransactionPaymentCode = props => {
                       </td>
                       <td className={`px-[8px] py-[2px] flex justify-center`}>
                         <Pill
-                          type={(item.status || "").toLowerCase().replace(' ', '_')}
+                          type={(item.status || '')
+                            .toLowerCase()
+                            .replace(' ', '_')}
                         />
                       </td>
                     </tr>

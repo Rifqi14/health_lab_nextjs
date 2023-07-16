@@ -1,4 +1,7 @@
-const { TIER_FETCH_SELECT_LIST, TIER_ALERT } = require('@constants/Tier');
+const {
+  TIER_FETCH_SELECT_LIST,
+  TIER_ALERT
+} = require('components/constants/Tier');
 
 const initState = {
   selectList: [],

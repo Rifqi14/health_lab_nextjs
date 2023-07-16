@@ -1,5 +1,5 @@
-import assets from "@/public/index";
-import { requestDelete, requestGet, requestPost } from "@config";
+import assets from 'public/index';
+import { requestDelete, requestGet, requestPost } from 'components/config';
 import {
   Button,
   Card,
@@ -12,19 +12,19 @@ import {
   Pill,
   Textarea,
   TimePicker,
-  Typography,
-} from "@atoms";
+  Typography
+} from 'components/atoms';
 import HouseCallButtonLabel, {
-  StatusAvailableButton,
-} from "@constants/HouseCallButtonLabel";
-import LengthChangeValue from "@constants/LengthChange";
-import Messages from "@constants/PopUpMessage";
-import { SERVICE_TYPE } from "@constants/ServiceMethod";
-import { EmptyTable, Pagination } from "@molecules";
-import { MainLayout, Table } from "@organisms";
-import { isAllOf } from "@reduxjs/toolkit";
-import { currencyFormatter } from "@utils/number";
-import ParseMessage from "@utils/string";
+  StatusAvailableButton
+} from 'components/constants/HouseCallButtonLabel';
+import LengthChangeValue from 'components/constants/LengthChange';
+import Messages from 'components/constants/PopUpMessage';
+import { SERVICE_TYPE } from 'components/constants/ServiceMethod';
+import { EmptyTable, Pagination } from 'components/molecules';
+import { MainLayout, Table } from 'components/organisms';
+import { isAllOf } from '@reduxjs/toolkit';
+import { currencyFormatter } from 'components/utils/number';
+import ParseMessage from 'components/utils/string';
 import {
   checkinItem,
   collectedItem,
@@ -34,160 +34,160 @@ import {
   inputStatusItem,
   inputStatusAntigenItem,
   fetchAntigenDetailData,
-  fetchDownloadResult,
-} from "components/store/actions/housecall";
-import { Field, FieldArray, Form, Formik } from "formik";
-import Head from "next/head";
-import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import * as Yup from "yup";
+  fetchDownloadResult
+} from 'components/store/actions/housecall';
+import { Field, FieldArray, Form, Formik } from 'formik';
+import Head from 'next/head';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import * as Yup from 'yup';
 import {
   uploadDocument,
-  deleteDocument,
-} from "components/store/actions/transaction";
-import ModalConfirmation from "../../../../components/Modals/ModalConfirmation";
+  deleteDocument
+} from 'components/store/actions/transaction';
+import ModalConfirmation from '../../../../components/Modals/ModalConfirmation';
 import {
   sampleCodeValidationSpesialChar,
-  sampleCodeValidationSpace,
-} from "components/constants/SamplecodeValidation";
-import { ymdToDmy } from "@utils/datetime";
+  sampleCodeValidationSpace
+} from 'components/constants/SamplecodeValidation';
+import { ymdToDmy } from 'components/utils/datetime';
 
-const HouseCallSlug = (props) => {
+const HouseCallSlug = props => {
   const router = useRouter();
   const { slug, id } = router.query;
   const dispatch = useDispatch();
-  const selector = useSelector((state) => state);
+  const selector = useSelector(state => state);
   const { transaction } = selector;
   const [selectedFile, setSelectedFile] = useState();
   const [errorMsg, setErrorMsg] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [state, setState] = useState({
-    headline: "Edit House Call",
+    headline: 'Edit House Call',
     breadcrumbs: [
       {
-        link: "/transaction-payment-code",
-        name: "Transaction Payment Code",
+        link: '/transaction-payment-code',
+        name: 'Transaction Payment Code'
       },
       {
         link: `/transaction-payment-code/${id}/house-call/${slug}`,
-        name: "Edit",
-      },
+        name: 'Edit'
+      }
     ],
     pagination: {
       p: 1,
       s: LengthChangeValue[0],
       offset: 0,
       limit: LengthChangeValue[0],
-      limit: LengthChangeValue[0],
+      limit: LengthChangeValue[0]
     },
     formInitialValue: {
-      transaction_id: "123",
-      corporate_name: "Radya Digital",
+      transaction_id: '123',
+      corporate_name: 'Radya Digital',
       total_payment_code: 5,
-      product: "PCR 12 Jam - Rp 275.000",
-      discount: "10%",
-      type_service: "House Call",
-      type_service_code: "house-call",
-      status: "Booked",
-      product: "PCR 12 Jam - Rp 275.000",
-      discount: "10%",
-      type_service: "House Call",
-      type_service_code: "house-call",
-      status: "Booked",
+      product: 'PCR 12 Jam - Rp 275.000',
+      discount: '10%',
+      type_service: 'House Call',
+      type_service_code: 'house-call',
+      status: 'Booked',
+      product: 'PCR 12 Jam - Rp 275.000',
+      discount: '10%',
+      type_service: 'House Call',
+      type_service_code: 'house-call',
+      status: 'Booked',
       isNeedToSendResult: true,
       table: [
         {
           no: 1,
-          payment_code: "BMPaymentCode_1",
-          patient_name: "Budi",
-          nik: "344000000000000",
-          sample_code: "-",
-          status: "Booked",
-          id: 1,
+          payment_code: 'BMPaymentCode_1',
+          patient_name: 'Budi',
+          nik: '344000000000000',
+          sample_code: '-',
+          status: 'Booked',
+          id: 1
         },
         {
           no: 2,
-          payment_code: "BMPaymentCode_2",
-          patient_name: "Budi",
-          nik: "344000000000000",
-          sample_code: "-",
-          status: "Booked",
-          id: 2,
+          payment_code: 'BMPaymentCode_2',
+          patient_name: 'Budi',
+          nik: '344000000000000',
+          sample_code: '-',
+          status: 'Booked',
+          id: 2
         },
         {
           no: 3,
-          payment_code: "BMPaymentCode_3",
-          patient_name: "Budi",
-          nik: "344000000000000",
-          sample_code: "-",
-          status: "Booked",
-          id: 3,
+          payment_code: 'BMPaymentCode_3',
+          patient_name: 'Budi',
+          nik: '344000000000000',
+          sample_code: '-',
+          status: 'Booked',
+          id: 3
         },
         {
           no: 4,
-          payment_code: "BMPaymentCode_4",
-          patient_name: "Budi",
-          nik: "344000000000000",
-          sample_code: "-",
-          status: "Booked",
-          id: 4,
+          payment_code: 'BMPaymentCode_4',
+          patient_name: 'Budi',
+          nik: '344000000000000',
+          sample_code: '-',
+          status: 'Booked',
+          id: 4
         },
         {
           no: 5,
-          payment_code: "BMPaymentCode_5",
-          patient_name: "Budi",
-          nik: "344000000000000",
-          sample_code: "-",
-          status: "Booked",
-          id: 5,
+          payment_code: 'BMPaymentCode_5',
+          patient_name: 'Budi',
+          nik: '344000000000000',
+          sample_code: '-',
+          status: 'Booked',
+          id: 5
         },
         {
-          payment_code: "BMPaymentCode_6",
-          patient_name: "Budi",
-          nik: "344000000000000",
-          sample_code: "-",
-          status: "Booked",
-          id: 6,
-        },
+          payment_code: 'BMPaymentCode_6',
+          patient_name: 'Budi',
+          nik: '344000000000000',
+          sample_code: '-',
+          status: 'Booked',
+          id: 6
+        }
       ],
-      pic: "Ahmad",
-      address: "Jl. Setiabudi No. 6",
-      cost: "1.000.000",
-      note: "",
-      medical: "Ahmad",
-      datetime: "22/09/2022 10:00",
-      pic: "Ahmad",
-      address: "Jl. Setiabudi No. 6",
-      cost: "1.000.000",
-      note: "",
-      medical: "Ahmad",
-      datetime: "22/09/2022 10:00",
+      pic: 'Ahmad',
+      address: 'Jl. Setiabudi No. 6',
+      cost: '1.000.000',
+      note: '',
+      medical: 'Ahmad',
+      datetime: '22/09/2022 10:00',
+      pic: 'Ahmad',
+      address: 'Jl. Setiabudi No. 6',
+      cost: '1.000.000',
+      note: '',
+      medical: 'Ahmad',
+      datetime: '22/09/2022 10:00',
       supportingData: [
         {
           id: 1,
-          file: "file_supporting_1.doc",
-          note: "Keterangan file Supporting data 1",
+          file: 'file_supporting_1.doc',
+          note: 'Keterangan file Supporting data 1'
         },
         {
           id: 2,
-          file: "file_supporting_2.doc",
-          note: "Keterangan file Supporting data 2",
-        },
-      ],
+          file: 'file_supporting_2.doc',
+          note: 'Keterangan file Supporting data 2'
+        }
+      ]
     },
-    uploadData: [{ index: 1, file: "", note: "" }],
+    uploadData: [{ index: 1, file: '', note: '' }],
     isOpenUploadSupportingData: false,
     isOpenUpCollectingAll: false,
     startBooking: new Date(),
     endBooking: new Date(),
-    spkFileName: "File_upload.doc",
-    penawaranFileName: "File_upload.doc",
-    npwpFileName: "File_upload.doc",
-    ktpFileName: "",
-    vendorFileName: "",
+    spkFileName: 'File_upload.doc',
+    penawaranFileName: 'File_upload.doc',
+    npwpFileName: 'File_upload.doc',
+    ktpFileName: '',
+    vendorFileName: '',
     isOpenCheckInConfirmationDialog: false,
     isOpenCollectedConfirmationDialog: false,
     isOpenSavedConfirmationDialog: false,
@@ -200,7 +200,7 @@ const HouseCallSlug = (props) => {
     isOpenOTPSuccessDialog: false,
     isOpenError: false,
     isReadonly: false,
-    isDisabled: true,
+    isDisabled: true
   });
   const [itemId, setItemId] = useState(undefined);
   const [statusCovid, setStatusCovid] = useState(undefined);
@@ -208,7 +208,7 @@ const HouseCallSlug = (props) => {
   const [checkInState, setCheckInState] = useState({
     itemId: undefined,
     sampleCode: undefined,
-    error: false,
+    error: false
   });
   const [patientsData, setPatiendData] = useState(new FormData());
   const [cekPCR, setCekPCR] = useState(undefined);
@@ -219,21 +219,21 @@ const HouseCallSlug = (props) => {
     setOnCreate(true);
     if (cekPCR == true) {
       const data = {
-        result: "Negatif",
+        result: 'Negatif'
       };
-      dispatch(collectedItem(itemId, data)).then((res) => {
+      dispatch(collectedItem(itemId, data)).then(res => {
         if (res.isSuccess && res.statusCode == 200) {
           setState({
             ...state,
             isOpenUpdatedConfirmationDialog: false,
-            isOpenOTPSuccessDialog: true,
+            isOpenOTPSuccessDialog: true
           });
         } else {
           setErrorMsg(res.response?.data.message);
           setState({
             ...state,
             isOpenUpdatedConfirmationDialog: false,
-            isOpenError: true,
+            isOpenError: true
           });
         }
         setOnCreate(false);
@@ -241,21 +241,21 @@ const HouseCallSlug = (props) => {
     } else {
       const data = {
         sampleCode,
-        result: statusCovid,
+        result: statusCovid
       };
-      dispatch(inputStatusAntigenItem(itemId, data)).then((res) => {
+      dispatch(inputStatusAntigenItem(itemId, data)).then(res => {
         if (res.isSuccess && res.statusCode == 200) {
           setState({
             ...state,
             isOpenUpdatedConfirmationDialog: false,
-            isOpenOTPSuccessDialog: true,
+            isOpenOTPSuccessDialog: true
           });
         } else {
           setErrorMsg(res.response?.data.message);
           setState({
             ...state,
             isOpenUpdatedConfirmationDialog: false,
-            isOpenError: true,
+            isOpenError: true
           });
         }
         setOnCreate(false);
@@ -263,25 +263,25 @@ const HouseCallSlug = (props) => {
     }
   };
 
-  const onChangeStartBooking = (value) => {
+  const onChangeStartBooking = value => {
     setState({
       ...state,
       startBooking: value,
-      endBooking: new Date(state.endBooking) < new Date(value) && value,
+      endBooking: new Date(state.endBooking) < new Date(value) && value
     });
   };
 
-  const onChangeEndBooking = (value) => {
+  const onChangeEndBooking = value => {
     setState({
       ...state,
       endBooking:
         new Date(state.startBooking) > new Date(value)
           ? state.startBooking
-          : value,
+          : value
     });
   };
 
-  const onChangeLength = (val) => {
+  const onChangeLength = val => {
     const offset = (1 - 1) * val;
     setState({
       ...state,
@@ -290,12 +290,12 @@ const HouseCallSlug = (props) => {
         s: val,
         p: 1,
         offset: offset,
-        limit: +offset + +val,
-      },
+        limit: +offset + +val
+      }
     });
   };
 
-  const onClickPagination = (val) => {
+  const onClickPagination = val => {
     const offset = (val - 1) * state.pagination.s;
     setState({
       ...state,
@@ -303,34 +303,34 @@ const HouseCallSlug = (props) => {
         ...state.pagination,
         p: val,
         offset: offset,
-        limit: +offset + +state.pagination.s,
-      },
+        limit: +offset + +state.pagination.s
+      }
     });
   };
 
-  const setIsOpenSampleCodeDialog = (value, itemId, type = "") => {
+  const setIsOpenSampleCodeDialog = (value, itemId, type = '') => {
     if (itemId) {
       setCheckInState({
         ...checkInState,
-        itemId: itemId,
+        itemId: itemId
       });
     } else {
       setCheckInState({
         ...checkInState,
         sampleCode: undefined,
-        error: false,
+        error: false
       });
     }
-    if (type === "submit") {
+    if (type === 'submit') {
       setState({
         ...state,
         isOpenSampleCodeDialog: false,
-        isOpenCheckInConfirmationDialog: true,
+        isOpenCheckInConfirmationDialog: true
       });
     } else {
       setState({
         ...state,
-        isOpenSampleCodeDialog: value,
+        isOpenSampleCodeDialog: value
       });
     }
   };
@@ -341,7 +341,7 @@ const HouseCallSlug = (props) => {
     }
     setState({
       ...state,
-      isOpenCheckInConfirmationDialog: value,
+      isOpenCheckInConfirmationDialog: value
     });
   };
 
@@ -351,14 +351,14 @@ const HouseCallSlug = (props) => {
     }
     setState({
       ...state,
-      isOpenCollectedConfirmationDialog: value,
+      isOpenCollectedConfirmationDialog: value
     });
   };
 
-  const setIsOpenSavedConfirmationDialog = (value) => {
+  const setIsOpenSavedConfirmationDialog = value => {
     setState({
       ...state,
-      isOpenSavedConfirmationDialog: value,
+      isOpenSavedConfirmationDialog: value
     });
   };
 
@@ -368,49 +368,49 @@ const HouseCallSlug = (props) => {
     }
     setState({
       ...state,
-      isOpenUpdatedConfirmationDialog: value,
+      isOpenUpdatedConfirmationDialog: value
     });
   };
 
-  const setIsOpenSendResultConfirmationDialog = (value) => {
+  const setIsOpenSendResultConfirmationDialog = value => {
     setState({
       ...state,
-      isOpenSendResultConfirmationDialog: value,
+      isOpenSendResultConfirmationDialog: value
     });
   };
-  const setIsOpenOTPSuccessDialog = (value) => {
+  const setIsOpenOTPSuccessDialog = value => {
     setState({
       ...state,
-      isOpenOTPSuccessDialog: value,
-    });
-  };
-
-  const setIsOpenError = (value) => {
-    setState({
-      ...state,
-      isOpenError: value,
+      isOpenOTPSuccessDialog: value
     });
   };
 
-  const setIsOpenSendResultSuccessDialog = (value) => {
+  const setIsOpenError = value => {
     setState({
       ...state,
-      isOpenSendResultSuccessDialog: value,
+      isOpenError: value
     });
   };
 
-  const setIsOpenDeleteDialog = (value) => {
+  const setIsOpenSendResultSuccessDialog = value => {
     setState({
       ...state,
-      isOpenDeleteDialog: value,
+      isOpenSendResultSuccessDialog: value
     });
   };
 
-  const setIsOpenUploadSupportingData = (value) => {
+  const setIsOpenDeleteDialog = value => {
+    setState({
+      ...state,
+      isOpenDeleteDialog: value
+    });
+  };
+
+  const setIsOpenUploadSupportingData = value => {
     setState({ ...state, isOpenUploadSupportingData: value });
   };
 
-  const setIsOpenUpCollectingAll = (value) => {
+  const setIsOpenUpCollectingAll = value => {
     setState({ ...state, isOpenUpCollectingAll: value });
   };
 
@@ -444,10 +444,10 @@ const HouseCallSlug = (props) => {
         ...state.uploadData,
         {
           index: state.uploadData[state.uploadData.length - 1].index + 1,
-          file: "",
-          note: "",
-        },
-      ],
+          file: '',
+          note: ''
+        }
+      ]
     });
   };
   const onChangeBrowseFile = (e, index) => {
@@ -460,32 +460,32 @@ const HouseCallSlug = (props) => {
     });
     setState({
       ...state,
-      uploadData: upload,
+      uploadData: upload
     });
   };
 
-  const deleteFile = (index) => {
+  const deleteFile = index => {
     const upload = state.uploadData.filter((item, i) => {
       return item.index !== index;
     });
     setState({
       ...state,
-      uploadData: upload,
+      uploadData: upload
     });
   };
 
-  const deleteSupportingData = (documentId) => {
-    dispatch(deleteDocument(documentId)).then((res) => {
+  const deleteSupportingData = documentId => {
+    dispatch(deleteDocument(documentId)).then(res => {
       dispatch(fetchHouseCallDetail(id));
     });
   };
 
   const validationSchema = Yup.object().shape({
     sample: Yup.string()
-      .min(20, "Too Short!")
-      .required("This field is required")
-      .matches(sampleCodeValidationSpesialChar, "No special character")
-      .matches(sampleCodeValidationSpace, "Cant use blankspace"),
+      .min(20, 'Too Short!')
+      .required('This field is required')
+      .matches(sampleCodeValidationSpesialChar, 'No special character')
+      .matches(sampleCodeValidationSpace, 'Cant use blankspace')
   });
 
   const onChangeNote = (e, index) => {
@@ -498,10 +498,10 @@ const HouseCallSlug = (props) => {
     });
     setState({
       ...state,
-      uploadData: upload,
+      uploadData: upload
     });
   };
-  const onSelectFile = (e) => {
+  const onSelectFile = e => {
     if (!e.target.files || e.target.files.length === 0) {
       setSelectedFile(undefined);
     }
@@ -513,12 +513,12 @@ const HouseCallSlug = (props) => {
   const uploadSupportinData = () => {
     state.uploadData.forEach((item, index) => {
       const formData = new FormData();
-      formData.append("TransactonId", id);
-      formData.append("Type", "supporting-data");
-      formData.append("file", item.file);
-      formData.append("notes", item.note);
+      formData.append('TransactonId', id);
+      formData.append('Type', 'supporting-data');
+      formData.append('file', item.file);
+      formData.append('notes', item.note);
 
-      dispatch(uploadDocument(formData)).then((res) => {
+      dispatch(uploadDocument(formData)).then(res => {
         if (res?.statusCode === 200 && index === state.uploadData.length - 1) {
           router.reload();
         }
@@ -526,18 +526,18 @@ const HouseCallSlug = (props) => {
     });
   };
 
-  const removePatientData = (e) => {
+  const removePatientData = e => {
     setIsSuccess(false);
     setSelectedFile(undefined);
   };
 
-  const collectAll = (id) => {
-    dispatch(collectAllItem(id)).then((res) => {
+  const collectAll = id => {
+    dispatch(collectAllItem(id)).then(res => {
       if (res.statusCode == 200) {
         setState({
           ...state,
           isOpenUpCollectingAll: false,
-          isOpenOTPSuccessDialog: true,
+          isOpenOTPSuccessDialog: true
         });
       } else {
         setErrorMsg(res.response.data.message);
@@ -547,17 +547,17 @@ const HouseCallSlug = (props) => {
   };
 
   const submitCheckin = () => {
-    dispatch(checkinItem(itemId, sampleCode)).then((res) => {
+    dispatch(checkinItem(itemId, sampleCode)).then(res => {
       if (res) {
         setState({
           ...state,
-          isOpenCheckInConfirmationDialog: false,
+          isOpenCheckInConfirmationDialog: false
         });
       }
     });
     setState({
       ...state,
-      isOpenCheckInConfirmationDialog: false,
+      isOpenCheckInConfirmationDialog: false
     });
   };
 
@@ -565,86 +565,86 @@ const HouseCallSlug = (props) => {
 
   const headColumns = [
     {
-      key: "no",
-      name: "No",
+      key: 'no',
+      name: 'No'
     },
     {
-      key: "payment_code",
-      name: "Payment Code",
-      className: "text-left",
+      key: 'payment_code',
+      name: 'Payment Code',
+      className: 'text-left'
     },
     {
-      key: "patient_name",
-      name: "Nama Pasien",
-      className: "text-left",
+      key: 'patient_name',
+      name: 'Nama Pasien',
+      className: 'text-left'
     },
     {
-      key: "nik",
-      name: "NIK",
-      className: "text-left",
+      key: 'nik',
+      name: 'NIK',
+      className: 'text-left'
     },
     {
-      key: "sample_code",
-      name: "Sample Code",
+      key: 'sample_code',
+      name: 'Sample Code',
       className: `${
-        state.formInitialValue.status === "Booked" && slug == "edit"
-          ? "hidden"
-          : ""
-      } text-left`,
+        state.formInitialValue.status === 'Booked' && slug == 'edit'
+          ? 'hidden'
+          : ''
+      } text-left`
     },
     {
-      key: "status",
-      name: "Status",
+      key: 'status',
+      name: 'Status',
       className: `${
-        state.formInitialValue.status === "Booked" && slug == "edit"
-          ? "hidden"
-          : ""
-      }`,
+        state.formInitialValue.status === 'Booked' && slug == 'edit'
+          ? 'hidden'
+          : ''
+      }`
     },
     {
-      key: "action",
+      key: 'action',
       name: `${
-        state.formInitialValue.status === "Booked" ||
-        state.formInitialValue.status === "Check In"
-          ? "Action"
-          : "Result"
+        state.formInitialValue.status === 'Booked' ||
+        state.formInitialValue.status === 'Check In'
+          ? 'Action'
+          : 'Result'
       }`,
       className: `${
-        state.formInitialValue.status === "Collected" ||
-        (state.formInitialValue.status === "Booked" && slug == "edit")
-          ? "hidden"
-          : ""
-      }`,
-    },
+        state.formInitialValue.status === 'Collected' ||
+        (state.formInitialValue.status === 'Booked' && slug == 'edit')
+          ? 'hidden'
+          : ''
+      }`
+    }
   ];
 
   const suppDataHeadColumns = [
-    { key: "no", name: "No", className: "w-[3rem] py-[15px] px-[0px]" },
-    { key: "file", name: "File", className: "text-left py-[15px] px-[0px]" },
-    { key: "note", name: "Note", className: "text-left py-[15px] px-[0px]" },
-    { key: "action", name: "", className: "text-left py-[15px] px-[0px]" },
+    { key: 'no', name: 'No', className: 'w-[3rem] py-[15px] px-[0px]' },
+    { key: 'file', name: 'File', className: 'text-left py-[15px] px-[0px]' },
+    { key: 'note', name: 'Note', className: 'text-left py-[15px] px-[0px]' },
+    { key: 'action', name: '', className: 'text-left py-[15px] px-[0px]' }
   ];
 
   const validationSchemaSampleCode = Yup.object().shape({
     sampleCode: Yup.string()
-      .required("Please fill out this field")
-      .min(20, "Minimal 20 character")
-      .max(25, "Maximal 25 character")
-      .matches(sampleCodeValidationSpesialChar, "No special character")
-      .matches(sampleCodeValidationSpace, "Cant use blankspace"),
+      .required('Please fill out this field')
+      .min(20, 'Minimal 20 character')
+      .max(25, 'Maximal 25 character')
+      .matches(sampleCodeValidationSpesialChar, 'No special character')
+      .matches(sampleCodeValidationSpace, 'Cant use blankspace')
   });
 
   const UploadControl = ({ children, value, onChange, disabled, accept }) => {
     return (
-      <label htmlFor="contained-button-file" className="m-0 w-100">
+      <label htmlFor='contained-button-file' className='m-0 w-100'>
         <input
           value={value}
           accept={accept}
           disabled={disabled}
-          style={{ display: "none" }}
-          id="contained-button-file"
+          style={{ display: 'none' }}
+          id='contained-button-file'
           multiple
-          type="file"
+          type='file'
           onChange={disabled ? () => {} : onChange}
         />
         {children}
@@ -661,28 +661,28 @@ const HouseCallSlug = (props) => {
   };
 
   useEffect(() => {
-    if (slug == "detail") {
+    if (slug == 'detail') {
       setState({
         ...state,
         isReadonly: true,
         isDisabled: false,
-        headline: "Detail House Call",
+        headline: 'Detail House Call',
         breadcrumbs: [
           {
-            link: "/transaction-payment-code",
-            name: "Transaction Payment Code",
+            link: '/transaction-payment-code',
+            name: 'Transaction Payment Code'
           },
           {
             link: `/transaction-payment-code/${id}/house-call/${slug}`,
-            name: "Detail",
-          },
-        ],
+            name: 'Detail'
+          }
+        ]
       });
     }
     if (state.isOpenSendResultSuccessDialog) {
       setState({
         ...state,
-        isOpenSendResultConfirmationDialog: false,
+        isOpenSendResultConfirmationDialog: false
       });
     }
     if (id) {
@@ -694,8 +694,8 @@ const HouseCallSlug = (props) => {
       <Head>
         <title>Bumame CMS</title>
         <link
-          rel="icon"
-          href={`${process.env.NEXT_PUBLIC_PREFIX_URL || ""}/favicon.ico`}
+          rel='icon'
+          href={`${process.env.NEXT_PUBLIC_PREFIX_URL || ''}/favicon.ico`}
         />
       </Head>
       <MainLayout headline={state.headline} breadcrumb={state.breadcrumbs}>
@@ -707,7 +707,7 @@ const HouseCallSlug = (props) => {
             {({ values, errors }) => (
               <Form>
                 {/* Upper Section Form */}
-                {slug == "detail" && (
+                {slug == 'detail' && (
                   <Card
                     rounded={`rounded-lg`}
                     shadow={`shadow-lg`}
@@ -720,8 +720,8 @@ const HouseCallSlug = (props) => {
                         <Label htmlFor={`id`}>Transaction Id</Label>
                         <Field
                           component={Input}
-                          placeholder="Transaction ID"
-                          name="id"
+                          placeholder='Transaction ID'
+                          name='id'
                           readonly={state.isReadonly}
                           disabled={state.isDisabled}
                         />
@@ -731,9 +731,9 @@ const HouseCallSlug = (props) => {
                         <Field
                           component={Input}
                           placeholder={`Type Service`}
-                          name="serviceType"
+                          name='serviceType'
                           value={
-                            SERVICE_TYPE.find((obj) => {
+                            SERVICE_TYPE.find(obj => {
                               if (obj?.value === values?.serviceType) {
                                 return obj?.label;
                               }
@@ -747,11 +747,11 @@ const HouseCallSlug = (props) => {
                       <div className={`grid gap-4 md:grid-cols-2`}>
                         <div>
                           <Label className={`pb-2`}>Status</Label>
-                          <div className="inline-flex">
+                          <div className='inline-flex'>
                             <Pill
                               type={values.statusValue
                                 .toLowerCase()
-                                .replace(" ", "_")}
+                                .replace(' ', '_')}
                             />
                           </div>
                         </div>
@@ -765,7 +765,7 @@ const HouseCallSlug = (props) => {
                         <Field
                           component={Input}
                           placeholder={`Corporate Name`}
-                          name="corporateName"
+                          name='corporateName'
                           readonly={state.isReadonly}
                           disabled={state.isDisabled}
                         />
@@ -775,7 +775,7 @@ const HouseCallSlug = (props) => {
                         <Field
                           component={Input}
                           placeholder={`Corporate Name`}
-                          name="productName"
+                          name='productName'
                           value={`${values.productName} - ${currencyFormatter(
                             values.productPrice
                           )}`}
@@ -791,7 +791,7 @@ const HouseCallSlug = (props) => {
                         <Field
                           component={Input}
                           placeholder={`Total Payment Code`}
-                          name="qty"
+                          name='qty'
                           readonly={state.isReadonly}
                           disabled={state.isDisabled}
                         />
@@ -801,8 +801,8 @@ const HouseCallSlug = (props) => {
                         <Field
                           component={Input}
                           placeholder={`Discount`}
-                          name="discount"
-                          value={values.discount + "%"}
+                          name='discount'
+                          value={values.discount + '%'}
                           readonly={state.isReadonly}
                           disabled={state.isDisabled}
                         />
@@ -814,7 +814,7 @@ const HouseCallSlug = (props) => {
                         <Field
                           component={Input}
                           placeholder={`Total Payment Code`}
-                          name="site.siteName"
+                          name='site.siteName'
                           readonly={state.isReadonly}
                           disabled={state.isDisabled}
                         />
@@ -823,7 +823,7 @@ const HouseCallSlug = (props) => {
                     </div>
                   </Card>
                 )}
-                {slug == "edit" && (
+                {slug == 'edit' && (
                   <Card
                     rounded={`rounded-lg`}
                     shadow={`shadow-lg`}
@@ -837,7 +837,7 @@ const HouseCallSlug = (props) => {
                         <Field
                           component={Input}
                           placeholder={`Corporate Name`}
-                          name="corporateName"
+                          name='corporateName'
                           readonly={state.isReadonly}
                           disabled={state.isDisabled}
                         />
@@ -847,7 +847,7 @@ const HouseCallSlug = (props) => {
                         <Field
                           component={Input}
                           placeholder={`Corporate Name`}
-                          name="productName"
+                          name='productName'
                           value={`${values.productName} - ${currencyFormatter(
                             values.productPrice
                           )}`}
@@ -858,11 +858,11 @@ const HouseCallSlug = (props) => {
                       <div className={`grid md:grid-cols-2`}>
                         <div>
                           <Label className={`pb-2`}>Status</Label>
-                          <div className="inline-flex">
+                          <div className='inline-flex'>
                             <Pill
                               type={values.statusValue
                                 .toLowerCase()
-                                .replace(" ", "_")}
+                                .replace(' ', '_')}
                             />
                           </div>
                         </div>
@@ -876,7 +876,7 @@ const HouseCallSlug = (props) => {
                         <Field
                           component={Input}
                           placeholder={`Total Payment Code`}
-                          name="qty"
+                          name='qty'
                           readonly={state.isReadonly}
                           disabled={state.isDisabled}
                         />
@@ -886,8 +886,8 @@ const HouseCallSlug = (props) => {
                         <Field
                           component={Input}
                           placeholder={`Discount`}
-                          name="discount"
-                          value={values.discount + "%"}
+                          name='discount'
+                          value={values.discount + '%'}
                           readonly={state.isReadonly}
                           disabled={state.isDisabled}
                         />
@@ -900,7 +900,7 @@ const HouseCallSlug = (props) => {
                         <Field
                           component={Input}
                           placeholder={`Total Payment Code`}
-                          name="site.siteName"
+                          name='site.siteName'
                           readonly={state.isReadonly}
                           disabled={state.isDisabled}
                         />
@@ -921,10 +921,10 @@ const HouseCallSlug = (props) => {
                     <div
                       className={`flex items-end justify-end align-end ${
                         values.isNeedToSendResult === false &&
-                        slug == "detail" &&
-                        values.statusValue.toLowerCase() == "checkin"
-                          ? ""
-                          : "hidden"
+                        slug == 'detail' &&
+                        values.statusValue.toLowerCase() == 'checkin'
+                          ? ''
+                          : 'hidden'
                       }`}
                     >
                       <Button
@@ -942,9 +942,9 @@ const HouseCallSlug = (props) => {
                   </div>
                   <div
                     className={`${
-                      values.statusValue === "Booked" && slug == "edit"
-                        ? ""
-                        : "hidden"
+                      values.statusValue === 'Booked' && slug == 'edit'
+                        ? ''
+                        : 'hidden'
                     }`}
                   >
                     <div className={`flex my-6`}>
@@ -953,7 +953,7 @@ const HouseCallSlug = (props) => {
                       >
                         <Button
                           className={`bg-[#349EFF] disabled:bg-[#D8DFE5]`}
-                          htmlFor="formId"
+                          htmlFor='formId'
                           disabled={disabledUploadBtn}
                         >
                           <UploadControl
@@ -1018,7 +1018,7 @@ const HouseCallSlug = (props) => {
                     </div>
                   </div>
                   <FieldArray name={`items`}>
-                    {(arrayHelpers) => (
+                    {arrayHelpers => (
                       <div
                         className={`w-full h-full overflow-x-auto space-y-[16px] flex flex-col rounded border border-[#E6E6E6]`}
                       >
@@ -1048,9 +1048,9 @@ const HouseCallSlug = (props) => {
                                     <td
                                       className={` ${
                                         state.formInitialValue.status ===
-                                          "Booked" && slug == "edit"
-                                          ? "pr-5"
-                                          : ""
+                                          'Booked' && slug == 'edit'
+                                          ? 'pr-5'
+                                          : ''
                                       }`}
                                     >
                                       <Field
@@ -1059,15 +1059,15 @@ const HouseCallSlug = (props) => {
                                         name={`items[${key}].identityName`}
                                         readonly={state.isReadonly}
                                         disabled={state.isDisabled}
-                                        placeholder="Nama Pasien"
+                                        placeholder='Nama Pasien'
                                       />
                                     </td>
                                     <td
                                       className={`${
                                         state.formInitialValue.status ===
-                                          "Booked" && slug == "edit"
-                                          ? "pr-5"
-                                          : ""
+                                          'Booked' && slug == 'edit'
+                                          ? 'pr-5'
+                                          : ''
                                       }`}
                                     >
                                       <Field
@@ -1076,29 +1076,29 @@ const HouseCallSlug = (props) => {
                                         name={`items[${key}].identityNumber`}
                                         readonly={state.isReadonly}
                                         disabled={state.isDisabled}
-                                        placeholder="NIK"
+                                        placeholder='NIK'
                                       />
                                     </td>
                                     <td
                                       className={`text-left ${
-                                        slug == "edit" ? "hidden" : ""
+                                        slug == 'edit' ? 'hidden' : ''
                                       }`}
                                     >
                                       <Typography>
                                         {item.sampleCode
                                           ? item.sampleCode
-                                          : "-"}
+                                          : '-'}
                                       </Typography>
                                     </td>
                                     <td
                                       className={`px-6 text-center h-full w-fit ${
-                                        slug == "edit" ? "hidden" : ""
+                                        slug == 'edit' ? 'hidden' : ''
                                       }`}
                                     >
                                       <Pill
                                         type={item.status
                                           .toLowerCase()
-                                          .replace(" ", "_")}
+                                          .replace(' ', '_')}
                                         fit={false}
                                       >
                                         {item.status}
@@ -1107,16 +1107,16 @@ const HouseCallSlug = (props) => {
 
                                     <td
                                       className={`pr-2 ${
-                                        slug == "detail" ? "" : "hidden"
+                                        slug == 'detail' ? '' : 'hidden'
                                       }`}
                                     >
-                                      {item.status === "Booked" ||
-                                      item.status == "CheckIn" ? (
+                                      {item.status === 'Booked' ||
+                                      item.status == 'CheckIn' ? (
                                         <>
                                           <Button
                                             onClick={
                                               item.status.toLowerCase() !=
-                                              "checkin"
+                                              'checkin'
                                                 ? () =>
                                                     setIsOpenSampleCodeDialog(
                                                       true,
@@ -1133,16 +1133,16 @@ const HouseCallSlug = (props) => {
                                             className={`${
                                               item.status
                                                 .toLowerCase()
-                                                .replace(" ", "_") === "booked"
-                                                ? "bg-label-completed-text hover:bg-label-completed-text/80"
-                                                : "bg-label-collected-text hover:bg-label-collected-text/80"
+                                                .replace(' ', '_') === 'booked'
+                                                ? 'bg-label-completed-text hover:bg-label-completed-text/80'
+                                                : 'bg-label-collected-text hover:bg-label-collected-text/80'
                                             } rounded-lg text-white disabled:bg-[#D8DFE5] disabled:hover:bg-[#D8DFE5]`}
                                             disabled={
                                               item.status
                                                 .toLowerCase()
-                                                .replace(" ", "_") ==
-                                                "collected" ||
-                                              item.identityName == ""
+                                                .replace(' ', '_') ==
+                                                'collected' ||
+                                              item.identityName == ''
                                             }
                                           >
                                             <Typography
@@ -1150,9 +1150,9 @@ const HouseCallSlug = (props) => {
                                             >
                                               {item.status
                                                 .toLowerCase()
-                                                .replace(" ", "_") == "booked"
-                                                ? "Check In"
-                                                : "Collected"}
+                                                .replace(' ', '_') == 'booked'
+                                                ? 'Check In'
+                                                : 'Collected'}
                                             </Typography>
                                           </Button>
                                         </>
@@ -1161,12 +1161,12 @@ const HouseCallSlug = (props) => {
                                           href={
                                             item.resultUrl
                                               ? item.resultUrl
-                                              : "#"
+                                              : '#'
                                           }
-                                          target="_blank"
+                                          target='_blank'
                                         >
                                           {item.result.toLowerCase() !==
-                                          "reswab" ? (
+                                          'reswab' ? (
                                             <>
                                               <div>
                                                 <Button
@@ -1180,16 +1180,16 @@ const HouseCallSlug = (props) => {
                                                   }
                                                   className={`${
                                                     item.status.toLowerCase() ===
-                                                    "completed"
-                                                      ? "bg-label-waiting-result-text hover:bg-label-waiting-result-text/80 rounded-lg text-white "
-                                                      : "bg-gray-400 text-white"
+                                                    'completed'
+                                                      ? 'bg-label-waiting-result-text hover:bg-label-waiting-result-text/80 rounded-lg text-white '
+                                                      : 'bg-gray-400 text-white'
                                                   }`}
                                                   disabled={
                                                     item.status.toLowerCase() !==
-                                                    "completed"
+                                                    'completed'
                                                   }
                                                 >
-                                                  <Typography className="font-normal text-sm">
+                                                  <Typography className='font-normal text-sm'>
                                                     Download PDF
                                                   </Typography>
                                                 </Button>
@@ -1200,7 +1200,7 @@ const HouseCallSlug = (props) => {
                                               <Pill
                                                 type={item.result
                                                   .toLowerCase()
-                                                  .replace(" ", "_")}
+                                                  .replace(' ', '_')}
                                               />
                                             </>
                                           )}
@@ -1228,7 +1228,7 @@ const HouseCallSlug = (props) => {
                             total={
                               transaction.items ? transaction.items.length : 0
                             }
-                            onClick={(value) => onClickPagination(value)}
+                            onClick={value => onClickPagination(value)}
                             currentPage={state.pagination.p}
                           />
                         </div>
@@ -1247,24 +1247,24 @@ const HouseCallSlug = (props) => {
                     <div></div>
                     <div></div>
                     <div>
-                      <Label htmlFor={"picName"}>PIC</Label>
+                      <Label htmlFor={'picName'}>PIC</Label>
                       <Field
-                        placeholder="PIC Name"
+                        placeholder='PIC Name'
                         component={Input}
                         name={`picName`}
                         readonly={state.isReadonly}
                         disabled={state.isDisabled}
                         value={
-                          values?.picName === ""
+                          values?.picName === ''
                             ? values?.corporateName
                             : values?.picName
                         }
                       />
                     </div>
                     <div>
-                      <Label htmlFor={"additionalCost"}>Cost Tambahan​</Label>
+                      <Label htmlFor={'additionalCost'}>Cost Tambahan​</Label>
                       <Field
-                        placeholder="Cost Tambahan​"
+                        placeholder='Cost Tambahan​'
                         component={Input}
                         name={`additionalCost`}
                         value={currencyFormatter(values.additionalCost)}
@@ -1274,9 +1274,9 @@ const HouseCallSlug = (props) => {
                     </div>
                     <div></div>
                     <div>
-                      <Label htmlFor={"address"}>Alamat</Label>
+                      <Label htmlFor={'address'}>Alamat</Label>
                       <Field
-                        placeholder="Alamat"
+                        placeholder='Alamat'
                         component={Input}
                         name={`address`}
                         readonly={state.isReadonly}
@@ -1284,10 +1284,10 @@ const HouseCallSlug = (props) => {
                       />
                     </div>
                     <div>
-                      <Label htmlFor={"notes"}>Description</Label>
+                      <Label htmlFor={'notes'}>Description</Label>
                       {state.isReadonly ? (
                         <Field
-                          placeholder="Description"
+                          placeholder='Description'
                           component={Input}
                           name={`notes`}
                           readonly={state.isReadonly}
@@ -1295,7 +1295,7 @@ const HouseCallSlug = (props) => {
                         />
                       ) : (
                         <Field
-                          placeholder="Description"
+                          placeholder='Description'
                           component={Textarea}
                           name={`notes`}
                           rows={3}
@@ -1317,9 +1317,9 @@ const HouseCallSlug = (props) => {
                     <div></div>
                     <div></div>
                     <div>
-                      <Label htmlFor={"pic"}>Tenaga Kesehatan</Label>
+                      <Label htmlFor={'pic'}>Tenaga Kesehatan</Label>
                       <Field
-                        placeholder="Tenaga Kesehatan"
+                        placeholder='Tenaga Kesehatan'
                         component={Input}
                         name={`schedule.pic`}
                         readonly={state.isReadonly}
@@ -1329,9 +1329,9 @@ const HouseCallSlug = (props) => {
                     <div></div>
                     <div></div>
                     <div>
-                      <Label htmlFor={"booking_date"}>Booking Date</Label>
+                      <Label htmlFor={'booking_date'}>Booking Date</Label>
                       <Field
-                        placeholder="Booking Date"
+                        placeholder='Booking Date'
                         component={Input}
                         name={`schedule.bookingDate`}
                         value={ymdToDmy(values?.schedule?.bookingDate)}
@@ -1340,20 +1340,20 @@ const HouseCallSlug = (props) => {
                       />
                     </div>
                     <div>
-                      <Label htmlFor={"booking_time"}>Booking Time</Label>
+                      <Label htmlFor={'booking_time'}>Booking Time</Label>
                       <Field
-                        placeholder="Booking Time"
+                        placeholder='Booking Time'
                         component={Input}
                         name={`schedule.timeStart`}
                         value={
                           values.schedule?.timeStart && values.schedule?.timeEnd
-                            ? `${("" + values.schedule?.timeStart)
-                                .padStart(4, "0")
-                                .insert(2, ":")} - ${(
-                                "" + values.schedule?.timeEnd
+                            ? `${('' + values.schedule?.timeStart)
+                                .padStart(4, '0')
+                                .insert(2, ':')} - ${(
+                                '' + values.schedule?.timeEnd
                               )
-                                .padStart(4, "0")
-                                .insert(2, ":")}`
+                                .padStart(4, '0')
+                                .insert(2, ':')}`
                             : null
                         }
                         readonly={state.isReadonly}
@@ -1368,7 +1368,7 @@ const HouseCallSlug = (props) => {
                     </Typography>
                   </div>
                   <FieldArray name={`documents`}>
-                    {(arrayHelpers) => (
+                    {arrayHelpers => (
                       <div
                         className={`w-2/3 h-full mb-6 overflow-x-auto space-y-[16px] flex flex-col rounded border border-[#E6E6E6]`}
                       >
@@ -1444,14 +1444,14 @@ const HouseCallSlug = (props) => {
                       {StatusAvailableButton.includes(
                         state.formInitialValue.status
                           .toLowerCase()
-                          .replace(" ", "_")
+                          .replace(' ', '_')
                       ) && (
                         <Button
                           className={`bg-label-completed-text rounded-lg text-white mr-6`}
                           onClick={() => {
                             state.formInitialValue.status
                               .toLowerCase()
-                              .replace(" ", "_") == "collected"
+                              .replace(' ', '_') == 'collected'
                               ? setIsOpenUpdatedConfirmationDialog(
                                   true,
                                   item.id
@@ -1464,7 +1464,7 @@ const HouseCallSlug = (props) => {
                               HouseCallButtonLabel[
                                 state.formInitialValue.status
                                   .toLowerCase()
-                                  .replace(" ", "_")
+                                  .replace(' ', '_')
                               ]
                             }
                           </Typography>
@@ -1472,7 +1472,7 @@ const HouseCallSlug = (props) => {
                       )}
                     </div>
                     <div>
-                      {slug === "edit" && (
+                      {slug === 'edit' && (
                         <Button
                           background={
                             selectedFile !== undefined
@@ -1513,19 +1513,19 @@ const HouseCallSlug = (props) => {
         )}
 
         <Modal
-          setIsOpen={(val) => setIsOpenCollectedConfirmationDialog(val)}
+          setIsOpen={val => setIsOpenCollectedConfirmationDialog(val)}
           width={`w-[27rem]`}
           title={`Confirmation`}
           isOpen={state.isOpenCollectedConfirmationDialog}
         >
           <Typography>
-            {ParseMessage(Messages.checkInConfirmation, "Collected")}
+            {ParseMessage(Messages.checkInConfirmation, 'Collected')}
           </Typography>
           <div className={`pt-10`}>
             <Button
               onClick={() => {
                 if (itemId) {
-                  dispatch(collectedItem(itemId)).then((res) => {
+                  dispatch(collectedItem(itemId)).then(res => {
                     if (res) {
                       setItemId(undefined);
                       setIsOpenCollectedConfirmationDialog(false);
@@ -1548,7 +1548,7 @@ const HouseCallSlug = (props) => {
         {/* Checkin Input Sample Code */}
         {state.isOpenSampleCodeDialog && (
           <Modal
-            setIsOpen={(val) => setIsOpenSampleCodeDialog(val)}
+            setIsOpen={val => setIsOpenSampleCodeDialog(val)}
             width={`w-[27rem]`}
             title={`Check In`}
             isOpen={state.isOpenSampleCodeDialog}
@@ -1556,28 +1556,28 @@ const HouseCallSlug = (props) => {
             <Formik
               initialValues={checkInState}
               validationSchema={validationSchemaSampleCode}
-              onSubmit={(values) => {
+              onSubmit={values => {
                 setCheckInState({
                   itemId: values.itemId,
-                  sampleCode: values.sampleCode,
+                  sampleCode: values.sampleCode
                 });
                 setState({
                   ...state,
                   isOpenCheckInConfirmationDialog: true,
-                  isOpenSampleCodeDialog: false,
+                  isOpenSampleCodeDialog: false
                 });
               }}
               enableReinitialize
             >
               {({ values, errors, touched, setFieldValue }) => (
-                <Form className="w-full flex flex-col items-center">
+                <Form className='w-full flex flex-col items-center'>
                   <Typography>Masukan Sample Code</Typography>
-                  <div className="w-full pt-4">
+                  <div className='w-full pt-4'>
                     <Field
-                      name="sampleCode"
+                      name='sampleCode'
                       component={Input}
-                      type="text"
-                      placeholder="Sample Code"
+                      type='text'
+                      placeholder='Sample Code'
                     />
                     {errors &&
                       errors.items &&
@@ -1587,25 +1587,25 @@ const HouseCallSlug = (props) => {
                       touched.items &&
                       touched.items[key] &&
                       touched.items[key].sampleCode && (
-                        <p className="mt-2 text-sm text-red-600 dark:text-red-500">
+                        <p className='mt-2 text-sm text-red-600 dark:text-red-500'>
                           {errors.items[key].sampleCode}
                         </p>
                       )}
                     {checkInState.error && (
-                      <p className="mt-2 text-sm text-red-600 dark:text-red-500">
+                      <p className='mt-2 text-sm text-red-600 dark:text-red-500'>
                         Sample Code Exist
                       </p>
                     )}
                     <Field
-                      name="itemId"
+                      name='itemId'
                       component={Input}
-                      type="hidden"
-                      placeholder="Item ID"
+                      type='hidden'
+                      placeholder='Item ID'
                     />
                   </div>
                   <div className={`pt-10`}>
                     <Button
-                      type="submit"
+                      type='submit'
                       className={`bg-btnBlue rounded-lg hover:bg-[#008AEC] text-white mr-5`}
                     >
                       <Typography>Submit</Typography>
@@ -1625,13 +1625,13 @@ const HouseCallSlug = (props) => {
         {/* Checkin Confirmation Dialog */}
         {state.isOpenCheckInConfirmationDialog && (
           <Modal
-            setIsOpen={(val) => setIsOpenCheckInConfirmationDialog(val)}
+            setIsOpen={val => setIsOpenCheckInConfirmationDialog(val)}
             width={`w-[27rem]`}
             title={`Confirmation`}
             isOpen={state.isOpenCheckInConfirmationDialog}
           >
             <Typography>
-              {ParseMessage(Messages.checkInConfirmation, "Check In")}
+              {ParseMessage(Messages.checkInConfirmation, 'Check In')}
             </Typography>
             <div className={`pt-10`}>
               <Button
@@ -1639,27 +1639,27 @@ const HouseCallSlug = (props) => {
                   if (checkInState.itemId && checkInState.sampleCode) {
                     dispatch(
                       checkinItem(checkInState.itemId, {
-                        sampleCode: checkInState.sampleCode,
+                        sampleCode: checkInState.sampleCode
                       })
-                    ).then((res) => {
+                    ).then(res => {
                       if (res.isSuccess && res.statusCode == 200) {
                         setIsOpenCheckInConfirmationDialog(false);
                         dispatch(fetchHouseCallDetail(id));
                         setCheckInState({
                           itemId: undefined,
                           sampleCode: undefined,
-                          error: false,
+                          error: false
                         });
                       } else {
                         setState({
                           ...state,
                           isOpenCheckInConfirmationDialog: false,
-                          isOpenError: true,
+                          isOpenError: true
                         });
                         setCheckInState({
                           itemId: checkInState.itemId,
                           sampleCode: checkInState.sampleCode,
-                          error: true,
+                          error: true
                         });
                         setErrorMsg(res.response?.data.message);
                       }
@@ -1680,7 +1680,7 @@ const HouseCallSlug = (props) => {
           </Modal>
         )}
         <Modal
-          setIsOpen={(val) => setIsOpenSavedConfirmationDialog(val)}
+          setIsOpen={val => setIsOpenSavedConfirmationDialog(val)}
           width={`w-[27rem]`}
           title={`Confirmation`}
           isOpen={state.isOpenSavedConfirmationDialog}
@@ -1692,14 +1692,14 @@ const HouseCallSlug = (props) => {
                 setIsOpenSavedConfirmationDialog(false);
                 const data = new FormData();
                 if (selectedFile) {
-                  data.append("file", selectedFile, selectedFile.name);
-                  dispatch(completeIdentityData(id, data)).then((res) => {
+                  data.append('file', selectedFile, selectedFile.name);
+                  dispatch(completeIdentityData(id, data)).then(res => {
                     if (res?.isSuccess == true) {
                       setIsOpenOTPSuccessDialog(true);
                       setState({
                         ...state,
                         isOpenSavedConfirmationDialog: false,
-                        isOpenOTPSuccessDialog: false,
+                        isOpenOTPSuccessDialog: false
                       });
                       dispatch(fetchHouseCallDetail(id));
                       router.push(
@@ -1710,7 +1710,7 @@ const HouseCallSlug = (props) => {
                       setState({
                         ...state,
                         isOpenSavedConfirmationDialog: false,
-                        isOpenError: true,
+                        isOpenError: true
                       });
                     }
                   });
@@ -1730,7 +1730,7 @@ const HouseCallSlug = (props) => {
         </Modal>
         {state.isOpenUpdatedConfirmationDialog && (
           <Modal
-            setIsOpen={(val) => setIsOpenUpdatedConfirmationDialog(val)}
+            setIsOpen={val => setIsOpenUpdatedConfirmationDialog(val)}
             width={`w-[28rem]`}
             title={`Confirmation`}
             isOpen={state.isOpenUpdatedConfirmationDialog}
@@ -1756,18 +1756,18 @@ const HouseCallSlug = (props) => {
               >
                 {onCreate ? (
                   <svg
-                    class="inline mr-2 w-4 h-4 text-gray-200 animate-spin dark:text-gray-600 fill-[#FFF] dark:fill-gray-300"
-                    viewBox="0 0 100 101"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
+                    class='inline mr-2 w-4 h-4 text-gray-200 animate-spin dark:text-gray-600 fill-[#FFF] dark:fill-gray-300'
+                    viewBox='0 0 100 101'
+                    fill='none'
+                    xmlns='http://www.w3.org/2000/svg'
                   >
                     <path
-                      d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                      fill="currentColor"
+                      d='M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z'
+                      fill='currentColor'
                     />
                     <path
-                      d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                      fill="currentFill"
+                      d='M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z'
+                      fill='currentFill'
                     />
                   </svg>
                 ) : null}
@@ -1783,7 +1783,7 @@ const HouseCallSlug = (props) => {
           </Modal>
         )}
         <Modal
-          setIsOpen={(val) => setIsOpenSendResultConfirmationDialog(val)}
+          setIsOpen={val => setIsOpenSendResultConfirmationDialog(val)}
           width={`w-[27rem]`}
           title={`Confirmation`}
           isOpen={state.isOpenSendResultConfirmationDialog}
@@ -1812,7 +1812,7 @@ const HouseCallSlug = (props) => {
           </div>
         </Modal>
         <Modal
-          setIsOpen={(val) => setIsOpenSendResultSuccessDialog(val)}
+          setIsOpen={val => setIsOpenSendResultSuccessDialog(val)}
           width={`w-[27rem]`}
           title={`Success`}
           headless
@@ -1842,7 +1842,7 @@ const HouseCallSlug = (props) => {
           </div>
         </Modal>
         <Modal
-          setIsOpen={(val) => setIsOpenDeleteDialog(val)}
+          setIsOpen={val => setIsOpenDeleteDialog(val)}
           width={`w-[27rem]`}
           title={`Success`}
           headless
@@ -1874,7 +1874,7 @@ const HouseCallSlug = (props) => {
           </div>
         </Modal>
         <Modal
-          setIsOpen={(val) => setIsOpenUploadSupportingData(val)}
+          setIsOpen={val => setIsOpenUploadSupportingData(val)}
           width={`w-[50rem]`}
           title={`Confirmation`}
           isOpen={state.isOpenUploadSupportingData}
@@ -1904,11 +1904,11 @@ const HouseCallSlug = (props) => {
                       <div className={`w-6/12 mr-2`}>
                         <div className={`border p-3 rounded-md`}>
                           <InputFile
-                            onChange={(e) => onChangeBrowseFile(e, item.index)}
+                            onChange={e => onChangeBrowseFile(e, item.index)}
                             name={`file[${item.index}]`}
                             fileName={
                               item.file?.name &&
-                              item.file?.name.substring(0, 12) + "..."
+                              item.file?.name.substring(0, 12) + '...'
                             }
                             className={`bg-[#1BC5BD] text-[#FFF]`}
                             isWhite
@@ -1919,7 +1919,7 @@ const HouseCallSlug = (props) => {
                         <Textarea
                           cols={4}
                           name={`note[${item.index}]`}
-                          onChange={(e) => onChangeNote(e, item.index)}
+                          onChange={e => onChangeNote(e, item.index)}
                         />
                       </div>
                       <div className={`w-1/12 ml-2 justify-self-end`}>
@@ -1970,7 +1970,7 @@ const HouseCallSlug = (props) => {
           </form>
         </Modal>
         <Modal
-          setIsOpen={(val) => setIsOpenUpCollectingAll(val)}
+          setIsOpen={val => setIsOpenUpCollectingAll(val)}
           width={`w-[50rem]`}
           title={`Confirmation`}
           isOpen={state.isOpenUpCollectingAll}
@@ -1999,7 +1999,7 @@ const HouseCallSlug = (props) => {
         </Modal>
         {/** Modal Input Sample Code */}
         <Modal
-          setIsOpen={(val) => setIsOpenUpResultConfirmation(val)}
+          setIsOpen={val => setIsOpenUpResultConfirmation(val)}
           width={`w-[50rem]`}
           title={`Confirmation`}
           isOpen={state.isOpenResultConfirmation}
@@ -2013,11 +2013,11 @@ const HouseCallSlug = (props) => {
             <Button
               className={`bg-[#1BC5BD] rounded-lg hover:bg-[#1BC5BD] text-white mr-5`}
               onClick={() => {
-                setStatusCovid("Positive");
+                setStatusCovid('Positive');
                 setState({
                   ...state,
                   isOpenResultConfirmation: false,
-                  isOpenUpdatedConfirmationDialog: true,
+                  isOpenUpdatedConfirmationDialog: true
                 });
               }}
             >
@@ -2025,11 +2025,11 @@ const HouseCallSlug = (props) => {
             </Button>
             <Button
               onClick={() => {
-                setStatusCovid("Negative");
+                setStatusCovid('Negative');
                 setState({
                   ...state,
                   isOpenResultConfirmation: false,
-                  isOpenUpdatedConfirmationDialog: true,
+                  isOpenUpdatedConfirmationDialog: true
                 });
               }}
               className={`bg-[#8950FC] rounded-lg hover:bg-[#8950FC] text-white`}
@@ -2039,7 +2039,7 @@ const HouseCallSlug = (props) => {
           </div>
         </Modal>
         <Modal
-          setIsOpen={(val) => setIsOpenOTPSuccessDialog(val)}
+          setIsOpen={val => setIsOpenOTPSuccessDialog(val)}
           width={`w-[27rem]`}
           title={`Success`}
           headless
@@ -2060,7 +2060,7 @@ const HouseCallSlug = (props) => {
                 setState({
                   ...state,
                   isOpenUpdatedConfirmationDialog: false,
-                  isOpenOTPSuccessDialog: false,
+                  isOpenOTPSuccessDialog: false
                 });
                 dispatch(fetchHouseCallDetail(id));
               }}
@@ -2071,7 +2071,7 @@ const HouseCallSlug = (props) => {
           </div>
         </Modal>
         <Modal
-          setIsOpen={(val) => setIsOpenError(val)}
+          setIsOpen={val => setIsOpenError(val)}
           width={`w-[27rem]`}
           title={``}
           headless
@@ -2086,12 +2086,12 @@ const HouseCallSlug = (props) => {
           <div className={`pt-10`}>
             <Button
               onClick={() => {
-                if (slug === "edit") {
+                if (slug === 'edit') {
                   setState({
                     ...state,
                     isOpenCheckInConfirmationDialog: false,
                     isOpenError: false,
-                    isOpenSampleCodeDialog: false,
+                    isOpenSampleCodeDialog: false
                   });
                 } else {
                   if (statusCovid !== undefined) {
@@ -2099,14 +2099,14 @@ const HouseCallSlug = (props) => {
                       ...state,
                       isOpenCheckInConfirmationDialog: false,
                       isOpenError: false,
-                      isOpenSampleCodeDialog: true,
+                      isOpenSampleCodeDialog: true
                     });
                   } else {
                     setState({
                       ...state,
                       isOpenCheckInConfirmationDialog: false,
                       isOpenError: false,
-                      isOpenSampleCodeDialog: false,
+                      isOpenSampleCodeDialog: false
                     });
                   }
                 }

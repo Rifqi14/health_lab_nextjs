@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { MainLayout } from "@organisms";
+import React, { useEffect, useState } from 'react';
+import { MainLayout } from 'components/organisms';
 import {
   Button,
   Pill,
@@ -7,17 +7,17 @@ import {
   UserDetail,
   Card,
   Label,
-  Modal,
-} from "@atoms";
-import Head from "next/head";
-import Image from "next/image";
-import assets from "@/public/index";
-import axios from "axios";
-import { getItemLocalStorage } from "@utils/localstorage";
-import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
-import { deleteCorporate } from "components/store/actions/corporate";
-import ModalConfirmation from "../../../../components/Modals/ModalConfirmation";
+  Modal
+} from 'components/atoms';
+import Head from 'next/head';
+import Image from 'next/image';
+import assets from 'public/index';
+import axios from 'axios';
+import { getItemLocalStorage } from 'components/utils/localstorage';
+import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
+import { deleteCorporate } from 'components/store/actions/corporate';
+import ModalConfirmation from '../../../../components/Modals/ModalConfirmation';
 
 const Detail = () => {
   const router = useRouter();
@@ -35,39 +35,39 @@ const Detail = () => {
   const typeSurat = [
     {
       id: 1,
-      type1: "SPH",
+      type1: 'SPH'
     },
     {
       id: 2,
-      type2: "SPK",
+      type2: 'SPK'
     },
     {
       id: 3,
-      type3: "Data",
+      type3: 'Data'
     },
     {
       id: 4,
-      type4: "Surat_Vendro",
+      type4: 'Surat_Vendro'
     },
     {
       id: 5,
-      type5: "NPWP",
-    },
+      type5: 'NPWP'
+    }
   ];
 
   const URL = process.env.NEXT_PUBLIC_API_URL;
-  const ls = JSON.parse(getItemLocalStorage("AUTH"));
+  const ls = JSON.parse(getItemLocalStorage('AUTH'));
 
   const getDetailData = async () => {
     try {
       axios.interceptors.response.use(
-        (res) => res,
-        (error) => interceptorResponseErr(error)
+        res => res,
+        error => interceptorResponseErr(error)
       );
       const res = await axios.get(`${URL}/api/v1/corporates/${code}`, {
         headers: {
-          Authorization: `${ls.scheme} ${ls.token}`,
-        },
+          Authorization: `${ls.scheme} ${ls.token}`
+        }
       });
       setData(res.data.payload);
       if (
@@ -77,25 +77,25 @@ const Detail = () => {
         setDataPics([
           {
             index: 0,
-            name: "-",
-            title: "Corporate",
-            contact: "-",
-            email: "-",
+            name: '-',
+            title: 'Corporate',
+            contact: '-',
+            email: '-'
           },
           {
             index: 1,
-            name: "-",
-            title: "Operasional",
-            contact: "-",
-            email: "-",
+            name: '-',
+            title: 'Operasional',
+            contact: '-',
+            email: '-'
           },
           {
             index: 2,
-            name: "-",
-            title: "Finance",
-            contact: "-",
-            email: "-",
-          },
+            name: '-',
+            title: 'Finance',
+            contact: '-',
+            email: '-'
+          }
         ]);
       } else {
         setDataPics(res.data.payload.pics);
@@ -107,33 +107,33 @@ const Detail = () => {
     }
   };
 
-  var docSpk = dataDocuments.filter((item) => {
-    return item.type.toLowerCase() == "spk";
+  var docSpk = dataDocuments.filter(item => {
+    return item.type.toLowerCase() == 'spk';
   });
 
-  var docSph = dataDocuments.filter((item) => {
-    return item.type.toLowerCase() == "sph";
+  var docSph = dataDocuments.filter(item => {
+    return item.type.toLowerCase() == 'sph';
   });
 
-  var NPWP = dataDocuments.filter((item) => {
-    return item.type.toLowerCase() == "npwp";
+  var NPWP = dataDocuments.filter(item => {
+    return item.type.toLowerCase() == 'npwp';
   });
 
-  var identity = dataDocuments.filter((item) => {
-    return item.type.toLowerCase() == "identity";
+  var identity = dataDocuments.filter(item => {
+    return item.type.toLowerCase() == 'identity';
   });
 
-  var docVendor = dataDocuments.filter((item) => {
-    return item.type.toLowerCase() == "vendor_document";
+  var docVendor = dataDocuments.filter(item => {
+    return item.type.toLowerCase() == 'vendor_document';
   });
 
   useEffect(() => {
     getDetailData();
   }, [code]);
 
-  const handleDelete = (code) => {
+  const handleDelete = code => {
     setOnDeleteData(true);
-    dispatch(deleteCorporate(code)).then((res) => {
+    dispatch(deleteCorporate(code)).then(res => {
       setShowModals(false);
       setShowSuccessDeleteModal(true);
       setOnDeleteData(false);
@@ -151,7 +151,7 @@ const Detail = () => {
       </Head>
       <MainLayout>
         <Card>
-          <div className="mb-[15px] flex justify-between">
+          <div className='mb-[15px] flex justify-between'>
             <Typography className={`font-medium text-lg text-[#212121]`}>
               Corporate Identity
             </Typography>
@@ -159,10 +159,10 @@ const Detail = () => {
               paddingVertical={`py-2`}
               paddingHorizontal={`px-4`}
               background={`bg-inActive`}
-              className={"flex items-center justify-center"}
+              className={'flex items-center justify-center'}
               onClick={() => setShowModals(true)}
             >
-              <Image src={assets.IconTrash} alt="create" />
+              <Image src={assets.IconTrash} alt='create' />
               <Typography className={`text-white font-normal text-sm pl-2`}>
                 Delete
               </Typography>
@@ -171,41 +171,41 @@ const Detail = () => {
           <div className={`grid gap-16 mb-6 md:grid-cols-3`}>
             <div>
               <Label>Nama Corporate</Label>
-              <UserDetail label={`${data.name}`} className={"!w-auto"} />
+              <UserDetail label={`${data.name}`} className={'!w-auto'} />
             </div>
             <div>
               <Label>Total User</Label>
-              <UserDetail title={`${data.totalUser}`} className={"!w-auto"} />
+              <UserDetail title={`${data.totalUser}`} className={'!w-auto'} />
             </div>
           </div>
           <div className={`grid gap-16 mb-6 md:grid-cols-3`}>
             <div>
               <Label>Brand Corporate</Label>
-              <UserDetail title={`${data.brand}`} className={"!w-auto"} />
+              <UserDetail title={`${data.brand}`} className={'!w-auto'} />
             </div>
             <div>
               <Label>Phone</Label>
-              <UserDetail title={`${data.phoneNumber}`} className={"!w-auto"} />
+              <UserDetail title={`${data.phoneNumber}`} className={'!w-auto'} />
             </div>
           </div>
           <div className={`grid gap-16 mb-6 md:grid-cols-3`}>
             <div>
               <Label>Code Corporate</Label>
-              <UserDetail title={`${data.code}`} className={"!w-auto"} />
+              <UserDetail title={`${data.code}`} className={'!w-auto'} />
             </div>
             <div>
               <Label>Tax ID</Label>
-              <UserDetail title={`${data.taxId}`} className={"!w-auto"} />
+              <UserDetail title={`${data.taxId}`} className={'!w-auto'} />
             </div>
           </div>
           <div className={`grid gap-16 mb-6 md:grid-cols-3`}>
             <div>
               <Label>Categorie</Label>
-              <UserDetail title={`${data.catagories}`} className={"!w-auto"} />
+              <UserDetail title={`${data.catagories}`} className={'!w-auto'} />
             </div>
             <div>
               <Label>AR Due Date</Label>
-              <UserDetail title={`${data.arDueDate}`} className={"!w-auto"} />
+              <UserDetail title={`${data.arDueDate}`} className={'!w-auto'} />
             </div>
           </div>
           <Typography className={`font-medium text-lg text-[#212121]`}>
@@ -214,37 +214,37 @@ const Detail = () => {
           <div className={`grid gap-16 mb-6 md:grid-cols-3`}>
             <div>
               <Label>Address</Label>
-              <UserDetail title={`${data.address}`} className={"!w-auto"} />
+              <UserDetail title={`${data.address}`} className={'!w-auto'} />
             </div>
             <div>
               <Label>Subdistrict</Label>
-              <UserDetail title={`${data.subDistinct}`} className={"!w-auto"} />
+              <UserDetail title={`${data.subDistinct}`} className={'!w-auto'} />
             </div>
           </div>
           <div className={`grid gap-16 mb-6 md:grid-cols-3`}>
             <div>
               <Label>Province</Label>
-              <UserDetail title={`${data.province}`} className={"!w-auto"} />
+              <UserDetail title={`${data.province}`} className={'!w-auto'} />
             </div>
             <div>
               <Label>RT</Label>
-              <UserDetail title={`${data.rt}`} className={"!w-auto"} />
+              <UserDetail title={`${data.rt}`} className={'!w-auto'} />
             </div>
           </div>
           <div className={`grid gap-16 mb-6 md:grid-cols-3`}>
             <div>
               <Label>City</Label>
-              <UserDetail title={`${data.city}`} className={"!w-auto"} />
+              <UserDetail title={`${data.city}`} className={'!w-auto'} />
             </div>
             <div>
               <Label>RW</Label>
-              <UserDetail title={`${data.rw}`} className={"!w-auto"} />
+              <UserDetail title={`${data.rw}`} className={'!w-auto'} />
             </div>
           </div>
           <div className={`grid gap-16 mb-6 md:grid-cols-3`}>
             <div>
               <Label>District</Label>
-              <UserDetail title={`${data.district}`} className={"!w-auto"} />
+              <UserDetail title={`${data.district}`} className={'!w-auto'} />
             </div>
           </div>
           <Typography className={`font-medium text-lg text-[#212121]`}>
@@ -257,41 +257,41 @@ const Detail = () => {
                     {item ? (
                       <>
                         <div
-                          className="grid gap-16 mb-6 md:grid-cols-3"
+                          className='grid gap-16 mb-6 md:grid-cols-3'
                           key={key}
                         >
                           <div>
                             <Label>PIC Name </Label>
                             <UserDetail
                               title={`${item.name}`}
-                              className={"!w-auto"}
+                              className={'!w-auto'}
                             />
                           </div>
                           <div>
                             <Label>Contact PIC </Label>
                             <UserDetail
                               title={`${item.contact}`}
-                              className={"!w-auto"}
+                              className={'!w-auto'}
                             />
                           </div>
                           <div></div>
                         </div>
                         <div
-                          className="grid gap-16 mb-6 md:grid-cols-3"
+                          className='grid gap-16 mb-6 md:grid-cols-3'
                           key={key}
                         >
                           <div>
                             <Label>Title PIC</Label>
                             <UserDetail
                               title={`${item.title}`}
-                              className={"!w-auto"}
+                              className={'!w-auto'}
                             />
                           </div>
                           <div>
                             <Label>Email PIC</Label>
                             <UserDetail
                               title={`${item.email}`}
-                              className={"!w-auto"}
+                              className={'!w-auto'}
                             />
                           </div>
                         </div>
@@ -299,9 +299,9 @@ const Detail = () => {
                     ) : null}
 
                     {key !== 2 ? (
-                      <div className="grid mb-6 md:grid-cols-3">
-                        <div className="w-100 bg-disabled-btn h-[3px] grid md:grid-cols-2"></div>
-                        <div className="w-100 bg-disabled-btn h-[3px] grid md:grid-cols-2"></div>
+                      <div className='grid mb-6 md:grid-cols-3'>
+                        <div className='w-100 bg-disabled-btn h-[3px] grid md:grid-cols-2'></div>
+                        <div className='w-100 bg-disabled-btn h-[3px] grid md:grid-cols-2'></div>
                       </div>
                     ) : null}
                   </>
@@ -317,7 +317,7 @@ const Detail = () => {
                     <UserDetail
                       key={key}
                       title={`${item.siteName}`}
-                      className={"!w-auto"}
+                      className={'!w-auto'}
                     />
                   );
                 })}
@@ -336,12 +336,12 @@ const Detail = () => {
                   <Typography>SPK</Typography>
                 </Label>
 
-                <div className="border-[1px] border-[#E6E6E6] rounded-[5px]">
-                  <table className="w-full ">
-                    <thead className="bg-[#F3F6F9] text-sm font-semibold text-[#575962] h-[50px] ">
-                      <th className="text-start py-[15px] px-[19px]">No</th>
-                      <th className="text-start py-[15px] px-[19px]">File</th>
-                      <th className="text-start py-[15px] px-[19px]">Note</th>
+                <div className='border-[1px] border-[#E6E6E6] rounded-[5px]'>
+                  <table className='w-full '>
+                    <thead className='bg-[#F3F6F9] text-sm font-semibold text-[#575962] h-[50px] '>
+                      <th className='text-start py-[15px] px-[19px]'>No</th>
+                      <th className='text-start py-[15px] px-[19px]'>File</th>
+                      <th className='text-start py-[15px] px-[19px]'>Note</th>
                     </thead>
                     <tbody>
                       {docSpk &&
@@ -349,15 +349,15 @@ const Detail = () => {
                           return (
                             <tr
                               key={key}
-                              className="text-sm text-[#575962] h-[50px]"
+                              className='text-sm text-[#575962] h-[50px]'
                             >
-                              <td className="text-start py-[15px] px-[19px]">
+                              <td className='text-start py-[15px] px-[19px]'>
                                 {key + 1}
                               </td>
-                              <td className="text-start py-[15px] px-[19px]">
+                              <td className='text-start py-[15px] px-[19px]'>
                                 {item.filename}
                               </td>
-                              <td className="text-start py-[15px] px-[19px]">
+                              <td className='text-start py-[15px] px-[19px]'>
                                 {item.notes}
                               </td>
                             </tr>
@@ -371,24 +371,24 @@ const Detail = () => {
                 <Label>
                   <Typography>Surat Penawaran Harga</Typography>
                 </Label>
-                <div className="border-[1px] border-[#E6E6E6] rounded-[5px]">
-                  <table className="w-full ">
-                    <thead className="bg-[#F3F6F9] text-sm font-semibold text-[#575962] h-[50px] ">
-                      <th className="text-start py-[15px] px-[19px]">No</th>
-                      <th className="text-start py-[15px] px-[19px]">File</th>
-                      <th className="text-start py-[15px] px-[19px]">Note</th>
+                <div className='border-[1px] border-[#E6E6E6] rounded-[5px]'>
+                  <table className='w-full '>
+                    <thead className='bg-[#F3F6F9] text-sm font-semibold text-[#575962] h-[50px] '>
+                      <th className='text-start py-[15px] px-[19px]'>No</th>
+                      <th className='text-start py-[15px] px-[19px]'>File</th>
+                      <th className='text-start py-[15px] px-[19px]'>Note</th>
                     </thead>
                     {docSph.length > 0
                       ? docSph.map((item, index) => {
                           return (
                             <>
                               <tbody key={index}>
-                                <tr className="text-sm text-[#575962] h-[50px]">
-                                  <td className="px-[19px]">{index + 1}</td>
-                                  <td className="text-start py-[15px] px-[19px]">
+                                <tr className='text-sm text-[#575962] h-[50px]'>
+                                  <td className='px-[19px]'>{index + 1}</td>
+                                  <td className='text-start py-[15px] px-[19px]'>
                                     {item.filename}
                                   </td>
-                                  <td className="text-start py-[15px] px-[19px]">
+                                  <td className='text-start py-[15px] px-[19px]'>
                                     {item.notes}
                                   </td>
                                 </tr>
@@ -406,24 +406,24 @@ const Detail = () => {
                 <Label>
                   <Typography>NPWP</Typography>
                 </Label>
-                <div className="border-[1px] border-[#E6E6E6] rounded-[5px]">
-                  <table className="w-full ">
-                    <thead className="bg-[#F3F6F9] text-sm font-semibold text-[#575962] h-[50px] ">
-                      <th className="text-start py-[15px] px-[19px]">No</th>
-                      <th className="text-start py-[15px] px-[19px]">File</th>
-                      <th className="text-start py-[15px] px-[19px]">Note</th>
+                <div className='border-[1px] border-[#E6E6E6] rounded-[5px]'>
+                  <table className='w-full '>
+                    <thead className='bg-[#F3F6F9] text-sm font-semibold text-[#575962] h-[50px] '>
+                      <th className='text-start py-[15px] px-[19px]'>No</th>
+                      <th className='text-start py-[15px] px-[19px]'>File</th>
+                      <th className='text-start py-[15px] px-[19px]'>Note</th>
                     </thead>
                     <tbody>
                       {NPWP.length > 0
                         ? NPWP.map((item, i) => {
                             return (
                               <>
-                                <tr className="text-sm text-[#575962] h-[50px]">
-                                  <td className="px-[19px]">{i + 1}</td>
-                                  <td className="text-start py-[15px] px-[19px]">
+                                <tr className='text-sm text-[#575962] h-[50px]'>
+                                  <td className='px-[19px]'>{i + 1}</td>
+                                  <td className='text-start py-[15px] px-[19px]'>
                                     {item.filename}
                                   </td>
-                                  <td className="text-start py-[15px] px-[19px]">
+                                  <td className='text-start py-[15px] px-[19px]'>
                                     {item.notes}
                                   </td>
                                 </tr>
@@ -441,24 +441,24 @@ const Detail = () => {
                     Data ID(KTP/Passport) Karyawan yang di swab
                   </Typography>
                 </Label>
-                <div className="border-[1px] border-[#E6E6E6] rounded-[5px]">
-                  <table className="w-full ">
-                    <thead className="bg-[#F3F6F9] text-sm font-semibold text-[#575962] h-[50px] ">
-                      <th className="text-start py-[15px] px-[19px]">No</th>
-                      <th className="text-start py-[15px] px-[19px]">File</th>
-                      <th className="text-start py-[15px] px-[19px]">Note</th>
+                <div className='border-[1px] border-[#E6E6E6] rounded-[5px]'>
+                  <table className='w-full '>
+                    <thead className='bg-[#F3F6F9] text-sm font-semibold text-[#575962] h-[50px] '>
+                      <th className='text-start py-[15px] px-[19px]'>No</th>
+                      <th className='text-start py-[15px] px-[19px]'>File</th>
+                      <th className='text-start py-[15px] px-[19px]'>Note</th>
                     </thead>
                     <tbody>
                       {identity.length > 0
                         ? identity.map((item, index) => {
                             return (
                               <>
-                                <tr className="text-sm text-[#575962] h-[50px]">
-                                  <td className="px-[19px]">{index + 1}</td>
-                                  <td className="text-start py-[15px] px-[19px]">
+                                <tr className='text-sm text-[#575962] h-[50px]'>
+                                  <td className='px-[19px]'>{index + 1}</td>
+                                  <td className='text-start py-[15px] px-[19px]'>
                                     {item.filename}
                                   </td>
-                                  <td className="text-start py-[15px] px-[19px]">
+                                  <td className='text-start py-[15px] px-[19px]'>
                                     {item.notes}
                                   </td>
                                 </tr>
@@ -476,24 +476,24 @@ const Detail = () => {
                 <Label>
                   <Typography>Surat Vendor</Typography>
                 </Label>
-                <div className="border-[1px] border-[#E6E6E6] rounded-[5px]">
-                  <table className="w-full ">
-                    <thead className="bg-[#F3F6F9] text-sm font-semibold text-[#575962] h-[50px] ">
-                      <th className="text-start py-[15px] px-[19px]">No</th>
-                      <th className="text-start py-[15px] px-[19px]">File</th>
-                      <th className="text-start py-[15px] px-[19px]">Note</th>
+                <div className='border-[1px] border-[#E6E6E6] rounded-[5px]'>
+                  <table className='w-full '>
+                    <thead className='bg-[#F3F6F9] text-sm font-semibold text-[#575962] h-[50px] '>
+                      <th className='text-start py-[15px] px-[19px]'>No</th>
+                      <th className='text-start py-[15px] px-[19px]'>File</th>
+                      <th className='text-start py-[15px] px-[19px]'>Note</th>
                     </thead>
                     <tbody>
                       {docVendor.length > 0
                         ? docVendor.map((item, index) => {
                             return (
                               <>
-                                <tr className="text-sm text-[#575962] h-[50px]">
-                                  <td className="px-[19px]">{index + 1}</td>
-                                  <td className="text-start py-[15px] px-[19px]">
+                                <tr className='text-sm text-[#575962] h-[50px]'>
+                                  <td className='px-[19px]'>{index + 1}</td>
+                                  <td className='text-start py-[15px] px-[19px]'>
                                     {item.filename}
                                   </td>
-                                  <td className="text-start py-[15px] px-[19px]">
+                                  <td className='text-start py-[15px] px-[19px]'>
                                     {item.notes}
                                   </td>
                                 </tr>
@@ -510,7 +510,7 @@ const Detail = () => {
           {/* );
               })
             : null} */}
-          <div className="flex justify-center mt-6">
+          <div className='flex justify-center mt-6'>
             <Button
               paddingVertical={`py-2`}
               paddingHorizontal={`px-7`}
@@ -531,11 +531,11 @@ const Detail = () => {
           handleYes={() => {
             handleDelete(code);
           }}
-          desc1="Apakah anda yakin akan menghapus data ini?"
+          desc1='Apakah anda yakin akan menghapus data ini?'
           isLoading={onDeleteData}
         />
         <Modal
-          setIsOpen={(val) => setShowSuccessDeleteModal(val)}
+          setIsOpen={val => setShowSuccessDeleteModal(val)}
           width={`w-[27rem]`}
           title={`Success`}
           headless
@@ -548,9 +548,9 @@ const Detail = () => {
             />
           </div>
           <Typography className={`pt-8`}>Data berhasil dihapus</Typography>
-          <div className="flex justify-center pt-8">
+          <div className='flex justify-center pt-8'>
             <Button
-              onClick={() => router.push("/master-corporate")}
+              onClick={() => router.push('/master-corporate')}
               color={`white`}
               background={`bg-btnBlue`}
             >

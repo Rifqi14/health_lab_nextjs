@@ -8,9 +8,9 @@ import {
   TimePicker,
   Typography,
   DateInput
-} from '@atoms';
+} from 'components/atoms';
 import { Transition } from '@headlessui/react';
-import { EmptyTable, TimeRangePicker } from '@molecules';
+import { EmptyTable, TimeRangePicker } from 'components/molecules';
 import React, { useEffect, useRef, useState } from 'react';
 import Table from '../Tables/Table';
 

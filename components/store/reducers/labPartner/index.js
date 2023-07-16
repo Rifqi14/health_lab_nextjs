@@ -6,7 +6,7 @@ const {
   LAB_PARTNER_UPDATE,
   LAB_SELECT_LIST,
   LAB_PARTNER_FETCH_SELECT_LIST
-} = require('@constants/LapPartner');
+} = require('components/constants/LapPartner');
 
 const initState = {
   postInitialValue: {

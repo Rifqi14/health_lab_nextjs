@@ -1,5 +1,5 @@
-import { requestGet } from '@config';
-import { SIDEBAR_MODULE } from '@constants/Sidebar';
+import { requestGet } from 'components/config';
+import { SIDEBAR_MODULE } from 'components/constants/Sidebar';
 
 const configUrl = {
   service: 'modules',

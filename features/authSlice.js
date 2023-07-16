@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { interceptorResponseErr } from '@utils/interceptor';
+import { interceptorResponseErr } from 'components/utils/interceptor';
 import axios from 'axios';
 
 const initialState = {

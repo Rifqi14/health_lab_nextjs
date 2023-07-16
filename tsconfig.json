@@ -17,7 +17,7 @@
     "paths": {
       "@images": ["./public/image/index"],
       "@constants": ["./src/constants/index"],
-      "@atoms": ["./src/components/atoms/index"]
+      "components/atoms": ["./src/components/atoms/index"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

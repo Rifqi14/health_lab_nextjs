@@ -1,6 +1,6 @@
-import assets from '@/public/index';
-import { Typography } from '@atoms';
-import { SORTING_ORDER } from '@constants/SortingOrder';
+import assets from 'public/index';
+import { Typography } from 'components/atoms';
+import { SORTING_ORDER } from 'components/constants/SortingOrder';
 import Image from 'next/image';
 import React from 'react';
 

@@ -1,19 +1,19 @@
-import { Avatar, Typography } from "@atoms";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector, useStore } from "react-redux";
-import authSlice from "features/authSlice";
-import { removeItemLocalStorage } from "../../utils/localstorage";
-import { useRouter } from "next/router";
-import { authCurrentUser, authlogout } from "../../store/actions/auth/index";
-import assets from "@/public/index";
-import Dropdown from "./Dropdown";
-import OnClickOut from "react-onclickoutside";
+import { Avatar, Typography } from 'components/atoms';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector, useStore } from 'react-redux';
+import authSlice from 'features/authSlice';
+import { removeItemLocalStorage } from '../../utils/localstorage';
+import { useRouter } from 'next/router';
+import { authCurrentUser, authlogout } from '../../store/actions/auth/index';
+import assets from 'public/index';
+import Dropdown from './Dropdown';
+import OnClickOut from 'react-onclickoutside';
 
-const ProfileDropdown = (props) => {
+const ProfileDropdown = props => {
   const { username, usernameAlias, className } = props;
   const [isClicked, setIsClicked] = useState(false);
   const dispatch = useDispatch();
-  const state = useSelector((state) => state);
+  const state = useSelector(state => state);
   const { auth } = state;
   const [userInitial, setUserInitial] = useState(undefined);
 
@@ -25,9 +25,9 @@ const ProfileDropdown = (props) => {
     setIsClicked(false);
   };
 
-  const getUserInitial = (userName) => {
-    const names = userName.split(" ");
-    const initials = "";
+  const getUserInitial = userName => {
+    const names = userName.split(' ');
+    const initials = '';
 
     for (const i in names) {
       initials += names[i].substring(0, 1).toUpperCase();
@@ -41,9 +41,9 @@ const ProfileDropdown = (props) => {
       dispatch(authCurrentUser());
     }
     if (Boolean(!userInitial)) {
-      const {currentLoginUser} = auth || {};
-      const {name} = currentLoginUser || {};
-      getUserInitial(name || '');
+      const { currentLoginUser } = auth || {};
+      const { name } = currentLoginUser || {};
+      getUserInitial(name || 'John Doe');
     }
   }, [auth]);
 
@@ -51,15 +51,15 @@ const ProfileDropdown = (props) => {
     <>
       <div className={`${className} pr-8`}>
         <button
-          id="dropdownAvatar"
-          className="flex items-center cursor-pointer"
+          id='dropdownAvatar'
+          className='flex items-center cursor-pointer'
           onClick={isClickedHandler}
         >
           <Typography
-            color={"text-[#434349]"}
-            weight={"font-medium"}
-            size={"text-sm"}
-            className={"pr-4"}
+            color={'text-[#434349]'}
+            weight={'font-medium'}
+            size={'text-sm'}
+            className={'pr-4'}
           >
             {auth.currentLoginUser?.name}
           </Typography>
@@ -72,7 +72,7 @@ const ProfileDropdown = (props) => {
 };
 
 const clickOutsideConfig = {
-  handleClickOutside: () => ProfileDropdown.handleClickOutside,
+  handleClickOutside: () => ProfileDropdown.handleClickOutside
 };
 
 export default OnClickOut(ProfileDropdown, clickOutsideConfig);

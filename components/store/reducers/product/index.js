@@ -4,7 +4,7 @@ const {
   PRODUCT_FETCH_SELECT_LIST,
   PRODUCT_ALERT,
   PRODUCT_FETCH_TIER_SELECT_LIST
-} = require('@constants/Product');
+} = require('components/constants/Product');
 
 const initState = {
   selectList: [],

@@ -1,17 +1,17 @@
-import { requestDelete, requestGet, requestPost } from "@config";
+import { requestDelete, requestGet, requestPost } from 'components/config';
 import {
   COOPERATION_TERM_ALERT,
-  COOPERATION_TERM_SELECT_LIST,
-} from "@constants/CooperationTerm";
+  COOPERATION_TERM_SELECT_LIST
+} from 'components/constants/CooperationTerm';
 
 const configUrl = {
-  service: "cooperation-terms",
-  version: "v1",
-  prefix: "api",
+  service: 'cooperation-terms',
+  version: 'v1',
+  prefix: 'api'
 };
 
 export const getCooperationTerms = () => {
-  return async (dispatch) => {
+  return async dispatch => {
     try {
       const res = await requestGet(
         `${configUrl.prefix}/${configUrl.version}/${configUrl.service}/datatable`
@@ -25,15 +25,15 @@ export const getCooperationTerms = () => {
         payload: {
           status: true,
           message: JSON.stringify(error.message),
-          type: "error",
-        },
+          type: 'error'
+        }
       });
     }
   };
 };
 
 export const fetchCooperationTermSelectList = () => {
-  return async (dispatch) => {
+  return async dispatch => {
     try {
       const res = await requestGet(
         `${configUrl.prefix}/${configUrl.version}/${configUrl.service}/select-list`
@@ -51,15 +51,15 @@ export const fetchCooperationTermSelectList = () => {
           message: error.response.data
             ? JSON.stringify(error.response.data?.message)
             : JSON.stringify(error.message),
-          type: "error",
-        },
+          type: 'error'
+        }
       });
     }
   };
 };
 
-export const createCooperationTerms = (data) => {
-  return async (dispatch) => {
+export const createCooperationTerms = data => {
+  return async dispatch => {
     try {
       const res = await requestPost(
         `${configUrl.prefix}/${configUrl.version}/${configUrl.service}`,
@@ -74,15 +74,15 @@ export const createCooperationTerms = (data) => {
         payload: {
           status: true,
           message: JSON.stringify(error.message),
-          type: "error",
-        },
+          type: 'error'
+        }
       });
     }
   };
 };
 
-export const uploadDocument = (body) => {
-  return async (dispatch) => {
+export const uploadDocument = body => {
+  return async dispatch => {
     try {
       const res = await requestPost(
         `${configUrl.prefix}/${configUrl.version}/${configUrl.service}/document`,
@@ -97,15 +97,15 @@ export const uploadDocument = (body) => {
         payload: {
           status: true,
           message: JSON.stringify(error.message),
-          type: "error",
-        },
+          type: 'error'
+        }
       });
     }
   };
 };
 
-export const deleteCooperationTerm = (id) => {
-  return async (dispatch) => {
+export const deleteCooperationTerm = id => {
+  return async dispatch => {
     try {
       const res = await requestDelete(
         `${configUrl.prefix}/${configUrl.version}/${configUrl.service}/${id}`
@@ -119,15 +119,15 @@ export const deleteCooperationTerm = (id) => {
         payload: {
           status: true,
           message: JSON.stringify(error.message),
-          type: "error",
-        },
+          type: 'error'
+        }
       });
     }
   };
 };
 
 export const updateCooperationTerms = (id, body) => {
-  return async (dispatch) => {
+  return async dispatch => {
     try {
       const res = await requestPatch(
         `${configUrl.prefix}/${configUrl.version}/${configUrl.service}/${id}`,
@@ -142,15 +142,15 @@ export const updateCooperationTerms = (id, body) => {
         payload: {
           status: true,
           message: JSON.stringify(error.message),
-          type: "error",
-        },
+          type: 'error'
+        }
       });
     }
   };
 };
 
-export const getCooperationTermsById = (id) => {
-  return async (dispatch) => {
+export const getCooperationTermsById = id => {
+  return async dispatch => {
     try {
       const res = await requestGet(
         `${configUrl.prefix}/${configUrl.version}/${configUrl.service}/${id}`
@@ -164,8 +164,8 @@ export const getCooperationTermsById = (id) => {
         payload: {
           status: true,
           message: JSON.stringify(error.message),
-          type: "error",
-        },
+          type: 'error'
+        }
       });
     }
   };

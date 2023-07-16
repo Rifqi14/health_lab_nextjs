@@ -9,7 +9,7 @@ import {
   ROLE_FETCH_SELECT_LIST,
   ROLE_FETCH_SELECT_LIST_ROLE_TYPE,
   ROLE_UPDATE
-} from '@constants/Role';
+} from 'components/constants/Role';
 
 const initState = {
   initialValue: {

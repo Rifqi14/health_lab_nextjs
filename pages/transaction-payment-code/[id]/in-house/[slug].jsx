@@ -1,4 +1,4 @@
-import assets from "@/public/index";
+import assets from 'public/index';
 import {
   Button,
   Card,
@@ -11,144 +11,144 @@ import {
   Pill,
   Radio,
   Textarea,
-  Typography,
-} from "@atoms";
+  Typography
+} from 'components/atoms';
 import HouseCallButtonLabel, {
-  StatusAvailableButton,
-} from "@constants/HouseCallButtonLabel";
-import LengthChangeValue from "@constants/LengthChange";
-import Messages from "@constants/PopUpMessage";
-import { EmptyTable, Pagination } from "@molecules";
-import { MainLayout, Table } from "@organisms";
-import { ymdToDmy } from "@utils/datetime";
-import { currencyFormatter } from "@utils/number";
-import ParseMessage from "@utils/string";
+  StatusAvailableButton
+} from 'components/constants/HouseCallButtonLabel';
+import LengthChangeValue from 'components/constants/LengthChange';
+import Messages from 'components/constants/PopUpMessage';
+import { EmptyTable, Pagination } from 'components/molecules';
+import { MainLayout, Table } from 'components/organisms';
+import { ymdToDmy } from 'components/utils/datetime';
+import { currencyFormatter } from 'components/utils/number';
+import ParseMessage from 'components/utils/string';
 import {
   fetchCorporateTrxDetail,
-  setStatus,
-} from "components/store/actions/corporateTrx/corporateTrx";
+  setStatus
+} from 'components/store/actions/corporateTrx/corporateTrx';
 import {
   fetchTransactionDocumentList,
   fetchTransactionItems,
-  uploadDocument,
-} from "components/store/actions/transaction";
-import Head from "next/head";
-import Image from "next/image";
-import { useRouter } from "next/router";
-import React, { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { uploadDocument as uploadDocumentApi } from "components/store/actions/transaction";
+  uploadDocument
+} from 'components/store/actions/transaction';
+import Head from 'next/head';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { uploadDocument as uploadDocumentApi } from 'components/store/actions/transaction';
 
-const WebRegSlug = (props) => {
+const WebRegSlug = props => {
   const router = useRouter();
   const { slug, id } = router.query;
   const dispatch = useDispatch();
-  const selector = useSelector((state) => state);
+  const selector = useSelector(state => state);
   const { transaction } = selector;
   const [isOpenUploadSupportingData, setIsOpenUploadSupportingData] =
     useState(false);
   const [state, setState] = useState({
-    headline: "Detail In House",
+    headline: 'Detail In House',
     breadcrumbs: [
       {
-        link: "/transaction-payment-code",
-        name: "Transaction Payment Code",
+        link: '/transaction-payment-code',
+        name: 'Transaction Payment Code'
       },
       {
         link: `/transaction-payment-code/${id}/in-house/${slug}`,
-        name: "Detail",
-      },
+        name: 'Detail'
+      }
     ],
     pagination: {
       p: 1,
       s: LengthChangeValue[0],
       offset: 0,
-      limit: LengthChangeValue[0],
+      limit: LengthChangeValue[0]
     },
     formInitialValue: {
-      transaction_id: "123",
-      corporate_name: "Radya Digital",
+      transaction_id: '123',
+      corporate_name: 'Radya Digital',
       total_payment_code: 5,
-      product: "PCR 12 Jam - Rp 275.000",
-      discount: "10%",
-      type_service: "Web Reg",
-      type_service_code: "web-reg",
-      service_method: "Drive Thru",
-      status: "Booked",
-      description: "",
+      product: 'PCR 12 Jam - Rp 275.000',
+      discount: '10%',
+      type_service: 'Web Reg',
+      type_service_code: 'web-reg',
+      service_method: 'Drive Thru',
+      status: 'Booked',
+      description: '',
       table: [
         {
           no: 1,
-          payment_code: "BMPaymentCode_1",
-          status: "Terpakai",
-          patient_name: "Budi",
-          used_date: "29-09-2022",
+          payment_code: 'BMPaymentCode_1',
+          status: 'Terpakai',
+          patient_name: 'Budi',
+          used_date: '29-09-2022'
         },
         {
           no: 2,
-          payment_code: "BMPaymentCode_2",
-          status: "Belum Terpakai",
-          patient_name: "Budi",
-          used_date: "29-09-2022",
+          payment_code: 'BMPaymentCode_2',
+          status: 'Belum Terpakai',
+          patient_name: 'Budi',
+          used_date: '29-09-2022'
         },
         {
           no: 3,
-          payment_code: "BMPaymentCode_3",
-          status: "Terpakai",
-          patient_name: "Budi",
-          used_date: "29-09-2022",
+          payment_code: 'BMPaymentCode_3',
+          status: 'Terpakai',
+          patient_name: 'Budi',
+          used_date: '29-09-2022'
         },
         {
           no: 4,
-          payment_code: "BMPaymentCode_4",
-          status: "Terpakai",
-          patient_name: "Budi",
-          used_date: "29-09-2022",
+          payment_code: 'BMPaymentCode_4',
+          status: 'Terpakai',
+          patient_name: 'Budi',
+          used_date: '29-09-2022'
         },
         {
           no: 5,
-          payment_code: "BMPaymentCode_5",
-          status: "Terpakai",
-          patient_name: "Budi",
-          used_date: "29-09-2022",
-        },
+          payment_code: 'BMPaymentCode_5',
+          status: 'Terpakai',
+          patient_name: 'Budi',
+          used_date: '29-09-2022'
+        }
       ],
-      transaction_date: "22/09/2022",
+      transaction_date: '22/09/2022',
       supportingData: [
         {
           id: 1,
-          file: "file_supporting_1.doc",
-          note: "Keterangan file Supporting data 1",
+          file: 'file_supporting_1.doc',
+          note: 'Keterangan file Supporting data 1'
         },
         {
           id: 2,
-          file: "file_supporting_2.doc",
-          note: "Keterangan file Supporting data 2",
-        },
-      ],
+          file: 'file_supporting_2.doc',
+          note: 'Keterangan file Supporting data 2'
+        }
+      ]
     },
     detail: transaction.inHouseDetail,
     isOpenSavedConfirmationDialog: false,
     isOpenDeleteDialog: false,
     isReadonly: true,
-    uploadData: [{ index: 1, file: "", note: "" }],
+    uploadData: [{ index: 1, file: '', note: '' }]
   });
 
-  const setIsOpenSavedConfirmationDialog = (value) => {
+  const setIsOpenSavedConfirmationDialog = value => {
     setState({
       ...state,
-      isOpenSavedConfirmationDialog: value,
+      isOpenSavedConfirmationDialog: value
     });
   };
 
-  const setIsOpenDeleteDialog = (value) => {
+  const setIsOpenDeleteDialog = value => {
     setState({
       ...state,
-      isOpenDeleteDialog: value,
+      isOpenDeleteDialog: value
     });
   };
 
-  const onChangeLength = (val) => {
+  const onChangeLength = val => {
     const offset = (1 - 1) * val;
     setState({
       ...state,
@@ -157,12 +157,12 @@ const WebRegSlug = (props) => {
         s: val,
         p: 1,
         offset: offset,
-        limit: +offset + +val,
-      },
+        limit: +offset + +val
+      }
     });
   };
 
-  const onClickPagination = (val) => {
+  const onClickPagination = val => {
     const offset = (val - 1) * state.pagination.s;
     setState({
       ...state,
@@ -170,8 +170,8 @@ const WebRegSlug = (props) => {
         ...state.pagination,
         p: val,
         offset: offset,
-        limit: +offset + +state.pagination.s,
-      },
+        limit: +offset + +state.pagination.s
+      }
     });
   };
 
@@ -179,33 +179,33 @@ const WebRegSlug = (props) => {
 
   const headColumns = [
     {
-      key: "no",
-      name: "No",
+      key: 'no',
+      name: 'No'
     },
     {
-      key: "payment_code",
-      name: "Payment Code",
-      className: "text-left",
+      key: 'payment_code',
+      name: 'Payment Code',
+      className: 'text-left'
     },
     {
-      key: "status",
-      name: "Status",
+      key: 'status',
+      name: 'Status'
     },
     {
-      key: "patient_name",
-      name: "Nama Pasien",
-      className: "text-left",
+      key: 'patient_name',
+      name: 'Nama Pasien',
+      className: 'text-left'
     },
     {
-      key: "used_date",
-      name: "Tanggal pemakaian",
-    },
+      key: 'used_date',
+      name: 'Tanggal pemakaian'
+    }
   ];
 
   const suppDataHeadColumns = [
-    { key: "no", name: "No", className: "w-[3rem] py-[15px] px-[0px]" },
-    { key: "file", name: "File", className: "text-left py-[15px] px-[0px]" },
-    { key: "note", name: "Note", className: "text-left py-[15px] px-[0px]" },
+    { key: 'no', name: 'No', className: 'w-[3rem] py-[15px] px-[0px]' },
+    { key: 'file', name: 'File', className: 'text-left py-[15px] px-[0px]' },
+    { key: 'note', name: 'Note', className: 'text-left py-[15px] px-[0px]' }
   ];
 
   if (transaction.inHouseDetail?.statusDesc == 'Booked') {
@@ -230,10 +230,10 @@ const WebRegSlug = (props) => {
         ...state.uploadData,
         {
           index: state.uploadData[state.uploadData.length - 1].index + 1,
-          file: "",
-          note: "",
-        },
-      ],
+          file: '',
+          note: ''
+        }
+      ]
     });
   };
 
@@ -247,17 +247,17 @@ const WebRegSlug = (props) => {
     });
     setState({
       ...state,
-      uploadData: upload,
+      uploadData: upload
     });
   };
 
-  const deleteFile = (index) => {
+  const deleteFile = index => {
     const upload = state.uploadData.filter((item, i) => {
       return item.index !== index;
     });
     setState({
       ...state,
-      uploadData: upload,
+      uploadData: upload
     });
   };
 
@@ -271,17 +271,17 @@ const WebRegSlug = (props) => {
     });
     setState({
       ...state,
-      uploadData: upload,
+      uploadData: upload
     });
   };
 
   const uploadDocument = () => {
     state.uploadData.forEach(async (item, index) => {
       const formData = new FormData();
-      formData.append("TransactonId", id);
-      formData.append("Type", "supporting-data");
-      formData.append("file", item.file);
-      formData.append("notes", item.note);
+      formData.append('TransactonId', id);
+      formData.append('Type', 'supporting-data');
+      formData.append('file', item.file);
+      formData.append('notes', item.note);
       const res = await dispatch(uploadDocumentApi(formData));
 
       if (res.statusCode === 200 && index === state.uploadData.length - 1) {
@@ -295,8 +295,8 @@ const WebRegSlug = (props) => {
       <Head>
         <title>Bumame CMS</title>
         <link
-          rel="icon"
-          href={`${process.env.NEXT_PUBLIC_PREFIX_URL || ""}/favicon.ico`}
+          rel='icon'
+          href={`${process.env.NEXT_PUBLIC_PREFIX_URL || ''}/favicon.ico`}
         />
       </Head>
       <MainLayout headline={state.headline} breadcrumb={state.breadcrumbs}>
@@ -342,7 +342,7 @@ const WebRegSlug = (props) => {
                   <Pill
                     type={transaction.inHouseDetail?.statusValue
                       ?.toLowerCase()
-                      .replace(" ", "_")}
+                      .replace(' ', '_')}
                   />
                 </div>
                 <div></div>
@@ -367,7 +367,7 @@ const WebRegSlug = (props) => {
                   type={`text`}
                   id={`discount`}
                   placeholder={`Diskon`}
-                  value={transaction.inHouseDetail?.discount + "%"}
+                  value={transaction.inHouseDetail?.discount + '%'}
                   name={`discount`}
                   readonly={state.isReadonly}
                 />
@@ -406,12 +406,12 @@ const WebRegSlug = (props) => {
                   type={`text`}
                   id={`type_service`}
                   placeholder={`Type Service`}
-                  value="In House"
+                  value='In House'
                   name={`type_service`}
                   readonly={state.isReadonly}
                 />
               </div>
-              <div className="flex gap-6">
+              <div className='flex gap-6'>
                 <div>
                   <Label htmlFor={`startDate`}>Start Date</Label>
                   <Input
@@ -475,15 +475,15 @@ const WebRegSlug = (props) => {
                             <Typography>
                               {(item.identityName && item.identityNumber) ||
                               item.issuedDate
-                                ? "Terpakai"
-                                : "Belum Terpakai"}
+                                ? 'Terpakai'
+                                : 'Belum Terpakai'}
                             </Typography>
                           </td>
                           <td className={`pr-7`}>
                             <Input
                               className={`${
                                 state.isReadonly &&
-                                "border-none hover:cursor-default"
+                                'border-none hover:cursor-default'
                               }`}
                               value={item.identityName}
                               name={item.payment_code}
@@ -494,58 +494,58 @@ const WebRegSlug = (props) => {
                           <td>
                             <Typography>
                               {item.issuedDate &&
-                                ymdToDmy(item.issuedDate, "-")}
+                                ymdToDmy(item.issuedDate, '-')}
                             </Typography>
                           </td>
-                          {transaction.inHouseDetail?.statusDesc == "Booked" &&
-                            (item.identityName == "" ||
+                          {transaction.inHouseDetail?.statusDesc == 'Booked' &&
+                            (item.identityName == '' ||
                               item.identityName == null) &&
-                            (item.identityNumber == "" ||
+                            (item.identityNumber == '' ||
                               item.identityNumber == null) &&
                             !item.issuedDate && (
                               <td className={`pr-7`}>
-                                {item.status != "Terpakai" && (
-                                  <div className="flex justify-center">
+                                {item.status != 'Terpakai' && (
+                                  <div className='flex justify-center'>
                                     <Radio
-                                      label={"Active"}
+                                      label={'Active'}
                                       id={`type-1-${key}`}
                                       name={`type[${key}]`}
                                       onClick={() => {
-                                        item.issuedStatus = "Active";
+                                        item.issuedStatus = 'Active';
                                         dispatch(
                                           setStatus({
                                             transactionItemId: item.id,
-                                            status: true,
+                                            status: true
                                           })
-                                        ).then((res) => {
+                                        ).then(res => {
                                           if (res) {
                                             dispatch(fetchTransactionItems(id));
                                           }
                                         });
                                       }}
-                                      checked={item.issuedStatus == "Active"}
-                                      value={"Active"}
-                                      className={"mr-4"}
+                                      checked={item.issuedStatus == 'Active'}
+                                      value={'Active'}
+                                      className={'mr-4'}
                                     />
                                     <Radio
-                                      label={"Inactive"}
+                                      label={'Inactive'}
                                       id={`type-2-${key}`}
                                       name={`type[${key}]`}
                                       onClick={() => {
-                                        item.issuedStatus = "InActive";
+                                        item.issuedStatus = 'InActive';
                                         dispatch(
                                           setStatus({
                                             transactionItemId: item.id,
-                                            status: false,
+                                            status: false
                                           })
-                                        ).then((res) => {
+                                        ).then(res => {
                                           if (res) {
                                             dispatch(fetchTransactionItems(id));
                                           }
                                         });
                                       }}
-                                      checked={item.issuedStatus == "InActive"}
-                                      value={"Inactive"}
+                                      checked={item.issuedStatus == 'InActive'}
+                                      value={'Inactive'}
                                     />
                                   </div>
                                 )}
@@ -570,7 +570,7 @@ const WebRegSlug = (props) => {
                 <Pagination
                   itemsPerPage={state.pagination.s || 10}
                   total={transaction.items ? transaction.items.length : 0}
-                  onClick={(value) => onClickPagination(value)}
+                  onClick={value => onClickPagination(value)}
                   currentPage={state.pagination.p}
                 />
               </div>
@@ -579,7 +579,7 @@ const WebRegSlug = (props) => {
               className={`grid gap-y-8 gap-x-16 mt-6 mb-6 grid-cols-1 lg:grid-cols-3`}
             >
               <div>
-                <Label htmlFor={"transaction_date"}>Transaction Date</Label>
+                <Label htmlFor={'transaction_date'}>Transaction Date</Label>
                 <Input
                   type={`text`}
                   id={`transaction_date`}
@@ -592,7 +592,7 @@ const WebRegSlug = (props) => {
               <span className={`hidden lg:block`}></span>
               <span className={`hidden lg:block`}></span>
               <div>
-                <Label htmlFor={"description"}>Description</Label>
+                <Label htmlFor={'description'}>Description</Label>
                 <Input
                   type={`text`}
                   id={`description`}
@@ -658,7 +658,7 @@ const WebRegSlug = (props) => {
             <div className={`grid gap-16 mt-14 mb-7 md:grid-cols-3`}>
               <div></div>
               <div>
-                {slug === "edit" && (
+                {slug === 'edit' && (
                   <Button
                     className={`bg-btnBlue rounded-lg hover:bg-[#008AEC] text-white mr-6`}
                     onClick={() => {
@@ -683,7 +683,7 @@ const WebRegSlug = (props) => {
           </Card>
         </form>
         <Modal
-          setIsOpen={(val) => setIsOpenSavedConfirmationDialog(val)}
+          setIsOpen={val => setIsOpenSavedConfirmationDialog(val)}
           width={`w-[27rem]`}
           title={`Confirmation`}
           isOpen={state.isOpenSavedConfirmationDialog}
@@ -694,7 +694,7 @@ const WebRegSlug = (props) => {
               onClick={() => {
                 setIsOpenSavedConfirmationDialog(false);
                 setTimeout(() => {
-                  router.push("/transaction-payment-code");
+                  router.push('/transaction-payment-code');
                 }, 1000);
               }}
               className={`bg-btnBlue rounded-lg hover:bg-[#008AEC] text-white mr-5`}
@@ -710,7 +710,7 @@ const WebRegSlug = (props) => {
           </div>
         </Modal>
         <Modal
-          setIsOpen={(val) => setIsOpenDeleteDialog(val)}
+          setIsOpen={val => setIsOpenDeleteDialog(val)}
           width={`w-[27rem]`}
           title={`Success`}
           headless
@@ -735,7 +735,7 @@ const WebRegSlug = (props) => {
               onClick={() => {
                 setIsOpenDeleteDialog(false);
                 setTimeout(() => {
-                  router.push("/transaction-payment-code");
+                  router.push('/transaction-payment-code');
                 }, 1000);
               }}
               className={`bg-inActive rounded-lg hover:bg-inActive text-white`}
@@ -745,7 +745,7 @@ const WebRegSlug = (props) => {
           </div>
         </Modal>
         <Modal
-          setIsOpen={(val) => setIsOpenUploadSupportingData(val)}
+          setIsOpen={val => setIsOpenUploadSupportingData(val)}
           width={`w-[50rem]`}
           title={`Confirmation`}
           isOpen={isOpenUploadSupportingData}
@@ -775,11 +775,11 @@ const WebRegSlug = (props) => {
                       <div className={`w-6/12 mr-2`}>
                         <div className={`border p-3 rounded-md`}>
                           <InputFile
-                            onChange={(e) => onChangeBrowseFile(e, item.index)}
+                            onChange={e => onChangeBrowseFile(e, item.index)}
                             name={`file[${item.index}]`}
                             fileName={
                               item.file?.name &&
-                              item.file?.name.substring(0, 12) + "..."
+                              item.file?.name.substring(0, 12) + '...'
                             }
                             className={`bg-[#1BC5BD] text-[#FFF]`}
                             isWhite
@@ -790,7 +790,7 @@ const WebRegSlug = (props) => {
                         <Textarea
                           cols={4}
                           name={`note[${item.index}]`}
-                          onChange={(e) => onChangeNote(e, item.index)}
+                          onChange={e => onChangeNote(e, item.index)}
                         />
                       </div>
                       <div className={`w-1/12 ml-2 justify-self-end`}>

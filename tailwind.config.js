@@ -1,26 +1,20 @@
 /** @type {import('tailwindcss').Config} */
-<<<<<<< HEAD
 const defaultTheme = require('tailwindcss/defaultTheme');
 module.exports = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx}',
-    './components/**/*.{js,ts,jsx,tsx}'
-=======
-module.exports = {
-  content: [
+    './components/**/*.{js,ts,jsx,tsx}',
     './src/pages/**/*.{js,ts,jsx,tsx}',
     './src/components/**/*.{js,ts,jsx,tsx}'
->>>>>>> cf2c543623abdfb04966cde688e14d33f22e63d3
   ],
   theme: {
     extend: {
       colors: {
-<<<<<<< HEAD
         primary: '#F77712',
         isActive: '#B85F1B',
         coolGray: '#959CB6',
         btnBlue: '#349EFF',
-        'btn-cancel': "#DDDDDD",
+        'btn-cancel': '#DDDDDD',
         aliceBlue: '#F3F6F9',
         inActive: '#F64E60',
         active: '#49D478',
@@ -41,14 +35,10 @@ module.exports = {
         disabledItem: '#E6E6E6',
         'hover-btnBlue': '#008AEC',
         'hover-btnCancel': '#C6C6C6',
-        'disabled-btn' : '#D8DFE5',
+        'disabled-btn': '#D8DFE5',
         white: '#FFFFFF',
         'light-gray': '#FCFCFC',
-        'light-shade' : '#C9CFD6'
-      },
-      fontFamily: {
-        sans: ['Poppins', ...defaultTheme.fontFamily.sans]
-=======
+        'light-shade': '#C9CFD6',
         'bumame-primary': '#F67612',
         'bumame-secondary': '#349EFF',
         'bumame-inactive': '#F64E60',
@@ -56,7 +46,9 @@ module.exports = {
         'bumame-collected': '#FFA800',
         'bumame-completed': '#1BC5BD',
         'bumame-gray': '#E0E0E0'
->>>>>>> cf2c543623abdfb04966cde688e14d33f22e63d3
+      },
+      fontFamily: {
+        sans: ['Poppins', ...defaultTheme.fontFamily.sans]
       }
     }
   },

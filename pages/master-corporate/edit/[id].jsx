@@ -1,55 +1,52 @@
-import { Button, InputText, Typography } from '@atoms'
-import { MainLayout } from '@organisms'
-import Head from 'next/head'
-import React, { useState } from 'react'
+import { Button, InputText, Typography } from 'components/atoms';
+import { MainLayout } from 'components/organisms';
+import Head from 'next/head';
+import React, { useState } from 'react';
 
-const Edit = (props) => {
-  const { id } = props
+const Edit = props => {
+  const { id } = props;
 
-  const [corporateName, setCorporateName] = useState("PT. Supra Boga Lestari")
-  const [corporateBrand, setCorporateBrand] = useState("Ranchmarket")
-  const [corporateCode, setCorporateCode] = useState("CRP001")
+  const [corporateName, setCorporateName] = useState('PT. Supra Boga Lestari');
+  const [corporateBrand, setCorporateBrand] = useState('Ranchmarket');
+  const [corporateCode, setCorporateCode] = useState('CRP001');
   const [type, setType] = useState([
     {
       id: 1,
-      type: "Corporate"
+      type: 'Corporate'
     },
     {
       id: 2,
-      type: "Individual"
+      type: 'Individual'
     }
-  ])
-  const [address, setAddress] = useState("Jl. Setiabudi")
-  const [phone, setPhone] = useState("021-11223344 ")
-  const [categories, setCategories] = useState("Supplier")
-  const [totalUser, setTotalUser] = useState(3000)
-  const [province, setProvince] = useState("DKI Jakarta")
-  const [district, setDistrict] = useState("Kemanggisan")
-  const [city, setCity] = useState("Jakarta")
-  const [subdistrict, setSubdistrict] = useState("Palmerah")
+  ]);
+  const [address, setAddress] = useState('Jl. Setiabudi');
+  const [phone, setPhone] = useState('021-11223344 ');
+  const [categories, setCategories] = useState('Supplier');
+  const [totalUser, setTotalUser] = useState(3000);
+  const [province, setProvince] = useState('DKI Jakarta');
+  const [district, setDistrict] = useState('Kemanggisan');
+  const [city, setCity] = useState('Jakarta');
+  const [subdistrict, setSubdistrict] = useState('Palmerah');
 
-  const [rt, setRt] = useState("1")
-  const [rw, setRw] = useState("1")
-  const [taxID, setTaxID] = useState("111.222.333.444.")
-  const [picName1, setPicName1] = useState("Ahmad")
-  const [titlePic1, setTitlePic1] = useState("HRD Supervisor")
-  const [contactPic1, setContactPic1] = useState("+62 81234512464")
-  const [emailPic1, setEmailPic1] = useState("andi@ranchmarket.com ")
-  const [picName2, setPicName2] = useState("Budi")
-  const [titlePic2, setTitlePic2] = useState("Finance Manager")
-  const [contactPic2, setContactPic2] = useState("+62812345124544")
-  const [emailPic2, setEmailPic2] = useState("budi@ranchmarket.com ")
-  const [arDueDays, setArDueDays] = useState("14")
+  const [rt, setRt] = useState('1');
+  const [rw, setRw] = useState('1');
+  const [taxID, setTaxID] = useState('111.222.333.444.');
+  const [picName1, setPicName1] = useState('Ahmad');
+  const [titlePic1, setTitlePic1] = useState('HRD Supervisor');
+  const [contactPic1, setContactPic1] = useState('+62 81234512464');
+  const [emailPic1, setEmailPic1] = useState('andi@ranchmarket.com ');
+  const [picName2, setPicName2] = useState('Budi');
+  const [titlePic2, setTitlePic2] = useState('Finance Manager');
+  const [contactPic2, setContactPic2] = useState('+62812345124544');
+  const [emailPic2, setEmailPic2] = useState('budi@ranchmarket.com ');
+  const [arDueDays, setArDueDays] = useState('14');
 
-  const handleSave = () => {
-  }
+  const handleSave = () => {};
 
   return (
     <>
       <Head>
-        <title>
-          Bumame CMS
-        </title>
+        <title>Bumame CMS</title>
       </Head>
 
       <MainLayout
@@ -78,122 +75,155 @@ const Edit = (props) => {
               />
               <InputText
                 label={'Brand Perusahaan'}
-                type={'text'} value={corporateBrand}
+                type={'text'}
+                value={corporateBrand}
                 onChange={e => setCorporateBrand(e.target.value)}
               />
               <InputText
                 label={'Kode Perusahaan'}
-                type={'text'} value={corporateCode}
+                type={'text'}
+                value={corporateCode}
                 onChange={e => setCorporateCode(e.target.value)}
               />
-              <div  className='my-2'>
+              <div className='my-2'>
                 <label className=''>Type</label>
-                <select className='bg-[#C9CFD6] rounded p-2 focus:outline-none border w-full' name="type" id="">
-                  { type.map((item) => (
-                    <option className='bg-white' selected={item.type} key={item.id} value="select">{ item.type }</option>
+                <select
+                  className='bg-[#C9CFD6] rounded p-2 focus:outline-none border w-full'
+                  name='type'
+                  id=''
+                >
+                  {type.map(item => (
+                    <option
+                      className='bg-white'
+                      selected={item.type}
+                      key={item.id}
+                      value='select'
+                    >
+                      {item.type}
+                    </option>
                   ))}
                 </select>
               </div>
               <InputText
                 label={'Alamat'}
-                type={'text'} value={address}
+                type={'text'}
+                value={address}
                 onChange={e => setAddress(e.target.value)}
               />
               <InputText
                 label={'Phone'}
-                type={'text'} value={phone}
+                type={'text'}
+                value={phone}
                 onChange={e => setPhone(e.target.value)}
               />
-              <InputText 
+              <InputText
                 label={'Categories'}
-                type={'text'} value={categories}
+                type={'text'}
+                value={categories}
                 onChange={e => setCategories(e.target.value)}
               />
-              <InputText 
+              <InputText
                 label={'Total User'}
-                type={'text'} value={totalUser}
+                type={'text'}
+                value={totalUser}
                 onChange={e => setTotalUser(e.target.value)}
               />
-              <InputText 
+              <InputText
                 label={'Province'}
-                type={'text'} value={province}
+                type={'text'}
+                value={province}
                 onChange={e => setProvince(e.target.value)}
               />
-              <InputText 
+              <InputText
                 label={'District'}
-                type={'text'} value={district}
+                type={'text'}
+                value={district}
                 onChange={e => setDistrict(e.target.value)}
               />
               <InputText
                 label={'City'}
-                type={'text'} value={city}
+                type={'text'}
+                value={city}
                 onChange={e => setCity(e.target.value)}
               />
               <InputText
                 label={'Subdistrict'}
-                type={'text'} value={subdistrict}
+                type={'text'}
+                value={subdistrict}
                 onChange={e => setSubdistrict(e.target.value)}
               />
             </div>
             <div className='w-[380px] ml-14'>
-              <InputText 
+              <InputText
                 label={'RT'}
-                type={'text'} value={rt}
+                type={'text'}
+                value={rt}
                 onChange={e => setRt(e.target.value)}
               />
-              <InputText 
+              <InputText
                 label={'RW'}
-                type={'text'} value={rw}
+                type={'text'}
+                value={rw}
                 onChange={e => setRw(e.target.value)}
               />
-              <InputText 
+              <InputText
                 label={'Tax ID'}
-                type={'text'} value={taxID}
+                type={'text'}
+                value={taxID}
                 onChange={e => setTaxID(e.target.value)}
               />
-              <InputText 
+              <InputText
                 label={'PIC Name 1'}
-                type={'text'} value={picName1}
+                type={'text'}
+                value={picName1}
                 onChange={e => setPicName1(e.target.value)}
               />
-              <InputText 
+              <InputText
                 label={'Title PIC 1'}
-                type={'text'} value={titlePic1}
+                type={'text'}
+                value={titlePic1}
                 onChange={e => setTitlePic1(e.target.value)}
               />
-              <InputText 
+              <InputText
                 label={'Contact PIC 1'}
-                type={'text'} value={contactPic1}
+                type={'text'}
+                value={contactPic1}
                 onChange={e => setContactPic1(e.target.value)}
               />
-              <InputText 
+              <InputText
                 label={'Email PIC 1'}
-                type={'text'} value={emailPic1}
+                type={'text'}
+                value={emailPic1}
                 onChange={e => setEmailPic1(e.target.value)}
               />
-              <InputText 
+              <InputText
                 label={'PIC Name 2'}
-                type={'text'} value={picName2}
+                type={'text'}
+                value={picName2}
                 onChange={e => setPicName2(e.target.value)}
               />
-              <InputText 
+              <InputText
                 label={'Title PIC 2'}
-                type={'text'} value={titlePic2}
+                type={'text'}
+                value={titlePic2}
                 onChange={e => setTitlePic2(e.target.value)}
               />
-              <InputText 
+              <InputText
                 label={'Contact PIC 2'}
-                type={'text'} value={contactPic2}
+                type={'text'}
+                value={contactPic2}
                 onChange={e => setContactPic2(e.target.value)}
               />
-              <InputText 
+              <InputText
                 label={'Email PIC 2'}
-                type={'text'} value={emailPic2}
+                type={'text'}
+                value={emailPic2}
                 onChange={e => setEmailPic2(e.target.value)}
               />
-              <InputText 
+              <InputText
                 label={'AR Due Days'}
-                type={'text'} value={arDueDays}
+                type={'text'}
+                value={arDueDays}
                 onChange={e => setArDueDays(e.target.value)}
               />
             </div>
@@ -216,15 +246,13 @@ const Edit = (props) => {
               className={'ml-3'}
               onClick={handleSave}
             >
-              <Typography className={`font-normal text-sm`}>
-                Cancel
-              </Typography>
+              <Typography className={`font-normal text-sm`}>Cancel</Typography>
             </Button>
           </div>
         </main>
       </MainLayout>
     </>
-  )
-}
+  );
+};
 
-export default Edit
+export default Edit;

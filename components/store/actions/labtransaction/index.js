@@ -1,13 +1,18 @@
-import { requestDelete, requestGet, requestPost, requestGetFile, requestPatch} from '@config';
+import {
+  requestDelete,
+  requestGet,
+  requestPost,
+  requestGetFile,
+  requestPatch
+} from 'components/config';
 import {
   LAB_TRANSACTION_ALERT,
   LAB_TRANSACTION_FETCH_DATATABLE,
   LAB_TRANSACTION_FETCH_DETAIL,
   LAB_PARTNER_FETCH_SELECT_LIST
-} from '@constants/LabTransaction';
-import { currencyFormatter } from '@utils/number';
-import { useLinkClickHandler } from "react-router-dom";
-
+} from 'components/constants/LabTransaction';
+import { currencyFormatter } from 'components/utils/number';
+import { useLinkClickHandler } from 'react-router-dom';
 
 const configUrl = {
   service: 'lab-partner-transaction',
@@ -28,16 +33,16 @@ export const fetchLabTransactionDataTable = params => {
       return res;
     } catch (error) {
       console.log(error);
-      dispatch({
-        type: LAB_TRANSACTION_ALERT,
-        payload: {
-          status: true,
-          message: error.response.data
-            ? JSON.stringify(error.response.data?.message)
-            : JSON.stringify(error.message),
-          type: 'error'
-        }
-      });
+      // dispatch({
+      //   type: LAB_TRANSACTION_ALERT,
+      //   payload: {
+      //     status: true,
+      //     message: error.response.data
+      //       ? JSON.stringify(error.response.data?.message)
+      //       : JSON.stringify(error.message),
+      //     type: 'error'
+      //   }
+      // });
     }
   };
 };
@@ -196,7 +201,6 @@ export const sendLabTransactionToPic = id => {
   };
 };
 
-
 export const fetchLabPartnerSelectList = () => {
   return async dispatch => {
     try {
@@ -246,8 +250,7 @@ export const fetchAntigenDetailData = params => {
   };
 };
 
-
-export const fetchDownloadResult = (transactionId,fileName) => {
+export const fetchDownloadResult = (transactionId, fileName) => {
   return async dispatch => {
     try {
       const res = await requestGetFile(
@@ -256,22 +259,19 @@ export const fetchDownloadResult = (transactionId,fileName) => {
       );
       const link = document.createElement('a');
       link.href = window.URL.createObjectURL(res);
-      link.setAttribute(
-        'download',
-        fileName,
-      );
+      link.setAttribute('download', fileName);
       document.body.appendChild(link);
       link.click();
-      link.parentNode.removeChild(link); 
-      
+      link.parentNode.removeChild(link);
+
       return res;
-    }catch (error) {
+    } catch (error) {
       console.log(error);
     }
-  }
-}
+  };
+};
 
-export const updateTierPricing = (data) => {
+export const updateTierPricing = data => {
   return async dispatch => {
     try {
       const res = await requestPatch(
@@ -279,10 +279,10 @@ export const updateTierPricing = (data) => {
         {},
         data
       );
-      
+
       return res;
-    }catch (error) {
+    } catch (error) {
       console.log(error);
     }
-  }
-}
+  };
+};

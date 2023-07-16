@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
-  "name": "my-app",
-=======
   "name": "bumame",
->>>>>>> cf2c543623abdfb04966cde688e14d33f22e63d3
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -13,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-<<<<<<< HEAD
     "@headlessui/react": "^1.7.3",
     "@reduxjs/toolkit": "^1.8.6",
     "axios": "^1.1.2",
@@ -42,25 +37,12 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
-=======
-    "next": "12.3.1",
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
-  },
-  "devDependencies": {
-    "@types/node": "18.7.23",
-    "@types/react": "18.0.21",
-    "@types/react-dom": "18.0.6",
->>>>>>> cf2c543623abdfb04966cde688e14d33f22e63d3
+    "@types/node": "20.4.2",
     "autoprefixer": "^10.4.12",
     "eslint": "8.24.0",
     "eslint-config-next": "12.3.1",
     "postcss": "^8.4.17",
-<<<<<<< HEAD
-    "tailwindcss": "^3.1.8"
-=======
     "tailwindcss": "^3.1.8",
     "typescript": "4.8.4"
->>>>>>> cf2c543623abdfb04966cde688e14d33f22e63d3
   }
 }

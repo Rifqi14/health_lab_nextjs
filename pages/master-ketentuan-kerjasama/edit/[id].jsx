@@ -1,30 +1,30 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import assets from "@/public/index";
+import assets from 'public/index';
 import {
   Button,
   InputFile,
   InputText,
   Modal,
   Textarea,
-  Typography,
-} from "@atoms";
-import { EmptyTable } from "@molecules";
-import { MainLayout, Table } from "@organisms";
-import { interceptorResponseErr } from "@utils/interceptor";
-import { getItemLocalStorage } from "@utils/localstorage";
-import axios from "axios";
-import ModalConfirmation from "components/Modals/ModalConfirmation";
-import ModalDelete from "components/Modals/ModalDelete";
+  Typography
+} from 'components/atoms';
+import { EmptyTable } from 'components/molecules';
+import { MainLayout, Table } from 'components/organisms';
+import { interceptorResponseErr } from 'components/utils/interceptor';
+import { getItemLocalStorage } from 'components/utils/localstorage';
+import axios from 'axios';
+import ModalConfirmation from 'components/Modals/ModalConfirmation';
+import ModalDelete from 'components/Modals/ModalDelete';
 import {
   getCooperationTermsById,
   updateCooperationTerms,
-  uploadDocument,
-} from "components/store/actions/cooperationTerm";
-import Head from "next/head";
-import Image from "next/image";
-import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+  uploadDocument
+} from 'components/store/actions/cooperationTerm';
+import Head from 'next/head';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 const Edit = () => {
   const router = useRouter();
@@ -34,7 +34,7 @@ const Edit = () => {
   const [cooperationTerms, setCooperationTerms] = useState([]);
   const [listDocument, setListDocument] = useState([]);
   const [code, setCode] = useState();
-  const [cooperationName, setCooperationName] = useState("");
+  const [cooperationName, setCooperationName] = useState('');
   const [desc, setDesc] = useState();
   const [status, setStatus] = useState();
   const [deleteId, setDeleteId] = useState();
@@ -44,37 +44,37 @@ const Edit = () => {
   const [succes, setSuccess] = useState(false);
   const [state, setState] = useState({
     isOpenUploadSupportingData: false,
-    uploadData: [{ index: 1, file: null, notes: "" }],
+    uploadData: [{ index: 1, file: null, notes: '' }]
   });
 
   const headColumns = [
     {
-      key: "no",
-      name: "No",
-      className: "w-3 px-4 text-center",
-      icon: false,
+      key: 'no',
+      name: 'No',
+      className: 'w-3 px-4 text-center',
+      icon: false
     },
     {
-      key: "file",
-      name: "File",
-      className: "text-left",
-      icon: false,
+      key: 'file',
+      name: 'File',
+      className: 'text-left',
+      icon: false
     },
     {
-      key: "note",
-      name: "Note",
-      className: "text-left pl-6",
-      icon: false,
+      key: 'note',
+      name: 'Note',
+      className: 'text-left pl-6',
+      icon: false
     },
     {
-      key: "deletbtn",
-      name: "",
-      className: "w-12 px-2",
-      icon: false,
-    },
+      key: 'deletbtn',
+      name: '',
+      className: 'w-12 px-2',
+      icon: false
+    }
   ];
 
-  const setIsOpenUploadSupportingData = (value) => {
+  const setIsOpenUploadSupportingData = value => {
     setState({ ...state, isOpenUploadSupportingData: value });
   };
 
@@ -85,20 +85,20 @@ const Edit = () => {
         ...state.uploadData,
         {
           index: state.uploadData[state.uploadData.length - 1].index + 1,
-          file: "",
-          note: "",
-        },
-      ],
+          file: '',
+          note: ''
+        }
+      ]
     });
   };
 
-  const deleteFile = (index) => {
+  const deleteFile = index => {
     const upload = state.uploadData.filter((item, i) => {
       return item.index !== index;
     });
     setState({
       ...state,
-      uploadData: upload,
+      uploadData: upload
     });
   };
 
@@ -112,7 +112,7 @@ const Edit = () => {
     });
     setState({
       ...state,
-      uploadData: upload,
+      uploadData: upload
     });
   };
 
@@ -126,26 +126,26 @@ const Edit = () => {
     });
     setState({
       ...state,
-      uploadData: upload,
+      uploadData: upload
     });
   };
 
   const URL = process.env.NEXT_PUBLIC_API_URL;
-  const ls = JSON.parse(getItemLocalStorage("AUTH"));
+  const ls = JSON.parse(getItemLocalStorage('AUTH'));
 
   const deleteDocument = async () => {
     try {
       axios.interceptors.response.use(
-        (res) => res,
-        (error) => interceptorResponseErr(error)
+        res => res,
+        error => interceptorResponseErr(error)
       );
       const res = await axios
         .delete(`${URL}/api/v1/cooperation-terms/document/${deleteId}`, {
           headers: {
-            Authorization: `${ls.scheme} ${ls.token}`,
-          },
+            Authorization: `${ls.scheme} ${ls.token}`
+          }
         })
-        .then((res) => {
+        .then(res => {
           if (res?.status === 200) {
             setShowDeleteModal(false);
             router.reload();
@@ -160,22 +160,22 @@ const Edit = () => {
     const dataEdit = {
       name: cooperationName,
       description: desc,
-      statusData: status,
+      statusData: status
     };
 
     try {
       setOnSubmitData(true);
       axios.interceptors.response.use(
-        (res) => res,
-        (error) => interceptorResponseErr(error)
+        res => res,
+        error => interceptorResponseErr(error)
       );
       const res = await axios.patch(
         `${URL}/api/v1/cooperation-terms/${id}`,
         dataEdit,
         {
           headers: {
-            Authorization: `${ls.scheme} ${ls.token}`,
-          },
+            Authorization: `${ls.scheme} ${ls.token}`
+          }
         }
       );
       setSuccess(true);
@@ -191,12 +191,12 @@ const Edit = () => {
 
     state.uploadData.forEach((item, index) => {
       const formData = new FormData();
-      formData.append("CooperationTermCode", code);
-      formData.append("Type", item.file.type);
-      formData.append("File", item.file);
-      formData.append("Notes", item.notes);
+      formData.append('CooperationTermCode', code);
+      formData.append('Type', item.file.type);
+      formData.append('File', item.file);
+      formData.append('Notes', item.notes);
 
-      dispatch(uploadDocument(formData)).then((res) => {
+      dispatch(uploadDocument(formData)).then(res => {
         if (res?.statusCode !== 200) {
           uploadDocumentStatus = false;
         } else {
@@ -212,7 +212,7 @@ const Edit = () => {
       return;
     }
 
-    dispatch(getCooperationTermsById(id)).then((res) => {
+    dispatch(getCooperationTermsById(id)).then(res => {
       const dataResponse = res?.payload;
       setCode(dataResponse.code);
       setCooperationName(dataResponse.name);
@@ -227,49 +227,49 @@ const Edit = () => {
       <Head>
         <title>CMS Bumame</title>
         <link
-          rel="icon"
+          rel='icon'
           href={`${
-            process.env.NEXT_PUBLIC_PREFIX_URL || "/housecall"
+            process.env.NEXT_PUBLIC_PREFIX_URL || '/housecall'
           }/favicon.ico`}
         />
       </Head>
 
       <MainLayout
-        height={"h-full"}
-        headline={"Master Ketentuan Kerjasama"}
+        height={'h-full'}
+        headline={'Master Ketentuan Kerjasama'}
         breadcrumb={[
           {
-            link: "/master-ketentuan-kerjasama",
-            name: "Master Ketentuan Kerjasama",
+            link: '/master-ketentuan-kerjasama',
+            name: 'Master Ketentuan Kerjasama'
           },
           {
-            link: "/master-ketentuan-kerjasama/edit/" + id,
-            name: "Edit",
-          },
+            link: '/master-ketentuan-kerjasama/edit/' + id,
+            name: 'Edit'
+          }
         ]}
       >
         <main
-          className={"flex flex-col bg-white rounded-lg shadow-lg p-7 mb-5"}
+          className={'flex flex-col bg-white rounded-lg shadow-lg p-7 mb-5'}
         >
-          <div className="w-96 -mt-4">
+          <div className='w-96 -mt-4'>
             <InputText
-              label="Kode Ketentuan"
+              label='Kode Ketentuan'
               readOnly
-              type="text"
+              type='text'
               value={code}
-              onChange={(e) => setCode(e.target.value)}
+              onChange={e => setCode(e.target.value)}
             />
             <InputText
-              label="Nama Ketentuan Kerjasama"
-              type="text"
+              label='Nama Ketentuan Kerjasama'
+              type='text'
               value={cooperationName}
-              onChange={(e) => setCooperationName(e.target.value)}
+              onChange={e => setCooperationName(e.target.value)}
             />
-            <div className="mt-2">
-              <p className="pb-1">Deskripsi Data</p>
+            <div className='mt-2'>
+              <p className='pb-1'>Deskripsi Data</p>
               <textarea
-                className="focus:outline-none border resize-none border-[#C9CFD6] rounded p-2 bg-white w-full h-[100px]"
-                onChange={(e) => setDesc(e.target.value)}
+                className='focus:outline-none border resize-none border-[#C9CFD6] rounded p-2 bg-white w-full h-[100px]'
+                onChange={e => setDesc(e.target.value)}
                 value={desc}
               ></textarea>
               {/* <Textarea
@@ -279,8 +279,8 @@ const Edit = () => {
               /> */}
             </div>
           </div>
-          <div className="mt-4 w-[570px]">
-            <p className="mb-1">Supporting Data</p>
+          <div className='mt-4 w-[570px]'>
+            <p className='mb-1'>Supporting Data</p>
             <Table headColumns={headColumns}>
               {listDocument.length > 0 ? (
                 listDocument.map((data, index) => (
@@ -288,7 +288,7 @@ const Edit = () => {
                     <tr
                       key={index}
                       className={`text-center ${
-                        index % 2 != 0 ? "bg-[#FCFCFC]" : "bg-[#FFFFFF]"
+                        index % 2 != 0 ? 'bg-[#FCFCFC]' : 'bg-[#FFFFFF]'
                       }`}
                     >
                       <td className={`py-[24px] text-center`}>
@@ -300,7 +300,7 @@ const Edit = () => {
                       <td className={`py-[24px] text-start pl-6`}>
                         <Typography>{data.notes}</Typography>
                       </td>
-                      <td className={"px-2"}>
+                      <td className={'px-2'}>
                         <Button
                           className={`bg-[#F64E60] flex items-center p-2`}
                           onClick={() => {
@@ -319,23 +319,23 @@ const Edit = () => {
                 <EmptyTable colSpan={3} title={`Supporting data empty`} />
               )}
               <tr>
-                <td colSpan="3">
-                  <div className="p-[15px]">
+                <td colSpan='3'>
+                  <div className='p-[15px]'>
                     <Button
                       paddingVertical={`py-1`}
                       paddingHorizontal={`px-6`}
                       background={`bg-pattensBlue hover:bg-btnBlue`}
                       className={
-                        "flex items-center text-btnBlue hover:text-white justify-center"
+                        'flex items-center text-btnBlue hover:text-white justify-center'
                       }
                       onClick={() => setIsOpenUploadSupportingData(true)}
                     >
                       <Typography
                         className={`font-normal text-sm flex items-center justify-center`}
                       >
-                        <span className="font-bold text-2xl pb-1.5 pr-2">
+                        <span className='font-bold text-2xl pb-1.5 pr-2'>
                           +
-                        </span>{" "}
+                        </span>{' '}
                         Create
                       </Typography>
                     </Button>
@@ -344,33 +344,33 @@ const Edit = () => {
               </tr>
             </Table>
           </div>
-          <div className="mt-4">
+          <div className='mt-4'>
             <Typography>Status</Typography>
-            <div className="flex items-center">
+            <div className='flex items-center'>
               <input
-                onChange={(e) => setStatus(e.target.value)}
-                checked={status === "Active" ? true : false}
-                value="Active"
-                type="radio"
-                name="status"
+                onChange={e => setStatus(e.target.value)}
+                checked={status === 'Active' ? true : false}
+                value='Active'
+                type='radio'
+                name='status'
               />
-              <label className="pl-1" htmlFor="active">
+              <label className='pl-1' htmlFor='active'>
                 Active
               </label>
               <input
-                onChange={(e) => setStatus(e.target.value)}
-                checked={status === "InActive" ? true : false}
-                value="InActive"
-                className="ml-5"
-                type="radio"
-                name="status"
+                onChange={e => setStatus(e.target.value)}
+                checked={status === 'InActive' ? true : false}
+                value='InActive'
+                className='ml-5'
+                type='radio'
+                name='status'
               />
-              <label className="pl-1" htmlFor="inactive">
+              <label className='pl-1' htmlFor='inactive'>
                 InActive
               </label>
             </div>
           </div>
-          <div className="flex justify-center items-center mt-[50px]">
+          <div className='flex justify-center items-center mt-[50px]'>
             <Button
               paddingVertical={`py-2`}
               paddingHorizontal={`px-7`}
@@ -387,7 +387,7 @@ const Edit = () => {
               background={`bg-btn-cancel`}
               className={`ml-4`}
               onClick={() => {
-                router.push("/master-ketentuan-kerjasama");
+                router.push('/master-ketentuan-kerjasama');
               }}
             >
               <Typography className={` font-normal text-sm`}>Cancel</Typography>
@@ -395,7 +395,7 @@ const Edit = () => {
           </div>
         </main>
         <Modal
-          setIsOpen={(val) => setIsOpenUploadSupportingData(val)}
+          setIsOpen={val => setIsOpenUploadSupportingData(val)}
           width={`w-[50rem]`}
           title={`Confirmation`}
           isOpen={state.isOpenUploadSupportingData}
@@ -425,11 +425,11 @@ const Edit = () => {
                       <div className={`w-6/12 mr-2`}>
                         <div className={`border p-3 rounded-md`}>
                           <InputFile
-                            onChange={(e) => onChangeBrowseFile(e, item.index)}
+                            onChange={e => onChangeBrowseFile(e, item.index)}
                             name={`file[${item.index}]`}
                             fileName={
                               item.file?.name &&
-                              item.file?.name.substring(0, 12) + "..."
+                              item.file?.name.substring(0, 12) + '...'
                             }
                             className={`bg-[#1BC5BD] text-[#FFF]`}
                             isWhite
@@ -440,8 +440,8 @@ const Edit = () => {
                         <Textarea
                           cols={4}
                           name={`note[${item.index}]`}
-                          className={"resize-none"}
-                          onChange={(e) => onChangeNote(e, item.index)}
+                          className={'resize-none'}
+                          onChange={e => onChangeNote(e, item.index)}
                         />
                       </div>
                       <div className={`w-1/12 ml-2 justify-self-end`}>
@@ -545,7 +545,7 @@ const Edit = () => {
           isLoading={onSubmitData}
         />
         <Modal
-          setIsOpen={(val) => setSuccess(val)}
+          setIsOpen={val => setSuccess(val)}
           width={`w-[27rem]`}
           title={`Success`}
           headless
@@ -558,9 +558,9 @@ const Edit = () => {
             />
           </div>
           <Typography className={`pt-8`}>Data berhasil disimpan</Typography>
-          <div className="flex justify-center pt-8">
+          <div className='flex justify-center pt-8'>
             <Button
-              onClick={() => router.push("/master-ketentuan-kerjasama")}
+              onClick={() => router.push('/master-ketentuan-kerjasama')}
               color={`white`}
               background={`bg-btnBlue`}
             >

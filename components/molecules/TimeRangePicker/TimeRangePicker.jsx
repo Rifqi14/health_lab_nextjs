@@ -1,5 +1,5 @@
 import React from 'react';
-import { TimePicker } from '@atoms';
+import { TimePicker } from 'components/atoms';
 
 const TimeRangePicker = props => {
   return (

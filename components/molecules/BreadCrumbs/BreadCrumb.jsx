@@ -1,4 +1,4 @@
-import { Typography } from '@atoms';
+import { Typography } from 'components/atoms';
 import Link from 'next/link';
 import React from 'react';
 

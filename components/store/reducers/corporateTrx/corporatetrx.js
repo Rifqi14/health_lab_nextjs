@@ -2,7 +2,7 @@ const {
   CORPORATE_TRX_FETCH_DATATABLE,
   CORPORATE_TRX_ALERT,
   CORPORATE_TRX_FETCH_DETAIL
-} = require('@constants/CorporateTransaction');
+} = require('components/constants/CorporateTransaction');
 
 const initState = {
   webRegInitialValue: {

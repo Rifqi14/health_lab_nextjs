@@ -1,19 +1,19 @@
-import { requestDelete, requestGet, requestPost } from "@config";
+import { requestDelete, requestGet, requestPost } from 'components/config';
 import {
   CORPORATE_ALERT,
   CORPORATE_FETCH_DETAIL,
-  CORPORATE_FETCH_SELECT_LIST,
-} from "@constants/Corporate";
-import axios from "axios";
+  CORPORATE_FETCH_SELECT_LIST
+} from 'components/constants/Corporate';
+import axios from 'axios';
 
 const configUrl = {
-  service: "corporates",
-  version: "v1",
-  prefix: "api",
+  service: 'corporates',
+  version: 'v1',
+  prefix: 'api'
 };
 
-export const fetchCorporateSelectList = (params) => {
-  return async (dispatch) => {
+export const fetchCorporateSelectList = params => {
+  return async dispatch => {
     try {
       const res = await requestGet(
         `${configUrl.prefix}/${configUrl.version}/${configUrl.service}/datatable`,
@@ -22,7 +22,7 @@ export const fetchCorporateSelectList = (params) => {
 
       dispatch({
         type: CORPORATE_FETCH_SELECT_LIST,
-        payload: res.payload.items,
+        payload: res.payload.items
       });
       return res;
     } catch (error) {
@@ -32,15 +32,15 @@ export const fetchCorporateSelectList = (params) => {
         payload: {
           status: true,
           message: JSON.stringify(error.message),
-          type: "error",
-        },
+          type: 'error'
+        }
       });
     }
   };
 };
 
-export const fetchCorporateDetail = (id) => {
-  return async (dispatch) => {
+export const fetchCorporateDetail = id => {
+  return async dispatch => {
     try {
       const res = await requestGet(
         `${configUrl.prefix}/${configUrl.version}/${configUrl.service}/${id}`
@@ -48,7 +48,7 @@ export const fetchCorporateDetail = (id) => {
 
       dispatch({
         type: CORPORATE_FETCH_DETAIL,
-        payload: res.payload,
+        payload: res.payload
       });
       return res;
     } catch (error) {
@@ -58,42 +58,42 @@ export const fetchCorporateDetail = (id) => {
         payload: {
           status: true,
           message: JSON.stringify(error.message),
-          type: "error",
-        },
+          type: 'error'
+        }
       });
     }
   };
 };
 
 export const verifyOtp = (token, otp) => {
-  return async (dispatch) => {
+  return async dispatch => {
     try {
       const res = axios
         .post(
           `${process.env.NEXT_PUBLIC_API_URL}/${configUrl.prefix}/${configUrl.version}/${configUrl.service}/${token}`,
           {
-            otp: otp,
+            otp: otp
           }
         )
-        .then((res) => {
+        .then(res => {
           dispatch({
             type: CORPORATE_ALERT,
             payload: {
               status: true,
               message: res.message,
-              type: "success",
-            },
+              type: 'success'
+            }
           });
           return res;
         })
-        .catch((error) => {
+        .catch(error => {
           dispatch({
             type: CORPORATE_ALERT,
             payload: {
               status: true,
               message: JSON.stringify(error.message),
-              type: "error",
-            },
+              type: 'error'
+            }
           });
           return error;
         });
@@ -105,38 +105,38 @@ export const verifyOtp = (token, otp) => {
         payload: {
           status: true,
           message: JSON.stringify(error.message),
-          type: "error",
-        },
+          type: 'error'
+        }
       });
     }
   };
 };
 
-export const createMasterCorporate = (data) => {
-  return async (dispatch) => {
+export const createMasterCorporate = data => {
+  return async dispatch => {
     const res = await requestPost(
       `${configUrl.prefix}/${configUrl.version}/${configUrl.service}`,
       data
     )
-      .then((res) => {
+      .then(res => {
         dispatch({
           type: CORPORATE_ALERT,
           payload: {
             status: true,
             message: res.message,
-            type: "success",
-          },
+            type: 'success'
+          }
         });
         return res;
       })
-      .catch((error) => {
+      .catch(error => {
         dispatch({
           type: CORPORATE_ALERT,
           payload: {
             status: true,
             message: JSON.stringify(error.message),
-            type: "error",
-          },
+            type: 'error'
+          }
         });
         return error;
       });
@@ -144,8 +144,8 @@ export const createMasterCorporate = (data) => {
   };
 };
 
-export const uploadDocument = (body) => {
-  return async (dispatch) => {
+export const uploadDocument = body => {
+  return async dispatch => {
     try {
       const res = await requestPost(
         `${configUrl.prefix}/${configUrl.version}/${configUrl.service}/document`,
@@ -160,15 +160,15 @@ export const uploadDocument = (body) => {
         payload: {
           status: true,
           message: JSON.stringify(error.message),
-          type: "error",
-        },
+          type: 'error'
+        }
       });
     }
   };
 };
 
 export const getSiteOption = () => {
-  return async (dispatch) => {
+  return async dispatch => {
     try {
       const res = await requestGet(
         `${configUrl.prefix}/${configUrl.version}/sites/select-list`
@@ -182,15 +182,15 @@ export const getSiteOption = () => {
         payload: {
           status: true,
           message: JSON.stringify(error.message),
-          type: "error",
-        },
+          type: 'error'
+        }
       });
     }
   };
 };
 
-export const deleteCorporate = (code) => {
-  return async (dispatch) => {
+export const deleteCorporate = code => {
+  return async dispatch => {
     try {
       const res = await requestDelete(
         `${configUrl.prefix}/${configUrl.version}/${configUrl.service}/${code}`
@@ -204,15 +204,15 @@ export const deleteCorporate = (code) => {
         payload: {
           status: true,
           message: JSON.stringify(error.message),
-          type: "error",
-        },
+          type: 'error'
+        }
       });
     }
   };
 };
 
-export const getDocument = (documentId) => {
-  return async (dispatch) => {
+export const getDocument = documentId => {
+  return async dispatch => {
     try {
       const res = await requestGet(
         `${configUrl.prefix}/${configUrl.version}/${configUrl.service}/${documentId}`
@@ -226,8 +226,8 @@ export const getDocument = (documentId) => {
         payload: {
           status: true,
           message: JSON.stringify(error.message),
-          type: "error",
-        },
+          type: 'error'
+        }
       });
     }
   };

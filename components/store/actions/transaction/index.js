@@ -1,10 +1,15 @@
-import { requestGet, requestPost, requestPut, requestDelete } from '@config';
+import {
+  requestGet,
+  requestPost,
+  requestPut,
+  requestDelete
+} from 'components/config';
 import {
   TRANSACTION_ALERT,
   TRANSACTION_FETCH_DATATABLE,
   TRANSACTION_FETCH_DOCUMENT_LIST,
   TRANSACTION_FETCH_ITEMS
-} from '@constants/Transaction';
+} from 'components/constants/Transaction';
 
 const configUrl = {
   service: '/transaction',
@@ -109,11 +114,11 @@ export const uploadDocument = body => {
           type: 'error'
         }
       });
-      return error
+      return error;
     }
   };
 };
-export const fetchAntigenDetailData = (data) => {
+export const fetchAntigenDetailData = data => {
   return async dispatch => {
     try {
       const res = await requestGet(
@@ -137,7 +142,7 @@ export const fetchAntigenDetailData = (data) => {
   };
 };
 
-export const deleteDocument = (id) => {
+export const deleteDocument = id => {
   return async dispatch => {
     try {
       const res = await requestDelete(
@@ -155,7 +160,7 @@ export const deleteDocument = (id) => {
           type: 'error'
         }
       });
-      return error
+      return error;
     }
   };
-}
+};

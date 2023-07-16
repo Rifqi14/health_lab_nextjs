@@ -1,4 +1,4 @@
-import assets from "@/public/index";
+import assets from 'public/index';
 import {
   Button,
   Card,
@@ -12,110 +12,110 @@ import {
   Select,
   Textarea,
   TimePicker,
-  Typography,
-} from "@atoms";
-import { Transition } from "@headlessui/react";
-import { EmptyTable, Pagination } from "@molecules";
-import { Field, FieldArray, Form, Formik } from "formik";
-import Image from "next/image";
-import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
-import Table from "../Tables/Table";
-import * as Yup from "yup";
-import { useRouter } from "next/router";
+  Typography
+} from 'components/atoms';
+import { Transition } from '@headlessui/react';
+import { EmptyTable, Pagination } from 'components/molecules';
+import { Field, FieldArray, Form, Formik } from 'formik';
+import Image from 'next/image';
+import React, { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
+import Table from '../Tables/Table';
+import * as Yup from 'yup';
+import { useRouter } from 'next/router';
 
-const HouseCall = (props) => {
+const HouseCall = props => {
   const router = useRouter();
   const {
     setIsOpenConfirmationDialog,
     isHouseCallFormOpen,
     houseCallFormRef,
     uploadDocumentFormRef,
-    qty,
+    qty
   } = props;
-  const selector = useSelector((state) => state);
+  const selector = useSelector(state => state);
   const { corporate } = selector;
   const [state, setState] = useState({
     formInitialValue: {
       transactionItems: {
         transactionId: 0,
         qty: qty,
-        items: [],
+        items: []
       },
-      picName: "",
-      address: "",
+      picName: '',
+      address: '',
       additionalCost: 0,
-      description: "",
+      description: '',
       schedule: {
-        pic: "",
-        bookingDate: "",
+        pic: '',
+        bookingDate: '',
         timeStart: 0,
-        timeEnd: 0,
+        timeEnd: 0
       },
       startBooking: new Date(),
       endBooking: new Date(),
       supportingData: [
         {
-          TransactionId: "",
-          File: "",
-          Type: "",
-          Notes: "",
-        },
-      ],
+          TransactionId: '',
+          File: '',
+          Type: '',
+          Notes: ''
+        }
+      ]
     },
     uploadData: {
       supportingData: [
         {
-          TransactionId: "",
-          File: "",
-          Type: "",
-          Notes: "",
-        },
-      ],
+          TransactionId: '',
+          File: '',
+          Type: '',
+          Notes: ''
+        }
+      ]
     },
-    isOpenUploadSupportingData: false,
+    isOpenUploadSupportingData: false
   });
 
   const headColumns = [
     {
-      key: "no",
-      name: "No",
+      key: 'no',
+      name: 'No'
     },
     {
-      key: "payment_code",
-      name: "Payment Code",
-      className: "text-left",
+      key: 'payment_code',
+      name: 'Payment Code',
+      className: 'text-left'
     },
     {
-      key: "patient_name",
-      name: "Nama Pasien",
-      className: "text-left",
+      key: 'patient_name',
+      name: 'Nama Pasien',
+      className: 'text-left'
     },
     {
-      key: "nik",
-      name: "NIK",
-      className: "text-left",
-    },
+      key: 'nik',
+      name: 'NIK',
+      className: 'text-left'
+    }
   ];
-  const onChangeStartBooking = (value) => {
+  const onChangeStartBooking = value => {
     setState({
       ...state,
       startBooking: value,
-      endBooking: new Date(state.endBooking) < new Date(value) && value,
+      endBooking: new Date(state.endBooking) < new Date(value) && value
     });
   };
 
-  const onChangeEndBooking = (value) => {
+  const onChangeEndBooking = value => {
     setState({
       ...state,
       endBooking:
         new Date(state.startBooking) > new Date(value)
           ? state.startBooking
-          : value,
+          : value
     });
   };
 
-  const setIsOpenUploadSupportingData = (value) => {
+  const setIsOpenUploadSupportingData = value => {
     setState({ ...state, isOpenUploadSupportingData: value });
   };
 
@@ -126,10 +126,10 @@ const HouseCall = (props) => {
         ...state.uploadData,
         {
           index: state.uploadData[state.uploadData.length - 1].index + 1,
-          file: "",
-          note: "",
-        },
-      ],
+          file: '',
+          note: ''
+        }
+      ]
     });
   };
 
@@ -143,11 +143,11 @@ const HouseCall = (props) => {
     });
     setState({
       ...state,
-      uploadData: upload,
+      uploadData: upload
     });
   };
 
-  const deleteFile = (index) => {
+  const deleteFile = index => {
     const upload = state.uploadData.supportingData.filter((item, i) => {
       return i !== index;
     });
@@ -155,8 +155,8 @@ const HouseCall = (props) => {
       ...state,
       uploadData: {
         ...state.uploadData,
-        supportingData: upload,
-      },
+        supportingData: upload
+      }
     });
   };
 
@@ -170,41 +170,41 @@ const HouseCall = (props) => {
     });
     setState({
       ...state,
-      uploadData: upload,
+      uploadData: upload
     });
   };
 
   const headColumnsSupportingData = [
-    { key: "no", name: "No", className: "w-[8rem]" },
-    { key: "file", name: "File", className: "text-left" },
-    { key: "note", name: "Note", className: "text-left" },
-    { key: "action", name: "Action", className: "text-left" },
+    { key: 'no', name: 'No', className: 'w-[8rem]' },
+    { key: 'file', name: 'File', className: 'text-left' },
+    { key: 'note', name: 'Note', className: 'text-left' },
+    { key: 'action', name: 'Action', className: 'text-left' }
   ];
 
   const itemsValidationSchema = Yup.object().shape({
     transactionItems: Yup.object().shape({
       items: Yup.array().of(
         Yup.object().shape({
-          identityName: Yup.string().required("Please fill out this field"),
+          identityName: Yup.string().required('Please fill out this field')
         })
-      ),
-    }),
+      )
+    })
   });
 
   const validationSchema = Yup.object().shape({
     supportingData: Yup.array().of(
       Yup.object().shape({
-        File: Yup.string().required("Please fill out this field"),
-        Notes: Yup.string().required("Please fill out this field"),
+        File: Yup.string().required('Please fill out this field'),
+        Notes: Yup.string().required('Please fill out this field')
       })
-    ),
+    )
   });
 
-  const onSubmitUpload = (values) => {
+  const onSubmitUpload = values => {
     setState({
       ...state,
       uploadData: values,
-      isOpenUploadSupportingData: false,
+      isOpenUploadSupportingData: false
     });
   };
 
@@ -212,8 +212,8 @@ const HouseCall = (props) => {
     let items = [];
     for (let index = 0; index < qty; index++) {
       items.push({
-        identityNumber: "",
-        identityName: "",
+        identityNumber: '',
+        identityName: ''
       });
     }
     if (items.length > 0) {
@@ -223,9 +223,9 @@ const HouseCall = (props) => {
           ...state.formInitialValue,
           transactionItems: {
             ...state.transactionItems,
-            items: items,
-          },
-        },
+            items: items
+          }
+        }
       });
     } else {
       const date = new Date();
@@ -239,8 +239,8 @@ const HouseCall = (props) => {
           },
           schedule: {
             ...state.schedule,
-            timeStart:(date.getHours() * 100) + date.getMinutes(), 
-            timeEnd:(date.getHours() * 100) + date.getMinutes()
+            timeStart: date.getHours() * 100 + date.getMinutes(),
+            timeEnd: date.getHours() * 100 + date.getMinutes()
           }
         }
       });
@@ -251,7 +251,7 @@ const HouseCall = (props) => {
     <Transition appear show={isHouseCallFormOpen}>
       <Formik
         initialValues={state.formInitialValue}
-        onSubmit={(values) => {
+        onSubmit={values => {
           houseCallFormRef.current.values.uploadData = state.uploadData;
           setIsOpenConfirmationDialog(true);
         }}
@@ -265,7 +265,8 @@ const HouseCall = (props) => {
               rounded={`rounded-lg`}
               shadow={`shadow-lg`}
               padding={`p-7`}
-              className={`mb-5`}>
+              className={`mb-5`}
+            >
               {/* <FieldArray name='transactionItems'>
                 {arrayHelpers => (
                   <div
@@ -340,15 +341,17 @@ const HouseCall = (props) => {
                 )}
               </FieldArray> */}
               <div
-                className={`grid gap-x-16 gap-y-5 mb-6 grid-cols-2 lg:grid-cols-3 pt-6`}>
+                className={`grid gap-x-16 gap-y-5 mb-6 grid-cols-2 lg:grid-cols-3 pt-6`}
+              >
                 <Typography className={`font-medium text-lg`}>
                   Data Information
                 </Typography>
               </div>
               <div
-                className={`grid gap-x-16 gap-y-5 mb-6 grid-cols-2 lg:grid-cols-3`}>
+                className={`grid gap-x-16 gap-y-5 mb-6 grid-cols-2 lg:grid-cols-3`}
+              >
                 <div>
-                  <Label htmlFor={"pic"}>PIC</Label>
+                  <Label htmlFor={'pic'}>PIC</Label>
                   <Field
                     component={Input}
                     className={`bg-[#E6E6E6] border-[#C9CFD6] text-[#575962]`}
@@ -356,7 +359,7 @@ const HouseCall = (props) => {
                     id={`picName`}
                     placeholder={`PIC`}
                     value={
-                      corporate?.detail?.corporateType === "Individual"
+                      corporate?.detail?.corporateType === 'Individual'
                         ? corporate?.detail?.name
                         : corporate?.detail?.pics[0]?.name
                     }
@@ -365,7 +368,7 @@ const HouseCall = (props) => {
                   />
                 </div>
                 <div>
-                  <Label htmlFor={"cost"}>Cost Tambahan</Label>
+                  <Label htmlFor={'cost'}>Cost Tambahan</Label>
                   <Field
                     component={InputCurrency}
                     id={`additionalCost`}
@@ -375,9 +378,10 @@ const HouseCall = (props) => {
                 </div>
               </div>
               <div
-                className={`grid gap-x-16 gap-y-5 mb-6 grid-cols-2 lg:grid-cols-3`}>
+                className={`grid gap-x-16 gap-y-5 mb-6 grid-cols-2 lg:grid-cols-3`}
+              >
                 <div>
-                  <Label htmlFor={"address"}>Alamat</Label>
+                  <Label htmlFor={'address'}>Alamat</Label>
                   <Field
                     component={Input}
                     className={`bg-[#E6E6E6] border-[#C9CFD6] text-[#575962]`}
@@ -386,19 +390,20 @@ const HouseCall = (props) => {
                     placeholder={`Alamat`}
                     name={`address`}
                     value={
-                      corporate.detail?.address ? corporate.detail?.address : ""
+                      corporate.detail?.address ? corporate.detail?.address : ''
                     }
                     disabled
                   />
                 </div>
                 <div>
-                  <Label htmlFor={"description"}>Description</Label>
-                  <Field component={Textarea} rows={3} name="description" />
+                  <Label htmlFor={'description'}>Description</Label>
+                  <Field component={Textarea} rows={3} name='description' />
                 </div>
               </div>
               {/* Action Schedule */}
               <div
-                className={`grid gap-x-16 gap-y-5 grid-cols-1 mb-6 lg:grid-cols-3`}>
+                className={`grid gap-x-16 gap-y-5 grid-cols-1 mb-6 lg:grid-cols-3`}
+              >
                 <div>
                   <Typography className={`font-medium text-lg`}>
                     Action Schedule
@@ -407,7 +412,7 @@ const HouseCall = (props) => {
                 <div className={`hidden lg:block`}></div>
                 <div className={`hidden lg:block`}></div>
                 <div>
-                  <Label htmlFor={"medical_worker"}>Tenaga Kesehatan</Label>
+                  <Label htmlFor={'medical_worker'}>Tenaga Kesehatan</Label>
                   <Field
                     component={Input}
                     type={`text`}
@@ -419,7 +424,7 @@ const HouseCall = (props) => {
                 <div className={`hidden lg:block`}></div>
                 <div className={`hidden lg:block`}></div>
                 <div>
-                  <Label htmlFor={"booking_date"}>Booking Date</Label>
+                  <Label htmlFor={'booking_date'}>Booking Date</Label>
                   <Field
                     component={DateInput}
                     name={`schedule.bookingDate`}
@@ -427,9 +432,10 @@ const HouseCall = (props) => {
                   />
                 </div>
                 <div>
-                  <Label htmlFor={"booking_time"}>Booking Time</Label>
+                  <Label htmlFor={'booking_time'}>Booking Time</Label>
                   <div
-                    className={`flex items-center border rounded-lg border-[#C9CFD6]`}>
+                    className={`flex items-center border rounded-lg border-[#C9CFD6]`}
+                  >
                     <div className={`w-14`}>
                       <Field
                         component={TimePicker}
@@ -456,7 +462,8 @@ const HouseCall = (props) => {
                 </Typography>
               </div>
               <div
-                className={`w-2/3 h-full mb-6 overflow-x-auto space-y-[16px] flex flex-col rounded border border-[#E6E6E6]`}>
+                className={`w-2/3 h-full mb-6 overflow-x-auto space-y-[16px] flex flex-col rounded border border-[#E6E6E6]`}
+              >
                 <Table headColumns={headColumnsSupportingData}>
                   {state.uploadData?.supportingData?.length > 0 &&
                     state.uploadData?.supportingData[0].File &&
@@ -464,7 +471,8 @@ const HouseCall = (props) => {
                       return (
                         <tr
                           key={key}
-                          className={`text-center odd:bg-[#FCFCFC] even:bg-white`}>
+                          className={`text-center odd:bg-[#FCFCFC] even:bg-white`}
+                        >
                           <td className={`py-6`}>
                             <Typography>{key + 1}</Typography>
                           </td>
@@ -478,7 +486,8 @@ const HouseCall = (props) => {
                             <Button
                               className={`bg-[#F64E60] flex items-center p-2`}
                               onClick={() => deleteFile(key)}
-                              emptyPadding>
+                              emptyPadding
+                            >
                               <Image
                                 src={assets.IconTrash}
                                 alt={`Delete icon`}
@@ -496,7 +505,8 @@ const HouseCall = (props) => {
                           paddingHorizontal={`px-5`}
                           background={`bg-pattensBlue`}
                           className={`flex justify-between items-center text-btnBlue`}
-                          onClick={() => setIsOpenUploadSupportingData(true)}>
+                          onClick={() => setIsOpenUploadSupportingData(true)}
+                        >
                           <Image
                             src={assets.IconPlusBlue}
                             alt={`Create button`}
@@ -511,19 +521,22 @@ const HouseCall = (props) => {
                 </Table>
               </div>
               <div
-                className={`grid gap-x-16 gap-y-5 mb-7 grid-cols-1 align-middle place-content-stretch lg:grid-cols-3`}>
+                className={`grid gap-x-16 gap-y-5 mb-7 grid-cols-1 align-middle place-content-stretch lg:grid-cols-3`}
+              >
                 <div className={`hidden lg:block`}></div>
                 <div className={`place-self-end`}>
                   <Button
                     className={`bg-btnBlue rounded-lg hover:bg-[#008AEC] text-white mr-6`}
-                    type="submit">
+                    type='submit'
+                  >
                     <Typography className={`font-normal text-sm`}>
                       Save
                     </Typography>
                   </Button>
                   <Button
                     className={`bg-[#DDDDDD] rounded-lg hover:bg-[#C6C6C6] text-black`}
-                    onClick={() => router.back()}>
+                    onClick={() => router.back()}
+                  >
                     <Typography>Cancel</Typography>
                   </Button>
                 </div>
@@ -533,21 +546,24 @@ const HouseCall = (props) => {
         )}
       </Formik>
       <Modal
-        setIsOpen={(val) => setIsOpenUploadSupportingData(val)}
+        setIsOpen={val => setIsOpenUploadSupportingData(val)}
         width={`w-[50rem]`}
         title={`Supporting Data`}
-        isOpen={state.isOpenUploadSupportingData}>
+        isOpen={state.isOpenUploadSupportingData}
+      >
         <Formik
           initialValues={state.uploadData}
-          onSubmit={(values) => {
+          onSubmit={values => {
             onSubmitUpload(values);
           }}
           innerRef={uploadDocumentFormRef}
-          validationSchema={validationSchema}>
+          validationSchema={validationSchema}
+        >
           {({ values, errors, touched, setFieldValue }) => (
             <Form className={`flex flex-col w-full items-center`}>
               <div
-                className={`flex flex-col w-full items-center justify-start`}>
+                className={`flex flex-col w-full items-center justify-start`}
+              >
                 <div className={`flex flex-row w-full`}>
                   <div className={`w-6/12 mr-2`}>
                     <Typography className={`pl-1 font-normal text-sm`}>
@@ -561,22 +577,24 @@ const HouseCall = (props) => {
                   </div>
                   <div className={`w-1/12 ml-2`}></div>
                 </div>
-                <FieldArray name="supportingData">
-                  {(arrayHelpers) => (
+                <FieldArray name='supportingData'>
+                  {arrayHelpers => (
                     <div
-                      className={`flex flex-col w-full items-center justify-start`}>
+                      className={`flex flex-col w-full items-center justify-start`}
+                    >
                       {values.supportingData?.length > 0 &&
                         values.supportingData?.map((item, key) => {
                           return (
                             <div
                               className={`flex flex-row w-full items-center pb-3`}
-                              key={key}>
+                              key={key}
+                            >
                               <div className={`w-6/12 mr-2`}>
                                 <div className={`border p-3 rounded-md`}>
                                   <Field
                                     component={InputFile}
                                     name={`supportingData[${key}].File`}
-                                    onChange={(val) => {
+                                    onChange={val => {
                                       setFieldValue(
                                         `supportingData[${key}].Type`,
                                         val.target?.files[0]
@@ -595,7 +613,7 @@ const HouseCall = (props) => {
                                   touched.supportingData &&
                                   touched.supportingData[key] &&
                                   touched.supportingData[key].File && (
-                                    <p className="mt-2 text-sm text-red-600 dark:text-red-500">
+                                    <p className='mt-2 text-sm text-red-600 dark:text-red-500'>
                                       {errors.supportingData[key].File}
                                     </p>
                                   )}
@@ -614,7 +632,7 @@ const HouseCall = (props) => {
                                   touched.supportingData &&
                                   touched.supportingData[key] &&
                                   touched.supportingData[key].Notes && (
-                                    <p className="mt-2 text-sm text-red-600 dark:text-red-500">
+                                    <p className='mt-2 text-sm text-red-600 dark:text-red-500'>
                                       {errors.supportingData[key].Notes}
                                     </p>
                                   )}
@@ -624,7 +642,8 @@ const HouseCall = (props) => {
                                   <Button
                                     className={`bg-[#F64E60] flex items-center p-2`}
                                     onClick={() => arrayHelpers.remove(key)}
-                                    emptyPadding>
+                                    emptyPadding
+                                  >
                                     <Image
                                       src={assets.IconTrash}
                                       alt={`Delete icon`}
@@ -643,12 +662,13 @@ const HouseCall = (props) => {
                           className={`flex justify-between items-center text-btnBlue`}
                           onClick={() =>
                             arrayHelpers.push({
-                              transactionId: "",
-                              file: "",
-                              type: "",
-                              notes: "",
+                              transactionId: '',
+                              file: '',
+                              type: '',
+                              notes: ''
                             })
-                          }>
+                          }
+                        >
                           <Image
                             src={assets.IconPlusBlue}
                             alt={`Create button`}
@@ -665,12 +685,14 @@ const HouseCall = (props) => {
               <div className={`pt-6`}>
                 <Button
                   className={`bg-btnBlue rounded-lg hover:bg-[#008AEC] text-white mr-5`}
-                  type="submit">
+                  type='submit'
+                >
                   <Typography>Upload</Typography>
                 </Button>
                 <Button
                   onClick={() => setIsOpenUploadSupportingData(false)}
-                  className={`bg-[#DDDDDD] rounded-lg hover:bg-[#C6C6C6] text-black`}>
+                  className={`bg-[#DDDDDD] rounded-lg hover:bg-[#C6C6C6] text-black`}
+                >
                   <Typography>No</Typography>
                 </Button>
               </div>

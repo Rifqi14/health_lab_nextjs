@@ -1,48 +1,56 @@
-import assets from "@/public/index";
-import { Button, Card, Input, Label, Modal, Select, Typography } from "@atoms";
-import Messages from "@constants/PopUpMessage";
-import { MainLayout } from "@organisms";
+import assets from 'public/index';
+import {
+  Button,
+  Card,
+  Input,
+  Label,
+  Modal,
+  Select,
+  Typography
+} from 'components/atoms';
+import Messages from 'components/constants/PopUpMessage';
+import { MainLayout } from 'components/organisms';
 import {
   createRole,
   deleteRole,
-  fetchRoleTypes,
-} from "components/store/actions/role";
-import Head from "next/head";
-import Image from "next/image";
-import React, { useEffect, useRef, useState } from "react";
-import { Formik, Field, Form } from "formik";
-import Checkbox from "components/atoms/Checkbox/Checkbox";
-import * as Yup from "yup";
-import { fetchSidebar } from "components/store/actions/sidebar";
-import ModalConfirmation from "../../components/Modals/ModalConfirmation";
+  fetchRoleTypes
+} from 'components/store/actions/role';
+import Head from 'next/head';
+import Image from 'next/image';
+import React, { useEffect, useRef, useState } from 'react';
+import { Formik, Field, Form } from 'formik';
+import Checkbox from 'components/atoms/Checkbox/Checkbox';
+import * as Yup from 'yup';
+import { fetchSidebar } from 'components/store/actions/sidebar';
+import ModalConfirmation from '../../components/Modals/ModalConfirmation';
 
-const { useRouter } = require("next/router");
-const { useSelector, useDispatch } = require("react-redux");
+const { useRouter } = require('next/router');
+const { useSelector, useDispatch } = require('react-redux');
 
-const RoleManagementCreate = (props) => {
+const RoleManagementCreate = props => {
   const router = useRouter();
   const dispatch = useDispatch();
   const ref = useRef();
-  const selector = useSelector((state) => state);
+  const selector = useSelector(state => state);
   const { role, sidebar } = selector;
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [onSubmit, setOnSubmit] = useState(false);
   const [isOpenErrorDialog, setIsOpenErrorDialog] = useState(false);
   const [state, setState] = useState({
-    headline: "Role Management",
+    headline: 'Role Management',
     breadcrumbs: [
-      { link: "/role-management", name: "List Role Management" },
-      { link: `/role-management/create`, name: "Create" },
+      { link: '/role-management', name: 'List Role Management' },
+      { link: `/role-management/create`, name: 'Create' }
     ],
     formInitialValue: role.initialValue,
-    isOpenConfirmationDialog: false,
+    isOpenConfirmationDialog: false
   });
 
   const setIsOpenConfirmationDialog = (value, ...props) => {
-    if (props[0] && props[0] === "submit") {
+    if (props[0] && props[0] === 'submit') {
       setOnSubmit(true);
       dispatch(createRole(ref.current.values))
-        .then((res) => {
+        .then(res => {
           if (res?.isSuccess && res?.statusCode === 200) {
             setShowSuccessModal(true);
           } else {
@@ -50,11 +58,11 @@ const RoleManagementCreate = (props) => {
             setIsOpenErrorDialog(true);
             setState({
               ...state,
-              isOpenConfirmationDialog: value,
+              isOpenConfirmationDialog: value
             });
           }
         })
-        .catch((err) => {
+        .catch(err => {
           setOnSubmit(false);
           alert(role.alert.message);
           setState({ ...state, isOpenConfirmationDialog: value });
@@ -64,20 +72,20 @@ const RoleManagementCreate = (props) => {
     }
   };
 
-  const setAllPermission = (e) => {
+  const setAllPermission = e => {
     if (e.target.checked) {
       ref.current.setFieldValue(
-        "listModuleCode",
-        sidebar.modules.map((item) => item.moduleCode)
+        'listModuleCode',
+        sidebar.modules.map(item => item.moduleCode)
       );
     } else {
-      ref.current.setFieldValue("listModuleCode", []);
+      ref.current.setFieldValue('listModuleCode', []);
     }
   };
 
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required("This field is required"),
-    roleType: Yup.string().required("This field is required"),
+    name: Yup.string().required('This field is required'),
+    roleType: Yup.string().required('This field is required')
   });
 
   useEffect(() => {
@@ -92,20 +100,20 @@ const RoleManagementCreate = (props) => {
       <Head>
         <title>Bumame CMS</title>
         <link
-          rel="icon"
-          href={`${process.env.NEXT_PUBLIC_PREFIX_URL || ""}/favicon.ico`}
+          rel='icon'
+          href={`${process.env.NEXT_PUBLIC_PREFIX_URL || ''}/favicon.ico`}
         />
       </Head>
       <MainLayout headline={state.headline} breadcrumb={state.breadcrumbs}>
         <Card>
           <Formik
             initialValues={state.formInitialValue}
-            onSubmit={(values) => {
+            onSubmit={values => {
               // same shape as initial values
               setState({
                 ...state,
                 formInitialValue: values,
-                isOpenConfirmationDialog: true,
+                isOpenConfirmationDialog: true
               });
             }}
             enableReinitialize
@@ -113,13 +121,11 @@ const RoleManagementCreate = (props) => {
             validationSchema={validationSchema}
           >
             <Form>
-              <div
-                className="grid gap-x-16 gap-y-6 mb-2 grid-cols-1 lg:grid-cols-3"
-              >
+              <div className='grid gap-x-16 gap-y-6 mb-2 grid-cols-1 lg:grid-cols-3'>
                 <div>
-                  <Label htmlFor={"name"}>Nama Role</Label>
+                  <Label htmlFor={'name'}>Nama Role</Label>
                   <Field
-                    name="name"
+                    name='name'
                     placeholder={`Role Name`}
                     component={Input}
                   />
@@ -127,9 +133,9 @@ const RoleManagementCreate = (props) => {
                 <div className={`hidden lg:block`}></div>
                 <div className={`hidden lg:block`}></div>
                 <div>
-                  <Label htmlFor={"roleType"}>Type Role</Label>
+                  <Label htmlFor={'roleType'}>Type Role</Label>
                   <Field
-                    name="roleType"
+                    name='roleType'
                     placeholder={`Role Type`}
                     component={Select}
                   >
@@ -149,7 +155,7 @@ const RoleManagementCreate = (props) => {
               </div>
               <div className={`grid grid-cols-1 lg:grid-cols-2`}>
                 <div>
-                  <Label htmlFor={"permission"}>Hak Akses</Label>
+                  <Label htmlFor={'permission'}>Hak Akses</Label>
                   <div className={`grid grid-cols-1 lg:grid-cols-2`}>
                     <Checkbox
                       name={`all`}
@@ -178,18 +184,18 @@ const RoleManagementCreate = (props) => {
                 </div>
                 <div className={`hidden lg:block`}></div>
               </div>
-              <div className="grid gap-x-16 gap-y-6 mb-2 grid-cols-1 lg:grid-cols-1 mt-4">
-                <div className="m-auto">
+              <div className='grid gap-x-16 gap-y-6 mb-2 grid-cols-1 lg:grid-cols-1 mt-4'>
+                <div className='m-auto'>
                   <Button
-                    className="bg-btnBlue rounded-lg hover:bg-hover-btnBlue text-white mr-6"
+                    className='bg-btnBlue rounded-lg hover:bg-hover-btnBlue text-white mr-6'
                     type={`submit`}
                   >
-                    <Typography className="font-normal text-sm">
+                    <Typography className='font-normal text-sm'>
                       Save
                     </Typography>
                   </Button>
                   <Button
-                    className="bg-btn-cancel rounded-lg hover:bg-hover-btnCancel text-black"
+                    className='bg-btn-cancel rounded-lg hover:bg-hover-btnCancel text-black'
                     onClick={() => {
                       router.back();
                     }}
@@ -203,7 +209,7 @@ const RoleManagementCreate = (props) => {
         </Card>
         {isOpenErrorDialog && (
           <Modal
-            setIsOpen={(val) => {
+            setIsOpen={val => {
               setIsOpenErrorDialog(val);
             }}
             width={`w-[27rem]`}
@@ -216,7 +222,7 @@ const RoleManagementCreate = (props) => {
             </div>
             <Typography className={`pt-8 text-center`}>
               {
-                "Simpan data Gagal. \nData tidak berhasil disimpan, silahkan coba lagi"
+                'Simpan data Gagal. \nData tidak berhasil disimpan, silahkan coba lagi'
               }
             </Typography>
             <div className={`pt-10`}>
@@ -224,7 +230,7 @@ const RoleManagementCreate = (props) => {
                 onClick={() => {
                   setIsOpenErrorDialog(false);
                 }}
-                className="bg-btnBlue rounded-lg hover:bg-hover-btnBlue text-white"
+                className='bg-btnBlue rounded-lg hover:bg-hover-btnBlue text-white'
               >
                 <Typography>OK</Typography>
               </Button>
@@ -236,13 +242,13 @@ const RoleManagementCreate = (props) => {
           confirmation={`Confirmation`}
           onHide={() => setIsOpenConfirmationDialog(false)}
           handleYes={() => {
-            setIsOpenConfirmationDialog(false, "submit");
+            setIsOpenConfirmationDialog(false, 'submit');
           }}
           desc1={Messages.confirmationSavedData}
           isLoading={onSubmit}
         />
         <Modal
-          setIsOpen={(val) => setShowSuccessModal(val)}
+          setIsOpen={val => setShowSuccessModal(val)}
           width={`w-[27rem]`}
           title={`Success`}
           isOpen={showSuccessModal}
@@ -255,9 +261,9 @@ const RoleManagementCreate = (props) => {
             />
           </div>
           <Typography className={`pt-8`}>Data Berhasil disimpan</Typography>
-          <div className="flex justify-center pt-8">
+          <div className='flex justify-center pt-8'>
             <Button
-              onClick={() => router.push("/role-management")}
+              onClick={() => router.push('/role-management')}
               color={`white`}
               background={`bg-btnBlue`}
             >

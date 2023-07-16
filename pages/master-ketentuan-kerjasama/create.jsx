@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { MainLayout, Table } from "@organisms";
-import Head from "next/head";
-import Image from "next/image";
+import React, { useEffect, useState } from 'react';
+import { MainLayout, Table } from 'components/organisms';
+import Head from 'next/head';
+import Image from 'next/image';
 import {
   Card,
   Typography,
@@ -10,27 +10,27 @@ import {
   Input,
   Modal,
   Textarea,
-  InputFile,
-} from "@atoms";
-import InputText from "components/atoms/Input/InputText";
-import { EmptyTable } from "@molecules";
-import assets from "@/public/index";
-import { useRouter } from "next/router";
-import axios from "axios";
-import { getItemLocalStorage } from "@utils/localstorage";
-import { useRef } from "react";
-import Messages from "@constants/PopUpMessage";
-import ModalConfirmation from "components/Modals/ModalConfirmation";
-import ModalSuccess from "components/Modals/ModalsSendLink";
-import { useDispatch } from "react-redux";
+  InputFile
+} from 'components/atoms';
+import InputText from 'components/atoms/Input/InputText';
+import { EmptyTable } from 'components/molecules';
+import assets from 'public/index';
+import { useRouter } from 'next/router';
+import axios from 'axios';
+import { getItemLocalStorage } from 'components/utils/localstorage';
+import { useRef } from 'react';
+import Messages from 'components/constants/PopUpMessage';
+import ModalConfirmation from 'components/Modals/ModalConfirmation';
+import ModalSuccess from 'components/Modals/ModalsSendLink';
+import { useDispatch } from 'react-redux';
 import {
   createCooperationTerms,
-  uploadDocument,
-} from "components/store/actions/cooperationTerm";
-import { Field, Form, Formik, useField } from "formik";
-import * as yup from "yup";
+  uploadDocument
+} from 'components/store/actions/cooperationTerm';
+import { Field, Form, Formik, useField } from 'formik';
+import * as yup from 'yup';
 
-const Create = (props) => {
+const Create = props => {
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -41,28 +41,28 @@ const Create = (props) => {
   const [btnUploadDisabled, setBtnUploadDisabled] = useState(false);
   const [onSubmitData, setOnSubmitData] = useState(false);
   const [state, setState] = useState({
-    headline: "Master Ketentuan Kerjasama",
+    headline: 'Master Ketentuan Kerjasama',
     breadcrumbs: [
       {
-        link: "/master-ketentuan-kerjasama",
-        name: "Master Ketentuan Kerjasama",
+        link: '/master-ketentuan-kerjasama',
+        name: 'Master Ketentuan Kerjasama'
       },
-      { link: `/master-ketentuan-kerjasama/create`, name: "Create" },
+      { link: `/master-ketentuan-kerjasama/create`, name: 'Create' }
     ],
     fileUploaded: null,
-    cooperationCode: "",
-    cooperationName: "",
-    cooperationDesc: "",
+    cooperationCode: '',
+    cooperationName: '',
+    cooperationDesc: '',
     uploadData: [],
     isOpenSupportingData: false,
     isOpenSavedConfirmationDialog: false,
-    isOpenUploadSupportingData: false,
+    isOpenUploadSupportingData: false
   });
 
   const validationSchema = yup.object().shape({
-    cooperationCode: yup.string().required("This field is required"),
-    cooperationName: yup.string().required("This field is required"),
-    cooperationDesc: yup.string().required("This field is required"),
+    cooperationCode: yup.string().required('This field is required'),
+    cooperationName: yup.string().required('This field is required'),
+    cooperationDesc: yup.string().required('This field is required')
   });
 
   const onSubmit = () => {
@@ -78,20 +78,20 @@ const Create = (props) => {
         ...state.uploadData,
         {
           index: state.uploadData.length + 1,
-          file: "",
-          notes: "",
-        },
-      ],
+          file: '',
+          notes: ''
+        }
+      ]
     });
   };
 
-  const deleteFile = (index) => {
+  const deleteFile = index => {
     const upload = state.uploadData.filter((item, i) => {
       return item.index !== index;
     });
     setState({
       ...state,
-      uploadData: upload,
+      uploadData: upload
     });
   };
 
@@ -105,59 +105,59 @@ const Create = (props) => {
     });
     setState({
       ...state,
-      uploadData: upload,
+      uploadData: upload
     });
   };
 
-  const setIsOpenUploadSupportingData = (value) => {
+  const setIsOpenUploadSupportingData = value => {
     setState({ ...state, isOpenUploadSupportingData: value });
   };
 
   const headColumns = [
     {
-      key: "no",
-      name: "No",
-      className: "w-3 px-4 text-center",
-      icon: false,
+      key: 'no',
+      name: 'No',
+      className: 'w-3 px-4 text-center',
+      icon: false
     },
     {
-      key: "file",
-      name: "File",
-      className: "text-left",
-      icon: false,
+      key: 'file',
+      name: 'File',
+      className: 'text-left',
+      icon: false
     },
     {
-      key: "note",
-      name: "Note",
-      className: "text-left pl-6",
-      icon: false,
+      key: 'note',
+      name: 'Note',
+      className: 'text-left pl-6',
+      icon: false
     },
     {
-      key: "deletbtn",
-      name: "",
-      className: "w-12 px-2",
-      icon: false,
-    },
+      key: 'deletbtn',
+      name: '',
+      className: 'w-12 px-2',
+      icon: false
+    }
   ];
 
-  const handleCooperationCode = (val) => {
+  const handleCooperationCode = val => {
     setState({
       ...state,
-      cooperationCode: val,
+      cooperationCode: val
     });
   };
 
-  const handleCooperationName = (val) => {
+  const handleCooperationName = val => {
     setState({
       ...state,
-      cooperationName: val,
+      cooperationName: val
     });
   };
 
-  const handleCooperationDesc = (val) => {
+  const handleCooperationDesc = val => {
     setState({
       ...state,
-      cooperationDesc: val,
+      cooperationDesc: val
     });
   };
 
@@ -171,7 +171,7 @@ const Create = (props) => {
     });
     setState({
       ...state,
-      uploadData: upload,
+      uploadData: upload
     });
   };
 
@@ -187,52 +187,51 @@ const Create = (props) => {
     const dataPost = {
       code: state.cooperationCode,
       name: state.cooperationName,
-      description: state.cooperationDesc,
+      description: state.cooperationDesc
     };
 
     setOnSubmitData(true);
-    dispatch(createCooperationTerms(dataPost)).then((res) => {
+    dispatch(createCooperationTerms(dataPost)).then(res => {
       if (res?.statusCode === 200) {
         setSuccess(true);
         setShow(false);
         let uploadDocumentStatus = true;
         state.uploadData.forEach((item, index) => {
           const newFormData = new FormData();
-          newFormData.append("CooperationTermCode", state.cooperationCode);
-          newFormData.append("File", item.file);
-          newFormData.append("Type", item.file.type);
-          newFormData.append("Notes", item.notes);
+          newFormData.append('CooperationTermCode', state.cooperationCode);
+          newFormData.append('File', item.file);
+          newFormData.append('Type', item.file.type);
+          newFormData.append('Notes', item.notes);
 
-          dispatch(uploadDocument(newFormData)).then((res) => {
+          dispatch(uploadDocument(newFormData)).then(res => {
             if (res.statusCode !== 200) {
               uploadDocumentStatus = false;
             }
           });
         });
       } else {
-        setShow(false)
+        setShow(false);
         setError(true);
       }
       setOnSubmitData(false);
     });
   };
 
-
   const handleNoUploadData = () => {
-    setIsOpenUploadSupportingData(false)
-    state.uploadData.splice(0, state.uploadData.length)
-  }
+    setIsOpenUploadSupportingData(false);
+    state.uploadData.splice(0, state.uploadData.length);
+  };
 
   useEffect(() => {
     buttonDisabled();
     // uploadDisabled();
     state.uploadData.map((item, key) => {
-      if(item.file === "" || item.notes === "" || !state.uploadData[0]) {
-        setBtnUploadDisabled(true)
+      if (item.file === '' || item.notes === '' || !state.uploadData[0]) {
+        setBtnUploadDisabled(true);
       } else {
-        setBtnUploadDisabled(false)
+        setBtnUploadDisabled(false);
       }
-    })
+    });
   }, [state, state.uploadData]);
 
   return (
@@ -240,9 +239,9 @@ const Create = (props) => {
       <Head>
         <title>Bumame CMS</title>
         <link
-          rel="icon"
+          rel='icon'
           href={`${
-            process.env.NEXT_PUBLIC_PREFIX_URL || "/housecall"
+            process.env.NEXT_PUBLIC_PREFIX_URL || '/housecall'
           }/favicon.ico`}
         />
       </Head>
@@ -251,10 +250,10 @@ const Create = (props) => {
         headline={state.headline}
         breadcrumb={[
           {
-            link: "/master-ketentuan-kerjasama",
-            name: "Master Ketentuan Kerjasama",
+            link: '/master-ketentuan-kerjasama',
+            name: 'Master Ketentuan Kerjasama'
           },
-          { link: `/master-ketentuan-kerjasama/create`, name: "Create" },
+          { link: `/master-ketentuan-kerjasama/create`, name: 'Create' }
         ]}
         className={`overflow-x-hidden`}
       >
@@ -265,7 +264,7 @@ const Create = (props) => {
               validationSchema={validationSchema}
               onSubmit={() => onSubmit()}
             >
-              {(formik) => {
+              {formik => {
                 return (
                   <Form>
                     <div className={`grid mb-3 grid-cols-1 lg:grid-cols-3`}>
@@ -273,47 +272,47 @@ const Create = (props) => {
                         <Label>Kode Ketentuan</Label>
                         <Field
                           component={Input}
-                          name="cooperationCode"
-                          label="Kode Ketentuan"
+                          name='cooperationCode'
+                          label='Kode Ketentuan'
                           type={`text`}
-                          onChange={(e) =>
+                          onChange={e =>
                             setState({
                               ...state,
-                              cooperationCode: e.target.value,
+                              cooperationCode: e.target.value
                             })
                           }
                         />
                       </div>
                       <div className={`hidden lg:block`}></div>
                       <div className={`hidden lg:block`}></div>
-                      <div className="mt-4">
+                      <div className='mt-4'>
                         <Label>Nama Ketentuan Kerjasama</Label>
                         <Field
                           component={Input}
-                          label="Nama Ketentuan Kerjasama"
-                          name="cooperationName"
-                          type="text"
-                          onChange={(e) =>
+                          label='Nama Ketentuan Kerjasama'
+                          name='cooperationName'
+                          type='text'
+                          onChange={e =>
                             setState({
                               ...state,
-                              cooperationName: e.target.value,
+                              cooperationName: e.target.value
                             })
                           }
                         />
                       </div>
                       <div className={`hidden lg:block`}></div>
                       <div className={`hidden lg:block`}></div>
-                      <div className="mt-4">
-                        <label htmlFor="">Deskripsi</label>
+                      <div className='mt-4'>
+                        <label htmlFor=''>Deskripsi</label>
                         <textarea
-                          as="textarea"
+                          as='textarea'
                           required
-                          name="cooperationDesc"
-                          className="focus:outline-none border resize-none border-[#C9CFD6] rounded p-2 bg-white w-full h-[100px]"
-                          onChange={(e) =>
+                          name='cooperationDesc'
+                          className='focus:outline-none border resize-none border-[#C9CFD6] rounded p-2 bg-white w-full h-[100px]'
+                          onChange={e =>
                             setState({
                               ...state,
-                              cooperationDesc: e.target.value,
+                              cooperationDesc: e.target.value
                             })
                           }
                         />
@@ -323,12 +322,12 @@ const Create = (props) => {
                     </div>
                     <div className={`grid mb-2 grid-cols-1 lg:grid-cols-2`}>
                       <div>
-                        <Typography className="text-base">
+                        <Typography className='text-base'>
                           Supporting Data
                         </Typography>
                         <Table headColumns={headColumns}>
                           {state.uploadData.length > 0 &&
-                          state.uploadData[0]?.file !== "" ? (
+                          state.uploadData[0]?.file !== '' ? (
                             state.uploadData.map((data, key) => {
                               return (
                                 <>
@@ -336,8 +335,8 @@ const Create = (props) => {
                                     key={key}
                                     className={`text-center ${
                                       key % 2 != 0
-                                        ? "bg-[#FCFCFC]"
-                                        : "bg-[#FFFFFF]"
+                                        ? 'bg-[#FCFCFC]'
+                                        : 'bg-[#FFFFFF]'
                                     }`}
                                   >
                                     <td className={`py-[24px] text-center`}>
@@ -351,7 +350,7 @@ const Create = (props) => {
                                     <td className={`py-[24px] text-start pl-6`}>
                                       <Typography>{data.notes}</Typography>
                                     </td>
-                                    <td className={"px-2"}>
+                                    <td className={'px-2'}>
                                       <Button
                                         className={`bg-[#F64E60] flex items-center p-2`}
                                         onClick={() => deleteFile(data.index)}
@@ -374,14 +373,14 @@ const Create = (props) => {
                             />
                           )}
                           <tr>
-                            <td colSpan="3">
-                              <div className="p-[15px]">
+                            <td colSpan='3'>
+                              <div className='p-[15px]'>
                                 <Button
                                   paddingVertical={`py-1`}
                                   paddingHorizontal={`px-6`}
                                   background={`bg-pattensBlue hover:bg-btnBlue`}
                                   className={
-                                    "flex items-center text-btnBlue hover:text-white justify-center"
+                                    'flex items-center text-btnBlue hover:text-white justify-center'
                                   }
                                   onClick={() =>
                                     setIsOpenUploadSupportingData(true)
@@ -390,9 +389,9 @@ const Create = (props) => {
                                   <Typography
                                     className={`font-normal text-sm flex items-center justify-center`}
                                   >
-                                    <span className="font-bold text-2xl pb-1.5 pr-2">
+                                    <span className='font-bold text-2xl pb-1.5 pr-2'>
                                       +
-                                    </span>{" "}
+                                    </span>{' '}
                                     Create
                                   </Typography>
                                 </Button>
@@ -403,7 +402,7 @@ const Create = (props) => {
                       </div>
                       <div className={`hidden lg:block`}></div>
                     </div>
-                    <div className="flex justify-center items-center mt-[50px]">
+                    <div className='flex justify-center items-center mt-[50px]'>
                       <Button
                         paddingVertical={`py-2`}
                         paddingHorizontal={`px-7`}
@@ -423,7 +422,7 @@ const Create = (props) => {
                         background={`bg-btn-cancel`}
                         className={`ml-4`}
                         onClick={() => {
-                          router.push("/master-ketentuan-kerjasama");
+                          router.push('/master-ketentuan-kerjasama');
                         }}
                       >
                         <Typography className={` font-normal text-sm`}>
@@ -438,7 +437,7 @@ const Create = (props) => {
           </Card>
         </main>
         <Modal
-          setIsOpen={(val) => setIsOpenUploadSupportingData(val)}
+          setIsOpen={val => setIsOpenUploadSupportingData(val)}
           width={`w-[50rem]`}
           title={`Supporting Data`}
           isOpen={state.isOpenUploadSupportingData}
@@ -468,11 +467,11 @@ const Create = (props) => {
                       <div className={`w-6/12 mr-2`}>
                         <div className={`border p-3 rounded-md`}>
                           <InputFile
-                            onChange={(e) => onChangeBrowseFile(e, item.index)}
+                            onChange={e => onChangeBrowseFile(e, item.index)}
                             name={`file[${item.index}]`}
                             fileName={
                               item.file?.name &&
-                              item.file?.name.substring(0, 12) + "..."
+                              item.file?.name.substring(0, 12) + '...'
                             }
                             className={`bg-[#1BC5BD] text-[#FFF]`}
                             isWhite
@@ -483,8 +482,8 @@ const Create = (props) => {
                         <Textarea
                           cols={4}
                           name={`note[${item.index}]`}
-                          className={"resize-none"}
-                          onChange={(e) => onChangeNote(e, item.index)}
+                          className={'resize-none'}
+                          onChange={e => onChangeNote(e, item.index)}
                         />
                       </div>
                       <div className={`w-1/12 ml-2 justify-self-end`}>
@@ -585,11 +584,11 @@ const Create = (props) => {
             setShow(false);
           }}
           handleYes={() => onSave()}
-          desc1="Apakah anda yakin akan menyimpan data ini?"
+          desc1='Apakah anda yakin akan menyimpan data ini?'
           isLoading={onSubmitData}
         />
         <Modal
-          setIsOpen={(val) => setError(val)}
+          setIsOpen={val => setError(val)}
           width={`w-[27rem]`}
           headless
           isOpen={error}
@@ -597,15 +596,19 @@ const Create = (props) => {
           <div>
             <Image src={assets.IconError} alt={`Error Dialog image`} />
           </div>
-          <div className="pt-8 text-center">
-            <Typography>Simpan data gagal. </Typography><br/>
+          <div className='pt-8 text-center'>
+            <Typography>Simpan data gagal. </Typography>
+            <br />
             <Typography>
               Data tidak berhasil disimpan, silahkan coba lagi
             </Typography>
           </div>
-          <div className="flex justify-center pt-8">
+          <div className='flex justify-center pt-8'>
             <Button
-              onClick={() => router.push("/master-ketentuan-kerjasama/create") && (setError(false))}
+              onClick={() =>
+                router.push('/master-ketentuan-kerjasama/create') &&
+                setError(false)
+              }
               color={`white`}
               background={`bg-inActive`}
             >
@@ -616,7 +619,7 @@ const Create = (props) => {
           </div>
         </Modal>
         <Modal
-          setIsOpen={(val) => setSuccess(val)}
+          setIsOpen={val => setSuccess(val)}
           width={`w-[27rem]`}
           title={`Success`}
           headless
@@ -629,9 +632,9 @@ const Create = (props) => {
             />
           </div>
           <Typography className={`pt-8`}>Data berhasil disimpan</Typography>
-          <div className="flex justify-center pt-8">
+          <div className='flex justify-center pt-8'>
             <Button
-              onClick={() => router.push("/master-ketentuan-kerjasama")}
+              onClick={() => router.push('/master-ketentuan-kerjasama')}
               color={`white`}
               background={`bg-btnBlue`}
             >

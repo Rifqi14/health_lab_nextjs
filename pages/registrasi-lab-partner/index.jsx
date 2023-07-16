@@ -1,4 +1,4 @@
-import assets from '@/public/index';
+import assets from 'public/index';
 import {
   Button,
   Card,
@@ -8,12 +8,12 @@ import {
   ReactSelect,
   Select,
   Typography
-} from '@atoms';
-import { LAB_PARTNER_CREATE } from '@constants/LapPartner';
-import LengthChangeValue from '@constants/LengthChange';
-import { SORTING_ORDER } from '@constants/SortingOrder';
-import { EmptyTable, Pagination } from '@molecules';
-import { MainLayout, Table } from '@organisms';
+} from 'components/atoms';
+import { LAB_PARTNER_CREATE } from 'components/constants/LapPartner';
+import LengthChangeValue from 'components/constants/LengthChange';
+import { SORTING_ORDER } from 'components/constants/SortingOrder';
+import { EmptyTable, Pagination } from 'components/molecules';
+import { MainLayout, Table } from 'components/organisms';
 import {
   fetchDataTable,
   fetchLabPartnerDetail
@@ -353,7 +353,7 @@ const RegistrasiLabPartner = props => {
               ) : (
                 <EmptyTable
                   colSpan={headColumns.length}
-                  title="List Registrasi Lab Partner Empty"
+                  title='List Registrasi Lab Partner Empty'
                 />
               )}
               <tr></tr>

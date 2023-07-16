@@ -1,19 +1,27 @@
-import { Button, Card, Typography, Input, Select, Pill, ReactSelect } from '@atoms';
-import { MainLayout, Table } from '@organisms';
+import {
+  Button,
+  Card,
+  Typography,
+  Input,
+  Select,
+  Pill,
+  ReactSelect
+} from 'components/atoms';
+import { MainLayout, Table } from 'components/organisms';
 import Head from 'next/head';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import assets from '@/public/index';
-import { EmptyTable, Pagination } from '@molecules';
+import assets from 'public/index';
+import { EmptyTable, Pagination } from 'components/molecules';
 import axios from 'axios';
-import { getItemLocalStorage } from '@utils/localstorage';
-import { interceptorResponseErr } from '@utils/interceptor';
+import { getItemLocalStorage } from 'components/utils/localstorage';
+import { interceptorResponseErr } from 'components/utils/interceptor';
 import { useDispatch } from 'react-redux';
 
 const MasterKetentuanKerjasama = () => {
   const router = useRouter();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const [state, setState] = useState({
     headline: 'List Master ketentuan kerjasama',
@@ -33,14 +41,14 @@ const MasterKetentuanKerjasama = () => {
   const [search, setSearch] = useState('');
   const [selectOption, setSelectOption] = useState([
     {
-      value: "Active",
-      label: "Active"
+      value: 'Active',
+      label: 'Active'
     },
     {
-      value: "InActive",
-      label: "InActive"
+      value: 'InActive',
+      label: 'InActive'
     }
-  ])
+  ]);
 
   const navigateToCreate = () => {
     router.push(`/master-ketentuan-kerjasama/create`);
@@ -97,7 +105,7 @@ const MasterKetentuanKerjasama = () => {
     setPage(value);
   };
 
-  const ls = JSON.parse(getItemLocalStorage('AUTH'));
+  // const ls = JSON.parse(getItemLocalStorage('AUTH'));
   // const URL = process.env.NEXT_PUBLIC_API_URL
 
   const URL = process.env.NEXT_PUBLIC_API_URL;
@@ -267,7 +275,7 @@ const MasterKetentuanKerjasama = () => {
             ) : (
               <EmptyTable
                 colSpan={7}
-                title="List Master Ketentuan Kerjasama Empty"
+                title='List Master Ketentuan Kerjasama Empty'
               />
             )}
           </Table>

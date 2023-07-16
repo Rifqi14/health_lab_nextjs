@@ -1,5 +1,5 @@
-import { Button, Typography, UserDetail } from '@atoms';
-import { MainLayout } from '@organisms';
+import { Button, Typography, UserDetail } from 'components/atoms';
+import { MainLayout } from 'components/organisms';
 import ModalDelete from 'components/Modals/ModalDelete';
 import ModalSucess from 'components/Modals/ModalsSendLink';
 import Head from 'next/head';
@@ -10,7 +10,6 @@ const Detail = props => {
   const router = useRouter();
   const { id } = props;
   const [showModals, setShowModals] = useState(false);
-
 
   return (
     <>

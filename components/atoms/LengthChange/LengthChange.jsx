@@ -1,4 +1,4 @@
-import LengthChangeValue from '@constants/LengthChange';
+import LengthChangeValue from 'components/constants/LengthChange';
 import React from 'react';
 
 const LengthChange = props => {

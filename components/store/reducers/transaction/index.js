@@ -5,7 +5,7 @@ const {
   TRANSACTION_FETCH_ITEMS,
   TRANSACTION_FETCH_DOCUMENT_LIST,
   TRANSACTION_FETCH_HOUSE_CALL_DETAIL
-} = require('@constants/Transaction');
+} = require('components/constants/Transaction');
 
 const initState = {
   dataTable: {

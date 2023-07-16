@@ -3,7 +3,7 @@ import {
   LAB_TRANSACTION_CREATE,
   LAB_TRANSACTION_FETCH_DATATABLE,
   LAB_TRANSACTION_FETCH_DETAIL
-} from '@constants/LabTransaction';
+} from 'components/constants/LabTransaction';
 
 const initState = {
   formInitialValue: null,
