@@ -183,7 +183,7 @@ const RegistrasiLabPartnerSlug = props => {
         ...state,
         formInitialValue: {
           ...labpartner.labPartnerDetail,
-          labHealth Lab: labpartner.labPartnerDetail?.lab?.name,
+          labBumame: labpartner.labPartnerDetail?.lab?.name,
           cooperationTermCode:
             labpartner.labPartnerDetail?.cooperationTerm?.name
         },
