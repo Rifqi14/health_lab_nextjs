@@ -44,7 +44,7 @@ const RegistrasiLabPartnerOtp = props => {
   return (
     <>
       <Head>
-        <title>Bumame CMS</title>
+        <title>Health Lab CMS</title>
         <link
           rel='icon'
           href={`${process.env.NEXT_PUBLIC_PREFIX_URL || ''}/favicon.ico`}
@@ -52,7 +52,7 @@ const RegistrasiLabPartnerOtp = props => {
       </Head>
       <div className={`flex flex-col justify-center items-center h-screen`}>
         <div className={`min-w-[30rem] flex flex-col`}>
-          <Image src={assets.Logo} alt={`Logo Bumame`} height={82} />
+          <Image src={assets.Logo} alt={`Logo Health Lab`} height={82} />
         </div>
         <div className={`flex flex-row items-center`}>
           <Typography className={`text-black text-sm font-semibold`}>
@@ -116,7 +116,7 @@ const RegistrasiLabPartnerOtp = props => {
               <Typography
                 className={`font-medium text-sm text-[#959CB6] text-center`}
               >
-                ©️ 2022 PT. Budimanmaju Megah Farmasi.
+                ©️ 2022 PT. Health Lab.
               </Typography>
             </div>
           </>

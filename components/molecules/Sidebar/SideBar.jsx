@@ -129,10 +129,7 @@ function SideBar() {
         style={{ minWidth: 80 }}
       >
         <div className={'ml-7 mr-2'}>
-          <Image
-            src={sidebar.active ? assets.Logo : assets.FavIconSVG}
-            alt='bumame'
-          />
+          <Image src={assets.FavIconSVG} alt='Health Lab' />
         </div>
         <span className={sidebar.active && 'pl-28'}></span>
         <Image

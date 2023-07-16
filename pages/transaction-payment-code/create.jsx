@@ -401,7 +401,7 @@ const CreateTransactionPaymentCode = props => {
         </Modal>
       )}
       <Head>
-        <title>Bumame CMS</title>
+        <title>Health Lab CMS</title>
         <link
           rel='icon'
           href={`${process.env.NEXT_PUBLIC_PREFIX_URL || ''}/favicon.ico`}

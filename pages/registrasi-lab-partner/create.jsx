@@ -205,7 +205,7 @@ const CreateRegistrasiLabPartner = props => {
         </Modal>
       )}
       <Head>
-        <title>Bumame CMS</title>
+        <title>Health Lab CMS</title>
         <link
           rel='icon'
           href={`${process.env.NEXT_PUBLIC_PREFIX_URL || ''}/favicon.ico`}
@@ -326,12 +326,12 @@ const CreateRegistrasiLabPartner = props => {
                     <div className={`hidden lg:block`}></div>
                     {/* Fifth Row */}
                     <div>
-                      <Label htmlFor={'bumameInCharge'}>
-                        Penanggung Jawab Bumame
+                      <Label htmlFor={'Health LabInCharge'}>
+                        Penanggung Jawab Health Lab
                       </Label>
                       <Field
-                        name='bumameInCharge'
-                        placeholder={`Penanggung Jawab Bumame`}
+                        name='Health LabInCharge'
+                        placeholder={`Penanggung Jawab Health Lab`}
                         component={Input}
                       />
                     </div>

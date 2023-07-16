@@ -76,7 +76,7 @@ const PageForgotPassword = () => {
   return (
     <>
       <Head>
-        <title>Bumame CMS | resetPassword</title>
+        <title>Health Lab CMS | resetPassword</title>
         <link
           rel='icon'
           href={`${
@@ -161,9 +161,7 @@ const PageForgotPassword = () => {
             </div>
           </div>
         </div>
-        <p className='text-[#959CB6]'>
-          ©️ 2022 PT. Budimanmaju Megah Farmasi.{' '}
-        </p>
+        <p className='text-[#959CB6]'>©️ 2022 PT. Health Lab. </p>
       </div>
       <ModalRedirect
         show={showModalsRedirect}

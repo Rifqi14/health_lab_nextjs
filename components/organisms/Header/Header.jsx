@@ -10,7 +10,7 @@ const Header = props => {
         className={`flex w-full bg-white h-fit py-[0.85rem] pl-7 items-center border-b-[1px] ${className}`}
       >
         <Typography className={`text-black text-xl font-semibold`}>
-          Bumame Corporate
+          Health Lab Corporate
         </Typography>
         <div className={`w-1 h-1 mx-2 bg-black rounded-full`}></div>
         <Typography className={`text-black text-xl font-semibold`}>

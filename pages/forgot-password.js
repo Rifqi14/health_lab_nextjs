@@ -40,7 +40,7 @@ const ForgotPassword = () => {
   return (
     <>
       <Head>
-        <title>Bumame CMS | forgotPassword</title>
+        <title>Health Lab CMS | forgotPassword</title>
         <link
           rel='icon'
           href={`${
@@ -110,7 +110,7 @@ const ForgotPassword = () => {
             </form>
           </div>
           <div className='text-[#959CB6] flex text-center items-end'>
-            <p>©️ 2022 PT. Budimanmaju Megah Farmasi. </p>
+            <p>©️ 2022 PT. Health Lab. </p>
           </div>
         </div>
       </div>

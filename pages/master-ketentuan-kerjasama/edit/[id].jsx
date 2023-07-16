@@ -225,7 +225,7 @@ const Edit = () => {
   return (
     <>
       <Head>
-        <title>CMS Bumame</title>
+        <title>CMS Health Lab</title>
         <link
           rel='icon'
           href={`${

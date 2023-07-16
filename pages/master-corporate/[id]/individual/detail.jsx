@@ -67,7 +67,7 @@ const Detail = () => {
   return (
     <>
       <Head>
-        <title>CMS Bumame</title>
+        <title>CMS Health Lab</title>
       </Head>
       <MainLayout>
         <Card>

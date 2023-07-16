@@ -61,7 +61,7 @@ const Login = () => {
   return (
     <>
       <Head>
-        <title>Bumame CMS | Login</title>
+        <title>Health Lab CMS | Login</title>
         <link
           rel='icon'
           href={`${
@@ -71,12 +71,11 @@ const Login = () => {
       </Head>
       <div className='h-screen w-screen flex justify-between'>
         <div className='bg-[#F67612] w-full h-full flex flex-col justify-end items-center'>
-          <Image src={assets.Logowhite} alt='Logo' />
           <Image src={assets.Imagelogin} alt='ilustration' />
         </div>
         <div className='h-full w-full flex flex-col justify-between bg-[#FFF]'>
           <div className='flex flex-col justify-center mt-20'>
-            <Image src={assets.Logo} alt='logo-bumame' />
+            <Image src={assets.FavIconSVG} alt='logo-Health Lab' />
             <div className='flex justify-center items-center font-bold gap-2'>
               <p className=''>Corporate</p>
               <Image src={assets.Ellipse} alt='' />
@@ -162,7 +161,7 @@ const Login = () => {
             </div>
           </div>
           <p className='text-[#959CB6] text-center py-4'>
-            ©️{new Date().getFullYear()} PT. Budimanmaju Megah Farmasi.
+            ©️{new Date().getFullYear()} PT. Health Lab.
           </p>
         </div>
       </div>

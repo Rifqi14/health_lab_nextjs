@@ -183,7 +183,7 @@ const RegistrasiLabPartnerSlug = props => {
         ...state,
         formInitialValue: {
           ...labpartner.labPartnerDetail,
-          labBumame: labpartner.labPartnerDetail?.lab?.name,
+          labHealth Lab: labpartner.labPartnerDetail?.lab?.name,
           cooperationTermCode:
             labpartner.labPartnerDetail?.cooperationTerm?.name
         },
@@ -244,7 +244,7 @@ const RegistrasiLabPartnerSlug = props => {
   return (
     <>
       <Head>
-        <title>Bumame CMS</title>
+        <title>Health Lab CMS</title>
         <link
           rel='icon'
           href={`${process.env.NEXT_PUBLIC_PREFIX_URL || ''}/favicon.ico`}
@@ -398,12 +398,12 @@ const RegistrasiLabPartnerSlug = props => {
                 <div className={`hidden lg:block`}></div>
                 {/* Fifth Row */}
                 <div>
-                  <Label htmlFor={'bumameInCharge'}>
-                    Penanggung Jawab Bumame
+                  <Label htmlFor={'Health LabInCharge'}>
+                    Penanggung Jawab Health Lab
                   </Label>
                   <Field
-                    name='bumameInCharge'
-                    placeholder={`Penanggung Jawab Bumame`}
+                    name='Health LabInCharge'
+                    placeholder={`Penanggung Jawab Health Lab`}
                     readonly={state.isReadonly}
                     component={Input}
                   />
